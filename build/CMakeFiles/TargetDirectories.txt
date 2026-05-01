@@ -1,0 +1,3 @@
+/home/nuc/Sniper/build/CMakeFiles/sniper.dir
+/home/nuc/Sniper/build/CMakeFiles/edit_cache.dir
+/home/nuc/Sniper/build/CMakeFiles/rebuild_cache.dir
