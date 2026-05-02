@@ -15,6 +15,10 @@ namespace doorlock_sniper
 namespace
 {
 
+constexpr size_t kVideoPacketBytes = 300U;
+constexpr size_t kPayloadHeaderBytes = 8U;
+constexpr size_t kVideoDataBytes = kVideoPacketBytes - kPayloadHeaderBytes;
+
 void LogInfo(const std::string & msg)
 {
   std::cout << "[Encoder][INFO] " << msg << std::endl;
@@ -28,6 +32,20 @@ void LogWarn(const std::string & msg)
 void LogError(const std::string & msg)
 {
   std::cerr << "[Encoder][ERROR] " << msg << std::endl;
+}
+
+void WriteLe16(std::vector<uint8_t> & payload, const size_t offset, const uint16_t value)
+{
+  payload[offset] = static_cast<uint8_t>(value & 0xFFU);
+  payload[offset + 1U] = static_cast<uint8_t>((value >> 8) & 0xFFU);
+}
+
+void WriteLe32(std::vector<uint8_t> & payload, const size_t offset, const uint32_t value)
+{
+  payload[offset] = static_cast<uint8_t>(value & 0xFFU);
+  payload[offset + 1U] = static_cast<uint8_t>((value >> 8) & 0xFFU);
+  payload[offset + 2U] = static_cast<uint8_t>((value >> 16) & 0xFFU);
+  payload[offset + 3U] = static_cast<uint8_t>((value >> 24) & 0xFFU);
 }
 
 }  // namespace
@@ -60,8 +78,6 @@ VideoEncoder::VideoEncoder(Options options)
   bus_(nullptr),
   display_running_(false)
 {
-  constexpr int kVideoPacketBytes = 300;
-  constexpr int kVideoDataBytes = 150;
   constexpr int kFixedOutputFps = 50;
 
   if (options_.output_fps != kFixedOutputFps) {
@@ -72,9 +88,11 @@ VideoEncoder::VideoEncoder(Options options)
     LogWarn("packet_size overridden to fixed 300 bytes");
     options_.packet_size = kVideoPacketBytes;
   }
-  if ((kVideoDataBytes + 3) > options_.packet_size) {
-    throw std::runtime_error(
-      "Invalid packet split, packet size must reserve 1 byte for seq and 2 bytes for pad count");
+  if (static_cast<size_t>(options_.packet_size) != kVideoPacketBytes) {
+    throw std::runtime_error("Invalid packet size, payload must be fixed 300 bytes");
+  }
+  if (kPayloadHeaderBytes >= static_cast<size_t>(options_.packet_size)) {
+    throw std::runtime_error("Invalid packet split, 300-byte payload must reserve 8-byte frame header");
   }
   if (options_.motion_trail_frames < 0) {
     options_.motion_trail_frames = 0;
@@ -213,17 +231,15 @@ void VideoEncoder::initialize_gstreamer()
   g_object_set(
     G_OBJECT(appsrc_),
     "caps", caps,
-    "block", FALSE,
-    "max-bytes", static_cast<guint64>(options_.output_size * options_.output_size * 3 * 3),
     "stream-type", 0,
     "format", GST_FORMAT_TIME,
     "is-live", TRUE,
-    "do-timestamp", FALSE,
+    "do-timestamp", TRUE,
     nullptr);
   gst_caps_unref(caps);
 
   const bool low_bitrate_mode = (options_.target_bitrate <= 80);
-  const int key_int = std::max(options_.output_fps, 30);
+  const int key_int = std::max(8 * options_.output_fps, 30);
   const int default_speed_preset = low_bitrate_mode ? 9 : 3;
   int speed_preset = default_speed_preset;
 
@@ -251,17 +267,19 @@ void VideoEncoder::initialize_gstreamer()
       G_OBJECT(encoder),
       "bitrate", options_.target_bitrate,
       "speed-preset", speed_preset,
-      "tune", 0x00000004,
+      "tune", 0,
       "byte-stream", TRUE,
-      "key-int-max", options_.output_fps,
-      "bframes", 0,
-      "rc-lookahead", 0,
-      "sync-lookahead", 0,
-      "sliced-threads", TRUE,
-      "ref", 1,
+      "key-int-max", key_int,
+      "bframes", 4,
+      "rc-lookahead", 40,
+      "sync-lookahead", 20,
+      "sliced-threads", FALSE,
+      "ref", 5,
       "aud", TRUE,
       "vbv-buf-capacity", 500,
-      "option-string", "repeat-headers=1:scenecut=0:ref=1:force-cfr=1",
+      "option-string",
+      "repeat-headers=1:scenecut=0:aq-mode=2:aq-strength=1.2:mbtree=1:qcomp=0.75:"
+      "subme=8:trellis=2:deblock=1,1:force-cfr=1",
       "pass", 0,
       nullptr);
   } else {
@@ -271,7 +289,7 @@ void VideoEncoder::initialize_gstreamer()
       "speed-preset", speed_preset,
       "tune", 0x00000004,
       "byte-stream", TRUE,
-      "key-int-max", options_.output_fps,
+      "key-int-max", 2 * options_.output_fps,
       "bframes", 0,
       "rc-lookahead", 0,
       "sync-lookahead", 0,
@@ -316,7 +334,6 @@ void VideoEncoder::initialize_gstreamer()
   bus_ = gst_element_get_bus(pipeline_);
   pipeline_started_ns_ = nowNs();
   last_encoded_sample_ns_ = 0;
-  last_watchdog_log_ns_ = 0;
 }
 
 void VideoEncoder::shutdown_gstreamer()
@@ -407,9 +424,9 @@ cv::Mat VideoEncoder::preprocess_image(
   if (options_.center_clear_size > 0) {
     const int clear_size = std::min({options_.center_clear_size, working.cols, working.rows});
     const int x0 = std::max(0, working.cols / 2 - clear_size / 2);
-    const int y0 = 50;
-    const int cw = 100;
-    const int ch = 200;
+    const int y0 = std::max(0, working.rows / 2 - clear_size / 2);
+    const int cw = std::min(clear_size, working.cols - x0);
+    const int ch = std::min(clear_size, working.rows - y0);
     cv::rectangle(motion_mask, cv::Rect(x0, y0, cw, ch), cv::Scalar(255), cv::FILLED);
   }
 
@@ -481,7 +498,6 @@ bool VideoEncoder::processImage(const cv::Mat & input, const int64_t timestamp_n
     return true;
   }
   last_encode_stamp_ns_ = now;
-  last_input_frame_ns_ = nowNs();
 
   cv::Mat roi_downsample;
   cv::Mat static_removed;
@@ -508,7 +524,6 @@ bool VideoEncoder::processImage(const cv::Mat & input, const int64_t timestamp_n
   push_frame_to_gstreamer(processed, frame_token);
   pull_stream_and_packetize();
   poll_gstreamer_bus();
-  watchdog_gstreamer_pipeline(nowNs());
   maybeLogRuntimeStats(nowNs());
   frame_count_++;
   return true;
@@ -529,7 +544,8 @@ void VideoEncoder::push_frame_to_gstreamer(const cv::Mat & frame, const uint64_t
     gst_buffer_unmap(buffer, &map);
 
     if (frame_interval_ns_ > 0) {
-      const GstClockTime pts = static_cast<GstClockTime>((frame_token - 1U) * static_cast<uint64_t>(frame_interval_ns_));
+      const GstClockTime pts =
+        static_cast<GstClockTime>((frame_token - 1U) * static_cast<uint64_t>(frame_interval_ns_));
       GST_BUFFER_PTS(buffer) = pts;
       GST_BUFFER_DTS(buffer) = pts;
       GST_BUFFER_DURATION(buffer) = static_cast<GstClockTime>(frame_interval_ns_);
@@ -561,11 +577,9 @@ void VideoEncoder::pull_stream_and_packetize()
     return;
   }
 
-  constexpr size_t kVideoDataBytes = 150U;
   const size_t packet_bytes = static_cast<size_t>(options_.packet_size);
   const size_t max_backlog_bytes = static_cast<size_t>(
     options_.bandwidth_limit_kbytes * 1000.0 * options_.max_tx_delay_s);
-  const int64_t max_tx_delay_ns = static_cast<int64_t>(options_.max_tx_delay_s * 1000000000.0);
   bool notify_sender = false;
 
   while (true) {
@@ -604,51 +618,32 @@ void VideoEncoder::pull_stream_and_packetize()
       FrameTrack track;
       track.track_id = track_id;
       track.source_frame_id = pending_found ? pending_input.source_frame_id : track_id;
+      track.payload_frame_id = next_payload_frame_id_++;
       track.input_time_ns = pending_found ? pending_input.input_time_ns : fallback_input_ns;
       track.enqueue_time_ns = pending_found ? pending_input.enqueue_time_ns : fallback_input_ns;
       track.encoded_bytes = map.size;
       active_frame_tracks_[track_id] = track;
 
-      const size_t old_size = stream_buffer_.size();
-      stream_buffer_.resize(old_size + map.size);
-      memcpy(stream_buffer_.data() + old_size, map.data, map.size);
-      appendStreamSpan(stream_buffer_spans_, track_id, map.size);
-      if (old_size == 0U && map.size > 0U) {
-        stream_buffer_first_byte_ns_ = nowNs();
-      }
-
-      while (stream_buffer_.size() >= kVideoDataBytes) {
-        const size_t valid_data_bytes = kVideoDataBytes;
-
-        // Protocol payload is fixed at 300 bytes; valid bytes are followed by zero padding.
+      const uint32_t frame_total_bytes = static_cast<uint32_t>(
+        std::min<size_t>(map.size, static_cast<size_t>(std::numeric_limits<uint32_t>::max())));
+      uint16_t fragment_index = 0;
+      size_t offset = 0U;
+      while (offset < map.size) {
+        const size_t valid_data_bytes = std::min(kVideoDataBytes, map.size - offset);
         TxPacket packet;
         packet.payload.resize(packet_bytes, 0U);
-        memcpy(packet.payload.data(), stream_buffer_.data(), valid_data_bytes);
-
-        // Store payload seq in the third-to-last byte and zero-padding count in the last 2 bytes.
-        packet.payload[packet_bytes - 3] = payload_data_seq_;
-        payload_data_seq_ = static_cast<uint8_t>(payload_data_seq_ + 1U);
-
-        const uint16_t pad_zero_count = static_cast<uint16_t>(packet_bytes - valid_data_bytes);
-        packet.payload[packet_bytes - 2] = static_cast<uint8_t>(pad_zero_count & 0xFFU);
-        packet.payload[packet_bytes - 1] = static_cast<uint8_t>((pad_zero_count >> 8) & 0xFFU);
-        consumeStreamSpans(stream_buffer_spans_, valid_data_bytes, &packet.spans);
+        WriteLe16(packet.payload, 0U, track.payload_frame_id);
+        WriteLe16(packet.payload, 2U, fragment_index);
+        WriteLe32(packet.payload, 4U, frame_total_bytes);
+        memcpy(packet.payload.data() + kPayloadHeaderBytes, map.data + offset, valid_data_bytes);
+        packet.spans.push_back(ByteSpan{track_id, valid_data_bytes});
         tx_queue_.push_back(std::move(packet));
         notify_sender = true;
-
-        memmove(
-          stream_buffer_.data(),
-          stream_buffer_.data() + valid_data_bytes,
-          stream_buffer_.size() - valid_data_bytes);
-        stream_buffer_.resize(stream_buffer_.size() - valid_data_bytes);
-        if (stream_buffer_.empty()) {
-          stream_buffer_first_byte_ns_ = 0;
-        } else {
-          stream_buffer_first_byte_ns_ = nowNs();
-        }
+        offset += valid_data_bytes;
+        fragment_index = static_cast<uint16_t>(fragment_index + 1U);
       }
 
-      const size_t queued_bytes = tx_queue_.size() * packet_bytes + stream_buffer_.size();
+      const size_t queued_bytes = tx_queue_.size() * packet_bytes;
       if (queued_bytes > max_backlog_bytes) {
         const size_t drop_bytes = queued_bytes - max_backlog_bytes;
         size_t drop_packets = (drop_bytes + packet_bytes - 1U) / packet_bytes;
@@ -662,63 +657,12 @@ void VideoEncoder::pull_stream_and_packetize()
           dropped_bytes_ += drop_packets * packet_bytes;
           dropped_events_++;
         }
-
-        if (tx_queue_.empty() && stream_buffer_.size() > max_backlog_bytes) {
-          const size_t target_drop = stream_buffer_.size() - max_backlog_bytes;
-          size_t raw_drop = target_drop;
-
-          for (size_t i = target_drop; i + 4U < stream_buffer_.size(); ++i) {
-            const bool start_code_3 =
-              (stream_buffer_[i] == 0U && stream_buffer_[i + 1U] == 0U &&
-              stream_buffer_[i + 2U] == 1U);
-            const bool start_code_4 =
-              (stream_buffer_[i] == 0U && stream_buffer_[i + 1U] == 0U &&
-              stream_buffer_[i + 2U] == 0U && stream_buffer_[i + 3U] == 1U);
-            if (start_code_3 || start_code_4) {
-              raw_drop = i;
-              break;
-            }
-          }
-
-          std::vector<ByteSpan> dropped_spans;
-          consumeStreamSpans(stream_buffer_spans_, raw_drop, &dropped_spans);
-          accountConsumedSpans(dropped_spans, false, nowNs());
-          memmove(
-            stream_buffer_.data(),
-            stream_buffer_.data() + raw_drop,
-            stream_buffer_.size() - raw_drop);
-          stream_buffer_.resize(stream_buffer_.size() - raw_drop);
-          dropped_bytes_ += raw_drop;
-          dropped_events_++;
-        }
       }
 
       gst_buffer_unmap(buffer, &map);
     }
 
     gst_sample_unref(sample);
-  }
-
-  if (!notify_sender && !stream_buffer_.empty() && stream_buffer_first_byte_ns_ > 0 && max_tx_delay_ns > 0) {
-    std::lock_guard<std::mutex> lock(buffer_mutex_);
-    const int64_t age_ns = nowNs() - stream_buffer_first_byte_ns_;
-    if (!stream_buffer_.empty() && age_ns >= max_tx_delay_ns) {
-      const size_t valid_data_bytes = stream_buffer_.size();
-      TxPacket packet;
-      packet.payload.resize(packet_bytes, 0U);
-      memcpy(packet.payload.data(), stream_buffer_.data(), valid_data_bytes);
-      packet.payload[packet_bytes - 3] = payload_data_seq_;
-      payload_data_seq_ = static_cast<uint8_t>(payload_data_seq_ + 1U);
-
-      const uint16_t pad_zero_count = static_cast<uint16_t>(packet_bytes - valid_data_bytes);
-      packet.payload[packet_bytes - 2] = static_cast<uint8_t>(pad_zero_count & 0xFFU);
-      packet.payload[packet_bytes - 1] = static_cast<uint8_t>((pad_zero_count >> 8) & 0xFFU);
-      consumeStreamSpans(stream_buffer_spans_, valid_data_bytes, &packet.spans);
-      tx_queue_.push_back(std::move(packet));
-      stream_buffer_.clear();
-      stream_buffer_first_byte_ns_ = 0;
-      notify_sender = true;
-    }
   }
 
   if (notify_sender) {
@@ -787,36 +731,6 @@ void VideoEncoder::poll_gstreamer_bus()
   if (saw_error || saw_eos) {
     restart_gstreamer_pipeline(saw_error ? "bus error" : "bus eos");
   }
-}
-
-void VideoEncoder::watchdog_gstreamer_pipeline(const int64_t now_ns)
-{
-  constexpr int64_t kRecentInputNs = 500000000LL;
-  constexpr int64_t kNoOutputStallNs = 2000000000LL;
-
-  if (pipeline_ == nullptr || last_input_frame_ns_ <= 0) {
-    return;
-  }
-
-  if ((now_ns - last_input_frame_ns_) > kRecentInputNs) {
-    return;
-  }
-
-  const int64_t last_output_ns = (last_encoded_sample_ns_ > 0) ? last_encoded_sample_ns_ : pipeline_started_ns_;
-  if (last_output_ns <= 0 || (now_ns - last_output_ns) < kNoOutputStallNs) {
-    return;
-  }
-
-  if ((now_ns - last_watchdog_log_ns_) >= 500000000LL) {
-    last_watchdog_log_ns_ = now_ns;
-    std::ostringstream oss;
-    oss << "Encoder pipeline watchdog stall: pushedFrames=" << pushed_frame_count_
-        << " pulledSamples=" << pulled_sample_count_
-        << " lastOutputAgoMs=" << ((now_ns - last_output_ns) / 1000000LL);
-    LogWarn(oss.str());
-  }
-
-  restart_gstreamer_pipeline("watchdog stall");
 }
 
 void VideoEncoder::maybeLogRuntimeStats(const int64_t now_ns)
