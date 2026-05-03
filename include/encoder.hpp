@@ -43,10 +43,10 @@ public:
     double bg_update_alpha = 0.01; // 背景更新的学习率，较小的值会使背景更新更慢但更稳定
     double bg_blur_sigma = 1.2; // 背景模糊的高斯核标准差，有助于减少细节并降低编码复杂度
     int center_clear_size = 100; // 中心清除区域大小（像素），在门锁场景中可以去除中心区域的运动检测以减少误报
-    bool force_monochrome = false; // 强制输出单色视频，即使输入是彩色的，这在极低比特率下可能有助于降低编码复杂度
-    double bandwidth_limit_kbytes = 14.0; // 发送带宽限制，单位KB/s，用于动态调整发送速率以避免网络拥塞
-    double bandwidth_window_s = 2.0; // 计算发送速率的时间窗口，单位秒，较大的窗口可以更平滑地响应带宽变化但反应更慢
-    double max_tx_delay_s = 1.0; // 发送最大延迟，单位秒，如果数据包在队列中等待超过此时间将被丢弃以避免过时的内容占用带宽
+    bool force_monochrome = true; // 强制输出单色视频，即使输入是彩色的，这在极低比特率下可能有助于降低编码复杂度
+    double bandwidth_limit_kbytes = 14.9; // 发送带宽限制，单位KB/s，用于动态调整发送速率以避免网络拥塞
+    double bandwidth_window_s = 0.5; // 计算发送速率的时间窗口，单位秒，较大的窗口可以更平滑地响应带宽变化但反应更慢
+    double max_tx_delay_s = 0.09; // 发送最大延迟，单位秒，如果数据包在队列中等待超过此时间将被丢弃以避免过时的内容占用带宽
     bool enable_display = true; // 启用显示功能
     bool debug_dump_enable = false; // 启用调试转储功能
     int debug_dump_every_n_frames = 20; // 每隔多少帧保存一次调试图像
@@ -92,6 +92,10 @@ private:
   {
     std::vector<uint8_t> payload; // 数据包负载，包含编码后的视频数据和必要的头部信息
     std::vector<ByteSpan> spans;  // 该数据包对应的ByteSpan列表，用于跟踪发送和确认
+    uint64_t source_frame_id = 0; // 源帧ID，便于发送线程实时打印当前正在发送的帧
+    uint16_t payload_frame_id = 0; // 编码后的负载帧ID，用于区分发送队列中的不同视频帧
+    uint16_t fragment_index = 0; // 当前数据包在所属视频帧中的分片序号
+    uint16_t fragment_count = 0; // 当前视频帧总共被切分成多少个数据包
   };
 
   struct FrameTrack
@@ -129,8 +133,8 @@ private:
     size_t bytes_to_consume,
     std::vector<ByteSpan> * consumed_spans); // 从ByteSpan队列中消费指定字节数，并将消费的span信息记录到consumed_spans中以便后续处理，通常在发送完成或丢弃数据包时调用
   void accountConsumedSpans(const std::vector<ByteSpan> & spans, bool sent, int64_t completion_ns); // 根据发送结果更新对应track_id的FrameTrack信息，记录已发送或已丢弃的字节数，并在该帧的所有数据都处理完成时计算并记录相关统计数据，如端到端延迟和丢包情况
-  void maybeLogLatencyStats(int64_t now_ns); // 根据当前时间和上次记录的时间间隔，决定是否记录一次端到端延迟统计数据，并将统计结果输出到日志中以便监控和调试
-  void maybeLogRuntimeStats(int64_t now_ns); // 根据当前时间和上次记录的时间间隔，决定是否记录一次运行时统计数据，如输入帧率、编码帧率、发送速率、丢包率等，并将统计结果输出到日志中以便监控和调试
+  void LogLatencyStats(int64_t now_ns); // 根据当前时间和上次记录的时间间隔，决定是否记录一次端到端延迟统计数据，并将统计结果输出到日志中以便监控和调试
+  void LogRuntimeStats(int64_t now_ns); // 根据当前时间和上次记录的时间间隔，决定是否记录一次运行时统计数据，如输入帧率、编码帧率、发送速率、丢包率等，并将统计结果输出到日志中以便监控和调试
   void retireFrameTrackIfDone(uint64_t track_id); // 检查指定track_id的FrameTrack是否已经完成发送（即已发送字节数加上已丢弃字节数达到编码字节数），如果完成则从active_frame_tracks_中移除该track，并记录相关统计数据以便监控和调试
 
   Options options_; // 编码器选项，包含各种参数设置以调整编码和发送行为
@@ -145,6 +149,7 @@ private:
 
   uint64_t packet_sequence_id_ = 0; // 数据包序列ID，用于为每个发送的数据包分配一个唯一的标识，以便接收端进行重组和处理
   uint32_t frame_count_ = 0; // 处理的输入帧总数，用于统计和监控输入帧率
+  int last_logged_tx_payload_frame_id_ = -1; // 上一次打印发送日志的负载帧ID，避免同一帧的每个分片都重复刷屏
 
   std::thread display_thread_; // 显示线程对象，负责实时显示处理后的图像，提供预览功能
   std::atomic<bool> display_running_;  // 显示线程运行状态标志，控制显示线程的启动和停止

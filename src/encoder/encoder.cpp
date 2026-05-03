@@ -15,9 +15,9 @@ namespace doorlock_sniper
 namespace
 {
 
-constexpr size_t kVideoPacketBytes = 300U;
-constexpr size_t kPayloadHeaderBytes = 8U;
-constexpr size_t kVideoDataBytes = kVideoPacketBytes - kPayloadHeaderBytes;
+constexpr size_t kVideoPacketBytes = 300U; // 每个视频数据包的总字节数，必须固定以便接收端正确解析
+constexpr size_t kPayloadHeaderBytes = 8U; // 每个视频数据包中预留的帧头字节数，用于存储帧相关信息，如跟踪ID和帧内序号，必须固定以便接收端正确解析
+constexpr size_t kVideoDataBytes = kVideoPacketBytes - kPayloadHeaderBytes; // 每个视频数据包中实际的视频数据字节数，必须固定以便接收端正确解析
 
 void LogInfo(const std::string & msg)
 {
@@ -239,7 +239,8 @@ void VideoEncoder::initialize_gstreamer()
   gst_caps_unref(caps);
 
   const bool low_bitrate_mode = (options_.target_bitrate <= 80);
-  const int key_int = std::max(8 * options_.output_fps, 30);
+  const int key_int = std::max(options_.output_fps, 40); // 关键帧间隔设置为1秒或更短，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久，尤其在极低比特率下更容易出现质量崩溃和解码失败的情况
+  // const int key_int = 40; // 固定关键帧间隔为40帧，约0.8秒，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
   const int default_speed_preset = low_bitrate_mode ? 9 : 3;
   int speed_preset = default_speed_preset;
 
@@ -265,22 +266,34 @@ void VideoEncoder::initialize_gstreamer()
   if (low_bitrate_mode) {
     g_object_set(
       G_OBJECT(encoder),
-      "bitrate", options_.target_bitrate,
-      "speed-preset", speed_preset,
-      "tune", 0,
-      "byte-stream", TRUE,
-      "key-int-max", key_int,
-      "bframes", 4,
-      "rc-lookahead", 40,
-      "sync-lookahead", 20,
-      "sliced-threads", FALSE,
-      "ref", 5,
-      "aud", TRUE,
-      "vbv-buf-capacity", 500,
-      "option-string",
-      "repeat-headers=1:scenecut=0:aq-mode=2:aq-strength=1.2:mbtree=1:qcomp=0.75:"
+      "bitrate", options_.target_bitrate, // x264enc的bitrate参数单位是kbps
+      "speed-preset", speed_preset, // 预设级别，数值越大编码越慢但质量越好，0是默认，1-10分别对应ultrafast到placebo
+      "tune", 0x00000004, // 不使用特殊调优，保持默认设置，x264enc的tune参数可以设置为zerolatency等以优化特定场景，但在极低比特率下可能不适用
+      "byte-stream", TRUE, // 输出Annex B格式的H.264字节流，适合网络传输
+      "key-int-max", key_int, // 最大关键帧间隔，单位是帧数，设置为max(output_fps, 40)，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
+      "bframes", 2, // B帧数量，设置为4可以在低比特率下提高压缩效率，但过多的B帧可能增加编码延迟和复杂度
+      "rc-lookahead", 0, // 码率控制的前瞻帧数，设置为40可以让编码器更好地分析未来的帧以优化码率分配，但过多的前瞻可能增加编码延迟
+      "sync-lookahead", 0, // 同步前瞻帧数，设置为20可以在保持较低延迟的同时提供一定的前瞻分析能力，过多可能增加延迟
+      "sliced-threads", FALSE, // 禁用切片线程，切片线程在低比特率和小分辨率下可能反而增加编码复杂度和降低效率
+      "ref", 1, // 参考帧数量，设置为5可以在低比特率下提高压缩效率，但过多的参考帧可能增加编码复杂度和内存使用
+      "aud", TRUE, // 在每个访问单元前插入访问单元分界符，适合网络传输
+      "vbv-buf-capacity", 500, // VBV缓冲区容量，单位是kbps，设置为500可以在低比特率下提供足够的缓冲以避免码率过高时的质量崩溃，但过大可能增加编码延迟
+
+      "option-string", // 其他x264编码选项，通过option-string参数传递，具体选项可以参考x264的文档和源代码，以下是一些可能有助于低比特率编码的选项：
+      // repeat-headers=1:每个关键帧前重复SPS/PPS等参数集，增加丢包恢复能力但增加码流大小
+      // scenecut=0:禁用场景切割，保持稳定的关键帧间隔，适合实时视频流
+      // ref=1:使用单参考帧，减少编码复杂度但可能降低质量
+      // aq-mode=2:启用自适应量化，增强低比特率下的视觉质量
+      // aq-strength=1.2:自适应量化强度，数值
+      // mbtree=1:启用宏块树优化，改善低比特率编码效率
+      // qcomp=0.75:量化参数压缩率，较高的数值在低比特率下可能提供更好的质量但增加码流大小
+      // subme=8:亚像素运动估计精度，设置为8提供最高精度但增加编码时间，低比特率下可能有助于提高质量
+      // trellis=2:启用RDO量化，设置为2提供最佳质量但增加编码时间，低比特率下可能有助于提高质量
+      // deblock=1,1:启用去块滤波，设置为1,1提供适度的去块效果，改善低比特率下的视觉质量，但过强可能增加编码复杂度
+      // force-cfr=1:强制恒定帧率，适合实时视频流
+      "repeat-headers=1:scenecut=0:aq-mode=2:aq-strength=1.2:mbtree=1:qcomp=0.75:" 
       "subme=8:trellis=2:deblock=1,1:force-cfr=1",
-      "pass", 0,
+      "pass", 0, // 单遍模式，适合实时编码，x264enc的pass参数可以设置为1或2以启用两遍编码以提高质量，但会增加编码时间，不适合实时视频流
       nullptr);
   } else {
     g_object_set(
@@ -289,7 +302,7 @@ void VideoEncoder::initialize_gstreamer()
       "speed-preset", speed_preset,
       "tune", 0x00000004,
       "byte-stream", TRUE,
-      "key-int-max", 2 * options_.output_fps,
+      "key-int-max", 25,
       "bframes", 0,
       "rc-lookahead", 0,
       "sync-lookahead", 0,
@@ -302,23 +315,23 @@ void VideoEncoder::initialize_gstreamer()
 
   g_object_set(
     G_OBJECT(parser),
-    "config-interval", -1,
-    "disable-passthrough", TRUE,
+    "config-interval", -1, // 不周期性插入SPS/PPS等参数集，交由encoder的repeat-headers选项控制，避免不必要的码流膨胀
+    "disable-passthrough", TRUE, // 禁止parser直接传递输入数据，确保所有数据都经过parser处理以正确生成访问单元分界符等必要的码流结构，适合网络传输
     nullptr);
 
   GstCaps * h264_caps = gst_caps_new_simple(
-    "video/x-h264",
-    "stream-format", G_TYPE_STRING, "byte-stream",
-    "alignment", G_TYPE_STRING, "au",
+    "video/x-h264", // 指定输出H.264编码格式，适合网络传输
+    "stream-format", G_TYPE_STRING, "byte-stream", // 输出Annex B格式的H.264字节流，适合网络传输
+    "alignment", G_TYPE_STRING, "au", // 以访问单元为对齐方式，确保每个样本包含完整的访问单元，适合网络传输
     nullptr);
 
   g_object_set(
     G_OBJECT(appsink_),
-    "caps", h264_caps,
-    "max-buffers", 5,
-    "drop", FALSE,
-    "emit-signals", FALSE,
-    "sync", FALSE,
+    "caps", h264_caps, // 设置appsink的caps以匹配parser的输出，确保数据格式正确，适合网络传输
+    "max-buffers", 2, // 限制appsink内部队列长度为2，避免过多的编码帧积压在内存中增加延迟
+    "drop", TRUE, // 当appsink队列满时丢弃新帧，保持最新的内容，适合实时视频流
+    "emit-signals", FALSE, // 禁用appsink的信号机制，改为使用gst_app_sink_try_pull_sample非阻塞拉取样本，适合实时视频流
+    "sync", FALSE, // 禁用appsink的同步机制，允许在不同线程中拉取样本，适合实时视频流
     nullptr);
   gst_caps_unref(h264_caps);
 
@@ -351,93 +364,90 @@ void VideoEncoder::shutdown_gstreamer()
   appsink_ = nullptr;
 }
 
-cv::Mat VideoEncoder::preprocess_image(
-  const cv::Mat & input,
-  cv::Mat * roi_downsample,
-  cv::Mat * static_removed)
+cv::Mat VideoEncoder::preprocess_image(const cv::Mat & input,cv::Mat * roi_downsample,cv::Mat * static_removed)
 {
-  int x = (input.cols - options_.crop_size) / 2;
-  int y = 0;
-  x = std::max(0, x);
-  y = std::max(0, y);
-  const int w = std::min(options_.crop_size, input.cols - x);
-  const int h = std::min(options_.crop_size, input.rows - y);
+  int x = (input.cols - options_.crop_size) / 2; // 计算水平裁剪起点：从图像中心开始，使裁剪区域居中
+  int y = 0; // 垂直裁剪起点设为0，仅在水平方向上居中
+  x = std::max(0, x); // 确保x坐标不为负数，防止越界访问
+  y = std::max(0, y); // 确保y坐标不为负数
+  const int w = std::min(options_.crop_size, input.cols - x); // 计算实际裁剪宽度，确保不超过剩余的图像宽度
+  const int h = std::min(options_.crop_size, input.rows - y); // 计算实际裁剪高度，确保不超过剩余的图像高度
 
-  cv::Mat cropped = input(cv::Rect(x, y, w, h));
+  cv::Mat cropped = input(cv::Rect(x, y, w, h)); // 从输入图像中提取感兴趣区域（ROI）
   cv::Mat resized;
-  cv::resize(cropped, resized, cv::Size(options_.output_size, options_.output_size), 0, 0, cv::INTER_LINEAR);
+  cv::resize(cropped, resized, cv::Size(options_.output_size, options_.output_size), 0, 0, cv::INTER_LINEAR); // 调整图像大小到输出分辨率
 
-  if (roi_downsample) {
+  if (roi_downsample) { // 如果提供了roi_downsample指针，将缩放后的图像复制到该指针指向的矩阵
     resized.copyTo(*roi_downsample);
   }
 
-  cv::Mat working = resized;
-  if (options_.force_monochrome) {
+  cv::Mat working = resized; // 将缩放后的图像作为工作图像
+  if (options_.force_monochrome) { // 如果启用强制单色模式，将图像转换为灰度后再转回BGR
     cv::Mat gray_full;
-    cv::cvtColor(working, gray_full, cv::COLOR_BGR2GRAY);
-    cv::cvtColor(gray_full, working, cv::COLOR_GRAY2BGR);
+    cv::cvtColor(working, gray_full, cv::COLOR_BGR2GRAY); // 转换为灰度图
+    cv::cvtColor(gray_full, working, cv::COLOR_GRAY2BGR); // 将灰度图转换回BGR格式（每个通道相同）
   }
 
-  if (!options_.static_simplify) {
-    if (static_removed) {
+  if (!options_.static_simplify) { // 如果未启用静态背景移除，直接返回处理后的图像
+    if (static_removed) { // 如果提供了static_removed指针，将当前工作图像复制到该指针指向的矩阵
       working.copyTo(*static_removed);
     }
     return working;
   }
 
-  cv::Mat gray;
+  cv::Mat gray; // 将工作图像转换为灰度用于背景检测
   cv::cvtColor(working, gray, cv::COLOR_BGR2GRAY);
-  if (background_gray_f32_.empty()) {
-    gray.convertTo(background_gray_f32_, CV_32F);
+  if (background_gray_f32_.empty()) { // 如果这是第一帧，初始化背景图像
+    gray.convertTo(background_gray_f32_, CV_32F); // 将灰度图转换为浮点格式存储为背景
     return working;
   }
 
-  cv::Mat bg_u8;
+  cv::Mat bg_u8; // 将浮点背景转换回8位格式用于差异计算
   cv::convertScaleAbs(background_gray_f32_, bg_u8);
 
-  cv::Mat diff;
+  cv::Mat diff; // 计算当前帧与背景之间的绝对差异
   cv::absdiff(gray, bg_u8, diff);
 
-  cv::Mat motion_mask;
+  cv::Mat motion_mask; // 使用阈值将差异转换为二值运动掩模
   cv::threshold(diff, motion_mask, options_.motion_threshold, 255, cv::THRESH_BINARY);
 
-  if (options_.motion_erode_px > 0) {
-    if (motion_erode_kernel_.empty()) {
+  if (options_.motion_erode_px > 0) { // 对运动掩模进行腐蚀操作来移除小的噪声
+    if (motion_erode_kernel_.empty()) { // 如果腐蚀核尚未创建，创建一个椭圆形腐蚀核
       const int k = 2 * options_.motion_erode_px + 1;
       motion_erode_kernel_ = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(k, k));
     }
-    cv::erode(motion_mask, motion_mask, motion_erode_kernel_, cv::Point(-1, -1), 1);
+    cv::erode(motion_mask, motion_mask, motion_erode_kernel_, cv::Point(-1, -1), 1); // 执行腐蚀操作
   }
 
-  if (options_.motion_dilate_px > 0) {
-    if (motion_dilate_kernel_.empty()) {
+  if (options_.motion_dilate_px > 0) { // 对运动掩模进行膨胀操作来填充小的间隙
+    if (motion_dilate_kernel_.empty()) { // 如果膨胀核尚未创建，创建一个椭圆形膨胀核
       const int k = 2 * options_.motion_dilate_px + 1;
       motion_dilate_kernel_ = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(k, k));
     }
-    cv::dilate(motion_mask, motion_mask, motion_dilate_kernel_, cv::Point(-1, -1), 1);
+    cv::dilate(motion_mask, motion_mask, motion_dilate_kernel_, cv::Point(-1, -1), 1); // 执行膨胀操作
   }
 
-  const double motion_ratio_raw =
+  const double motion_ratio_raw = // 计算运动掩模中非零像素的比例
     static_cast<double>(cv::countNonZero(motion_mask)) / static_cast<double>(motion_mask.total());
-  const bool suppress_trail = (motion_ratio_raw >= options_.trail_disable_motion_ratio);
+  const bool suppress_trail = (motion_ratio_raw >= options_.trail_disable_motion_ratio); // 判断是否运动比例过高，需要禁用运动拖尾效果
 
-  if (options_.center_clear_size > 0) {
-    const int clear_size = std::min({options_.center_clear_size, working.cols, working.rows});
-    const int x0 = std::max(0, working.cols / 2 - clear_size / 2);
-    const int y0 = std::max(0, working.rows / 2 - clear_size / 2);
-    const int cw = std::min(clear_size, working.cols - x0);
-    const int ch = std::min(clear_size, working.rows - y0);
-    cv::rectangle(motion_mask, cv::Rect(x0, y0, cw, ch), cv::Scalar(255), cv::FILLED);
+  if (options_.center_clear_size > 0) { // 如果启用中心清除，在中心区域填充运动掩模为白色（强制显示）
+    const int clear_size = std::min({options_.center_clear_size, working.cols, working.rows}); // 计算清除区域的实际大小
+    const int x0 = std::max(0, working.cols / 2 - clear_size / 2); // 计算清除区域的起始坐标（图像中心）
+    const int y0 = std::max(0, working.rows / 2 - clear_size / 2); // 计算清除区域的起始坐标（图像中心）
+    const int cw = std::min(clear_size, working.cols - x0); // 计算清除区域的实际宽度和高度
+    const int ch = std::min(clear_size, working.rows - y0); // 计算清除区域的实际高度
+    cv::rectangle(motion_mask, cv::Rect(x0, y0, cw, ch), cv::Scalar(255), cv::FILLED); // 在中心区域绘制白色矩形
   }
 
-  cv::Mat static_base = working.clone();
-  if (!options_.force_monochrome && options_.target_bitrate <= 80) {
+  cv::Mat static_base = working.clone(); // 克隆工作图像作为静态背景基础
+  if (!options_.force_monochrome && options_.target_bitrate <= 80) { // 如果未启用强制单色且目标比特率较低，转换静态背景为单色
     cv::Mat gray_bg;
-    cv::cvtColor(static_base, gray_bg, cv::COLOR_BGR2GRAY);
-    cv::cvtColor(gray_bg, static_base, cv::COLOR_GRAY2BGR);
+    cv::cvtColor(static_base, gray_bg, cv::COLOR_BGR2GRAY); // 转换为灰度图
+    cv::cvtColor(gray_bg, static_base, cv::COLOR_GRAY2BGR); // 转换回BGR格式
   }
 
-  cv::Mat blurred_static;
+  cv::Mat blurred_static; // 对静态背景进行高斯模糊操作
   cv::GaussianBlur(
     static_base,
     blurred_static,
@@ -445,66 +455,66 @@ cv::Mat VideoEncoder::preprocess_image(
     std::max(0.0, options_.bg_blur_sigma),
     std::max(0.0, options_.bg_blur_sigma));
 
-  cv::Mat focused = blurred_static.clone();
-  working.copyTo(focused, motion_mask);
-  if (static_removed) {
+  cv::Mat focused = blurred_static.clone(); // 创建焦点图像，初始为模糊的静态背景
+  working.copyTo(focused, motion_mask); // 使用运动掩模将原始工作图像复制到焦点图像（只复制运动区域）
+  if (static_removed) { // 如果提供了static_removed指针，将焦点图像复制到该指针指向的矩阵
     focused.copyTo(*static_removed);
   }
 
-  if (options_.motion_trail_frames > 0) {
-    motion_mask_history_.push_back(motion_mask.clone());
-    trail_frame_history_.push_back(working.clone());
-    const size_t max_history = static_cast<size_t>(options_.motion_trail_frames + 1);
-    while (motion_mask_history_.size() > max_history) {
+  if (options_.motion_trail_frames > 0) { // 如果启用运动拖尾效果
+    motion_mask_history_.push_back(motion_mask.clone()); // 将当前帧的运动掩模添加到历史记录
+    trail_frame_history_.push_back(working.clone()); // 将当前帧添加到历史记录
+    const size_t max_history = static_cast<size_t>(options_.motion_trail_frames + 1); // 计算允许的最大历史记录大小
+    while (motion_mask_history_.size() > max_history) { // 移除超出大小限制的旧运动掩模
       motion_mask_history_.pop_front();
     }
-    while (trail_frame_history_.size() > max_history) {
+    while (trail_frame_history_.size() > max_history) { // 移除超出大小限制的旧帧
       trail_frame_history_.pop_front();
     }
 
-    const size_t history_size = motion_mask_history_.size();
-    if (!suppress_trail && history_size > 1 && history_size == trail_frame_history_.size()) {
-      cv::Mat trail_mask = motion_mask.clone();
-      cv::Mat trail_img = working.clone();
-      for (size_t i = 0; i < history_size - 1; ++i) {
-        cv::bitwise_or(trail_mask, motion_mask_history_[i], trail_mask);
-        cv::max(trail_img, trail_frame_history_[i], trail_img);
+    const size_t history_size = motion_mask_history_.size(); // 获取当前历史记录大小
+    if (!suppress_trail && history_size > 1 && history_size == trail_frame_history_.size()) { // 如果条件允许，将历史运动拖尾合并到焦点图像中
+      cv::Mat trail_mask = motion_mask.clone(); // 初始化拖尾掩模为当前运动掩模
+      cv::Mat trail_img = working.clone(); // 初始化拖尾图像为当前工作图像
+      for (size_t i = 0; i < history_size - 1; ++i) { // 遍历所有历史帧
+        cv::bitwise_or(trail_mask, motion_mask_history_[i], trail_mask); // 将历史运动掩模与拖尾掩模进行按位或操作
+        cv::max(trail_img, trail_frame_history_[i], trail_img); // 将历史帧与拖尾图像进行逐像素最大值操作
       }
-      trail_img.copyTo(focused, trail_mask);
+      trail_img.copyTo(focused, trail_mask); // 使用拖尾掩模将拖尾图像复制到焦点图像中
     }
-  } else {
+  } else { // 如果禁用拖尾效果
     motion_mask_history_.clear();
     trail_frame_history_.clear();
   }
 
-  cv::accumulateWeighted(gray, background_gray_f32_, std::clamp(options_.bg_update_alpha, 0.001, 0.2));
-  return focused;
+  cv::accumulateWeighted(gray, background_gray_f32_, std::clamp(options_.bg_update_alpha, 0.001, 0.2)); // 使用加权累积更新背景灰度图像
+  return focused; // 返回处理后的焦点图像
 }
 
 bool VideoEncoder::processImage(const cv::Mat & input, const int64_t timestamp_ns, const uint64_t source_frame_id)
 {
-  if (input.empty()) {
+  if (input.empty()) { // 检查输入图像是否为空，如果为空返回false
     return false;
   }
 
-  ++input_frame_count_;
-  int64_t now = (timestamp_ns > 0) ? timestamp_ns : nowNs();
-  if (last_encode_stamp_ns_ > 0 && now <= last_encode_stamp_ns_) {
+  ++input_frame_count_; // 增加输入帧计数
+  int64_t now = (timestamp_ns > 0) ? timestamp_ns : nowNs(); // 使用提供的时间戳，如果没有则使用当前时间
+  if (last_encode_stamp_ns_ > 0 && now <= last_encode_stamp_ns_) { // 如果有上一次编码的时间戳，且当前时间不晚于上一次，则重新获取当前时间以保证时间戳单调递增
     now = nowNs();
   }
-  if (last_encode_stamp_ns_ > 0 && (now - last_encode_stamp_ns_) < frame_interval_ns_) {
-    ++throttled_frame_count_;
-    maybeLogRuntimeStats(nowNs());
-    return true;
+  if (last_encode_stamp_ns_ > 0 && (now - last_encode_stamp_ns_) < frame_interval_ns_) { // 检查帧间隔是否足够，如果不足则跳过此帧（进行帧率控制）
+    ++throttled_frame_count_; // 增加被限制的帧计数
+    LogRuntimeStats(nowNs()); // 记录运行时统计信息
+    return true; // 虽然跳过编码但返回true表示接受了此帧
   }
-  last_encode_stamp_ns_ = now;
+  last_encode_stamp_ns_ = now; // 更新最后编码时间戳
 
-  cv::Mat roi_downsample;
-  cv::Mat static_removed;
-  cv::Mat processed = preprocess_image(input, &roi_downsample, &static_removed);
+  cv::Mat roi_downsample; // 准备用于存储ROI缩小图像的矩阵
+  cv::Mat static_removed; // 准备用于存储移除静态背景后图像的矩阵
+  cv::Mat processed = preprocess_image(input, &roi_downsample, &static_removed); // 对输入图像进行预处理，包括裁剪、缩放、单色转换、背景去除等
 
-  if (options_.enable_display) {
-    cv::Mat raw_preview;
+  if (options_.enable_display) { // 如果启用显示模式，生成预览图像
+    cv::Mat raw_preview; // 将原始输入图像缩小为一半尺寸用于预览
     cv::resize(
       input,
       raw_preview,
@@ -513,20 +523,20 @@ bool VideoEncoder::processImage(const cv::Mat & input, const int64_t timestamp_n
       0,
       cv::INTER_AREA);
 
-    std::lock_guard<std::mutex> lock(frame_mutex_);
-    raw_preview.copyTo(display_raw_frame_);
-    roi_downsample.copyTo(display_roi_frame_);
-    static_removed.copyTo(display_static_frame_);
-    processed.copyTo(display_frame_);
+    std::lock_guard<std::mutex> lock(frame_mutex_); // 获取帧显示互斥锁
+    raw_preview.copyTo(display_raw_frame_); // 将原始预览图像复制到显示缓冲区
+    roi_downsample.copyTo(display_roi_frame_); // 将ROI缩小图像复制到显示缓冲区
+    static_removed.copyTo(display_static_frame_); // 将移除静态背景的图像复制到显示缓冲区
+    processed.copyTo(display_frame_); // 将处理后的最终图像复制到显示缓冲区
   }
 
-  const uint64_t frame_token = reserveFrameToken(now, source_frame_id);
-  push_frame_to_gstreamer(processed, frame_token);
-  pull_stream_and_packetize();
-  poll_gstreamer_bus();
-  maybeLogRuntimeStats(nowNs());
-  frame_count_++;
-  return true;
+  const uint64_t frame_token = reserveFrameToken(now, source_frame_id); // 为此帧预留一个唯一的帧令牌用于追踪
+  push_frame_to_gstreamer(processed, frame_token); // 将处理后的帧推送到GStreamer管道
+  pull_stream_and_packetize(); // 从GStreamer拉取已编码的数据流并进行打包
+  poll_gstreamer_bus(); // 处理GStreamer总线上的消息和事件
+  LogRuntimeStats(nowNs()); // 记录运行时统计信息
+  frame_count_++; // 增加处理的帧计数
+  return true; // 返回true表示帧已成功接受并进行处理
 }
 
 void VideoEncoder::push_frame_to_gstreamer(const cv::Mat & frame, const uint64_t frame_token)
@@ -626,12 +636,20 @@ void VideoEncoder::pull_stream_and_packetize()
 
       const uint32_t frame_total_bytes = static_cast<uint32_t>(
         std::min<size_t>(map.size, static_cast<size_t>(std::numeric_limits<uint32_t>::max())));
+      const size_t fragment_count_size_t =
+        (map.size + kVideoDataBytes - 1U) / kVideoDataBytes;
+      const uint16_t fragment_count = static_cast<uint16_t>(
+        std::min<size_t>(fragment_count_size_t, static_cast<size_t>(std::numeric_limits<uint16_t>::max())));
       uint16_t fragment_index = 0;
       size_t offset = 0U;
       while (offset < map.size) {
         const size_t valid_data_bytes = std::min(kVideoDataBytes, map.size - offset);
         TxPacket packet;
         packet.payload.resize(packet_bytes, 0U);
+        packet.source_frame_id = track.source_frame_id;
+        packet.payload_frame_id = track.payload_frame_id;
+        packet.fragment_index = fragment_index;
+        packet.fragment_count = fragment_count;
         WriteLe16(packet.payload, 0U, track.payload_frame_id);
         WriteLe16(packet.payload, 2U, fragment_index);
         WriteLe32(packet.payload, 4U, frame_total_bytes);
@@ -733,7 +751,7 @@ void VideoEncoder::poll_gstreamer_bus()
   }
 }
 
-void VideoEncoder::maybeLogRuntimeStats(const int64_t now_ns)
+void VideoEncoder::LogRuntimeStats(const int64_t now_ns)
 {
   if (now_ns - last_runtime_report_ns_ < 1000000000LL) {
     return;
@@ -748,20 +766,20 @@ void VideoEncoder::maybeLogRuntimeStats(const int64_t now_ns)
   }
 
   const int64_t last_output_ns = (last_encoded_sample_ns_ > 0) ? last_encoded_sample_ns_ : pipeline_started_ns_;
-  std::ostringstream oss;
-  oss << "Encoder runtime: input=" << input_frame_count_
-      << " throttled=" << throttled_frame_count_
-      << " pushed=" << pushed_frame_count_
-      << " pushFailed=" << push_failed_count_
-      << " pulled=" << pulled_sample_count_
-      << " sent=" << sent_packet_count_
-      << " sendFailed=" << send_failed_count_
-      << " queue=" << queue_packets
-      << " streamBuffer=" << stream_buffer_bytes << "B";
-  if (last_output_ns > 0) {
-    oss << " lastOutputAgoMs=" << ((now_ns - last_output_ns) / 1000000LL);
-  }
-  LogInfo(oss.str());
+  // std::ostringstream oss;
+  // oss << "Encoder runtime: input=" << input_frame_count_
+  //     << " throttled=" << throttled_frame_count_
+  //     << " pushed=" << pushed_frame_count_
+  //     << " pushFailed=" << push_failed_count_
+  //     << " pulled=" << pulled_sample_count_
+  //     << " sent=" << sent_packet_count_
+  //     << " sendFailed=" << send_failed_count_
+  //     << " queue=" << queue_packets
+  //     << " streamBuffer=" << stream_buffer_bytes << "B";
+  // if (last_output_ns > 0) {
+  //   oss << " lastOutputAgoMs=" << ((now_ns - last_output_ns) / 1000000LL);
+  // }
+  // LogInfo(oss.str());
   last_runtime_report_ns_ = now_ns;
 }
 
@@ -822,6 +840,18 @@ void VideoEncoder::tx_loop()
     }
 
     bool sent_ok = false;
+    // if (static_cast<int>(packet.payload_frame_id) != last_logged_tx_payload_frame_id_) {
+    //   std::ostringstream oss;
+    //   oss << "TX sending frame source=" << packet.source_frame_id
+    //       << " payloadFrame=" << packet.payload_frame_id
+    //       << " fragments=" << packet.fragment_count;
+    //   if (packet.fragment_count > 0U) {
+    //     oss << " firstFragment=" << (static_cast<unsigned>(packet.fragment_index) + 1U)
+    //         << "/" << packet.fragment_count;
+    //   }
+    //   LogInfo(oss.str());
+    //   last_logged_tx_payload_frame_id_ = static_cast<int>(packet.payload_frame_id);
+    // }
     if (serial_sender_ && serial_sender_->isOpen()) {
       size_t written = 0;
       sent_ok = serial_sender_->sendOnce(packet.payload, &written);
@@ -843,7 +873,7 @@ void VideoEncoder::tx_loop()
     {
       std::lock_guard<std::mutex> lock(buffer_mutex_);
       accountConsumedSpans(packet.spans, true, completion_ns);
-      maybeLogLatencyStats(completion_ns);
+      LogLatencyStats(completion_ns);
     }
 
 
@@ -957,7 +987,7 @@ void VideoEncoder::accountConsumedSpans(
   }
 }
 
-void VideoEncoder::maybeLogLatencyStats(const int64_t now_ns)
+void VideoEncoder::LogLatencyStats(const int64_t now_ns)
 {
   if (latency_sample_count_ == 0U) {
     return;
@@ -967,6 +997,7 @@ void VideoEncoder::maybeLogLatencyStats(const int64_t now_ns)
     return;
   }
 
+// 估计从捕获到发送完成的延迟统计，单位为毫秒，包含最新的单帧延迟、平均延迟、最小延迟、最大延迟以及样本数量等信息，以便监控编码性能和网络传输状况 
   // std::ostringstream oss;
   // oss << std::fixed << std::setprecision(2)
   //     << "Capture->last-packet latency: last=" << latency_latest_ms_

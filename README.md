@@ -128,8 +128,13 @@ sudo apt install -y gstreamer1.0-plugins-ugly
 
 
 
+## 延迟估计
+0ms<发送端延迟<100ms
+传输延迟：
+  100ms<图传<300ms
+  50ms<mqtt直连<150ms
+100ms<解码<200ms
+10ms<渲染<20ms
 
-方法固定延迟300ms
-传输延迟200ms
-解码渲染100ms
+真实画面延迟=相机采集->图片处理结束
 
