@@ -5,7 +5,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 SKIP_BUILD="${SKIP_BUILD:-0}"
-PROTOBUF_FORCE_SOURCE="${PROTOBUF_FORCE_SOURCE:-1}"
+PROTOBUF_FORCE_SOURCE="${PROTOBUF_FORCE_SOURCE:-0}"
 SUDO_CMD=""
 APT_UPDATED=0
 GST_INSPECT_BIN=""
@@ -56,7 +56,8 @@ install_base_packages() {
     libprotobuf-dev protobuf-compiler \
     libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
     gstreamer1.0-tools gstreamer1.0-plugins-base \
-    gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly \
+    gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-ugly \
     libmosquitto-dev mosquitto mosquitto-clients
 }
 
@@ -127,7 +128,7 @@ install_protobuf_from_source() {
 }
 
 ensure_protobuf_version() {
-  local required="3.19.0"
+  local required="3.19.3"
   local current=""
 
   if command -v protoc >/dev/null 2>&1; then
@@ -146,27 +147,35 @@ ensure_protobuf_version() {
     return
   fi
 
-  if ! version_ge "$current" "$required"; then
-    warn "protoc version ${current} < ${required}, will install protobuf 3.19.3 from source"
+  if [[ "$current" != "$required" ]]; then
+    warn "protoc version ${current} != ${required}, will install protobuf 3.19.3 from source"
     install_protobuf_from_source
   else
     log "protobuf version ok: ${current}"
   fi
 }
 
-ensure_x264enc() {
-  if "$GST_INSPECT_BIN" x264enc >/dev/null 2>&1; then
-    log "gstreamer x264enc found"
+ensure_gstreamer_element() {
+  local element="$1"
+  local package="$2"
+
+  if "$GST_INSPECT_BIN" "$element" >/dev/null 2>&1; then
+    log "gstreamer ${element} found"
     return
   fi
 
-  warn "x264enc not found, reinstall gstreamer1.0-plugins-ugly"
-  apt_install gstreamer1.0-plugins-ugly
+  warn "${element} not found, installing ${package}"
+  apt_install "$package"
 
-  if ! "$GST_INSPECT_BIN" x264enc >/dev/null 2>&1; then
-    err "x264enc still missing after install"
+  if ! "$GST_INSPECT_BIN" "$element" >/dev/null 2>&1; then
+    err "${element} still missing after installing ${package}"
     exit 1
   fi
+}
+
+ensure_encoder_plugins() {
+  ensure_gstreamer_element x264enc gstreamer1.0-plugins-ugly
+  ensure_gstreamer_element h264parse gstreamer1.0-plugins-bad
 }
 
 ensure_gxiapi() {
@@ -230,7 +239,7 @@ main() {
 
   install_base_packages
   ensure_protobuf_version
-  ensure_x264enc
+  ensure_encoder_plugins
   ensure_gxiapi
 
   if [[ "$SKIP_BUILD" != "1" ]]; then

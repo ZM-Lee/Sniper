@@ -126,7 +126,15 @@ sudo apt install -y gstreamer1.0-plugins-ugly
 
 说明大恒 SDK 未正确安装或运行库未进入系统库路径。请先手动安装/配置 Daheng Galaxy SDK，再重新执行脚本.
 
+## mqtt配置
 
+```bash
+sudo nano /etc/mosquitto/mosquitto.conf
+```
+在最后加上：  
+listener 3333 0.0.0.0  
+allow_anonymous true  
+protocol mqtt  
 
 ## 延迟估计
 0ms<发送端延迟<100ms
