@@ -240,7 +240,7 @@ void VideoEncoder::initialize_gstreamer()
 
   const bool low_bitrate_mode = (options_.target_bitrate <= 80);
   const int key_int = std::max(options_.output_fps, 40); // 关键帧间隔设置为1秒或更短，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久，尤其在极低比特率下更容易出现质量崩溃和解码失败的情况
-  // const int key_int = 40; // 固定关键帧间隔为40帧，约0.8秒，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
+  // const int key_int = 30; // 固定关键帧间隔为40帧，约0.8秒，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
   const int default_speed_preset = low_bitrate_mode ? 9 : 3;
   int speed_preset = default_speed_preset;
 
@@ -262,22 +262,25 @@ void VideoEncoder::initialize_gstreamer()
     else if (preset_lower == "placebo") speed_preset = 10;
     else speed_preset = default_speed_preset;
   }
+  // std::ostringstream oss;
+  // oss << "x264 preset: " << options_.x264_preset << " -> speed-preset=" << speed_preset;
+  // LogInfo(oss.str());
 
   if (low_bitrate_mode) {
     g_object_set(
       G_OBJECT(encoder),
       "bitrate", options_.target_bitrate, // x264enc的bitrate参数单位是kbps
-      "speed-preset", speed_preset, // 预设级别，数值越大编码越慢但质量越好，0是默认，1-10分别对应ultrafast到placebo
-      "tune", 0x00000004, // 不使用特殊调优，保持默认设置，x264enc的tune参数可以设置为zerolatency等以优化特定场景，但在极低比特率下可能不适用
+      "speed-preset", 8, // 预设级别，数值越大编码越慢但质量越好，0是默认，1-10分别对应ultrafast到placebo
+      "tune", 0x00000004, // 调优选项，0x00000004对应zerolatency，适合实时编码，禁用帧重排序和过多的缓冲以降低延迟
       "byte-stream", TRUE, // 输出Annex B格式的H.264字节流，适合网络传输
       "key-int-max", key_int, // 最大关键帧间隔，单位是帧数，设置为max(output_fps, 40)，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
-      "bframes", 2, // B帧数量，设置为4可以在低比特率下提高压缩效率，但过多的B帧可能增加编码延迟和复杂度
-      "rc-lookahead", 0, // 码率控制的前瞻帧数，设置为40可以让编码器更好地分析未来的帧以优化码率分配，但过多的前瞻可能增加编码延迟
-      "sync-lookahead", 0, // 同步前瞻帧数，设置为20可以在保持较低延迟的同时提供一定的前瞻分析能力，过多可能增加延迟
+      "bframes", 0, // B帧数量，可以在低比特率下提高压缩效率，但过多的B帧可能增加编码延迟和复杂度
+      "rc-lookahead", 0, // 码率控制的前瞻帧数，过多的前瞻可能增加编码延迟
+      "sync-lookahead", 0, // 同步前瞻帧数，过多可能增加延迟
       "sliced-threads", FALSE, // 禁用切片线程，切片线程在低比特率和小分辨率下可能反而增加编码复杂度和降低效率
-      "ref", 1, // 参考帧数量，设置为5可以在低比特率下提高压缩效率，但过多的参考帧可能增加编码复杂度和内存使用
+      "ref", 2, // 参考帧数量，可以在低比特率下提高压缩效率，但过多的参考帧可能增加编码复杂度和内存使用
       "aud", TRUE, // 在每个访问单元前插入访问单元分界符，适合网络传输
-      "vbv-buf-capacity", 500, // VBV缓冲区容量，单位是kbps，设置为500可以在低比特率下提供足够的缓冲以避免码率过高时的质量崩溃，但过大可能增加编码延迟
+      "vbv-buf-capacity", 650, // VBV缓冲区容量，单位是kbps，设置为500可以在低比特率下提供足够的缓冲以避免码率过高时的质量崩溃，但过大可能增加编码延迟
 
       "option-string", // 其他x264编码选项，通过option-string参数传递，具体选项可以参考x264的文档和源代码，以下是一些可能有助于低比特率编码的选项：
       // repeat-headers=1:每个关键帧前重复SPS/PPS等参数集，增加丢包恢复能力但增加码流大小

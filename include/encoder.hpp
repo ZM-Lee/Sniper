@@ -32,7 +32,7 @@ public:
     int crop_size = 800; // 设置为0以禁用裁剪
     int output_size = 400; // 输出视频的宽高，必须是偶数
     int output_fps = 50;  // 输出视频帧率
-    int target_bitrate = 40; // 目标视频比特率，单位kbps
+    int target_bitrate = 60; // 目标视频比特率，单位kbps
     int packet_size = 300; // 每个数据包的字节数，必须小于等于300
     bool static_simplify = true; // 启用静态区域简化以减少编码复杂度
     int motion_threshold = 14; // 像素差异阈值，低于此值的像素将被视为静态
