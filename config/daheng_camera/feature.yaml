@@ -1,7 +1,10 @@
-ExposureTime: 6000
-Gain: 24
+ExposureTime: 5000
+Gain: 20
 Width: 1920
 Height: 1080
-AcquisitionFrameRate: 50
+AcquisitionFrameRate: 60
 BalanceWhiteAuto: 1
 TriggerMode: 0
+GammaEnable: 1
+GammaMode: 1
+Gamma: 0.5

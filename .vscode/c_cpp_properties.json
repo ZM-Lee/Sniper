@@ -1,0 +1,21 @@
+{
+  "configurations": [
+    {
+      "name": "Linux",
+      "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+      "compilerPath": "/usr/bin/c++",
+      "includePath": [
+        "${workspaceFolder}/include",
+        "${workspaceFolder}/include/protobuf",
+        "/usr/include/opencv4",
+        "/usr/include/gstreamer-1.0",
+        "/usr/include/glib-2.0",
+        "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+      ],
+      "intelliSenseMode": "linux-gcc-x64",
+      "cppStandard": "c++17",
+      "cStandard": "c17"
+    }
+  ],
+  "version": 4
+}

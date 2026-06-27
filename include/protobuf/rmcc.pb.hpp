@@ -46,13 +46,14 @@ struct TableStruct_rmcc_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[36]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[37]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
   static const uint32_t offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rmcc_2eproto;
+namespace rmcc {
 class AirSupportCommand;
 struct AirSupportCommandDefaultTypeInternal;
 extern AirSupportCommandDefaultTypeInternal _AirSupportCommand_default_instance_;
@@ -104,9 +105,12 @@ extern HeroDeployModeEventCommandDefaultTypeInternal _HeroDeployModeEventCommand
 class KeyboardMouseControl;
 struct KeyboardMouseControlDefaultTypeInternal;
 extern KeyboardMouseControlDefaultTypeInternal _KeyboardMouseControl_default_instance_;
-class MapClickInfoNotify;
-struct MapClickInfoNotifyDefaultTypeInternal;
-extern MapClickInfoNotifyDefaultTypeInternal _MapClickInfoNotify_default_instance_;
+class MapClickCmd;
+struct MapClickCmdDefaultTypeInternal;
+extern MapClickCmdDefaultTypeInternal _MapClickCmd_default_instance_;
+class MapClickInfo;
+struct MapClickInfoDefaultTypeInternal;
+extern MapClickInfoDefaultTypeInternal _MapClickInfo_default_instance_;
 class PenaltyInfo;
 struct PenaltyInfoDefaultTypeInternal;
 extern PenaltyInfoDefaultTypeInternal _PenaltyInfo_default_instance_;
@@ -161,49 +165,52 @@ extern SentryStatusSyncDefaultTypeInternal _SentryStatusSync_default_instance_;
 class TechCoreMotionStateSync;
 struct TechCoreMotionStateSyncDefaultTypeInternal;
 extern TechCoreMotionStateSyncDefaultTypeInternal _TechCoreMotionStateSync_default_instance_;
+}  // namespace rmcc
 PROTOBUF_NAMESPACE_OPEN
-template<> ::AirSupportCommand* Arena::CreateMaybeMessage<::AirSupportCommand>(Arena*);
-template<> ::AirSupportStatusSync* Arena::CreateMaybeMessage<::AirSupportStatusSync>(Arena*);
-template<> ::AssemblyCommand* Arena::CreateMaybeMessage<::AssemblyCommand>(Arena*);
-template<> ::Buff* Arena::CreateMaybeMessage<::Buff>(Arena*);
-template<> ::CommonCommand* Arena::CreateMaybeMessage<::CommonCommand>(Arena*);
-template<> ::CustomByteBlock* Arena::CreateMaybeMessage<::CustomByteBlock>(Arena*);
-template<> ::CustomControl* Arena::CreateMaybeMessage<::CustomControl>(Arena*);
-template<> ::DartCommand* Arena::CreateMaybeMessage<::DartCommand>(Arena*);
-template<> ::DartSelectTargetStatusSync* Arena::CreateMaybeMessage<::DartSelectTargetStatusSync>(Arena*);
-template<> ::DeployModeStatusSync* Arena::CreateMaybeMessage<::DeployModeStatusSync>(Arena*);
-template<> ::Event* Arena::CreateMaybeMessage<::Event>(Arena*);
-template<> ::GameStatus* Arena::CreateMaybeMessage<::GameStatus>(Arena*);
-template<> ::GlobalLogisticsStatus* Arena::CreateMaybeMessage<::GlobalLogisticsStatus>(Arena*);
-template<> ::GlobalSpecialMechanism* Arena::CreateMaybeMessage<::GlobalSpecialMechanism>(Arena*);
-template<> ::GlobalUnitStatus* Arena::CreateMaybeMessage<::GlobalUnitStatus>(Arena*);
-template<> ::HeroDeployModeEventCommand* Arena::CreateMaybeMessage<::HeroDeployModeEventCommand>(Arena*);
-template<> ::KeyboardMouseControl* Arena::CreateMaybeMessage<::KeyboardMouseControl>(Arena*);
-template<> ::MapClickInfoNotify* Arena::CreateMaybeMessage<::MapClickInfoNotify>(Arena*);
-template<> ::PenaltyInfo* Arena::CreateMaybeMessage<::PenaltyInfo>(Arena*);
-template<> ::RadarInfoToClient* Arena::CreateMaybeMessage<::RadarInfoToClient>(Arena*);
-template<> ::RadarSingleRobotInfo* Arena::CreateMaybeMessage<::RadarSingleRobotInfo>(Arena*);
-template<> ::RobotDynamicStatus* Arena::CreateMaybeMessage<::RobotDynamicStatus>(Arena*);
-template<> ::RobotInjuryStat* Arena::CreateMaybeMessage<::RobotInjuryStat>(Arena*);
-template<> ::RobotModuleStatus* Arena::CreateMaybeMessage<::RobotModuleStatus>(Arena*);
-template<> ::RobotPathPlanInfo* Arena::CreateMaybeMessage<::RobotPathPlanInfo>(Arena*);
-template<> ::RobotPerformanceSelectionCommand* Arena::CreateMaybeMessage<::RobotPerformanceSelectionCommand>(Arena*);
-template<> ::RobotPerformanceSelectionSync* Arena::CreateMaybeMessage<::RobotPerformanceSelectionSync>(Arena*);
-template<> ::RobotPosition* Arena::CreateMaybeMessage<::RobotPosition>(Arena*);
-template<> ::RobotRespawnStatus* Arena::CreateMaybeMessage<::RobotRespawnStatus>(Arena*);
-template<> ::RobotStaticStatus* Arena::CreateMaybeMessage<::RobotStaticStatus>(Arena*);
-template<> ::RuneActivateCommand* Arena::CreateMaybeMessage<::RuneActivateCommand>(Arena*);
-template<> ::RuneStatusSync* Arena::CreateMaybeMessage<::RuneStatusSync>(Arena*);
-template<> ::SentryCtrlCommand* Arena::CreateMaybeMessage<::SentryCtrlCommand>(Arena*);
-template<> ::SentryCtrlResult* Arena::CreateMaybeMessage<::SentryCtrlResult>(Arena*);
-template<> ::SentryStatusSync* Arena::CreateMaybeMessage<::SentryStatusSync>(Arena*);
-template<> ::TechCoreMotionStateSync* Arena::CreateMaybeMessage<::TechCoreMotionStateSync>(Arena*);
+template<> ::rmcc::AirSupportCommand* Arena::CreateMaybeMessage<::rmcc::AirSupportCommand>(Arena*);
+template<> ::rmcc::AirSupportStatusSync* Arena::CreateMaybeMessage<::rmcc::AirSupportStatusSync>(Arena*);
+template<> ::rmcc::AssemblyCommand* Arena::CreateMaybeMessage<::rmcc::AssemblyCommand>(Arena*);
+template<> ::rmcc::Buff* Arena::CreateMaybeMessage<::rmcc::Buff>(Arena*);
+template<> ::rmcc::CommonCommand* Arena::CreateMaybeMessage<::rmcc::CommonCommand>(Arena*);
+template<> ::rmcc::CustomByteBlock* Arena::CreateMaybeMessage<::rmcc::CustomByteBlock>(Arena*);
+template<> ::rmcc::CustomControl* Arena::CreateMaybeMessage<::rmcc::CustomControl>(Arena*);
+template<> ::rmcc::DartCommand* Arena::CreateMaybeMessage<::rmcc::DartCommand>(Arena*);
+template<> ::rmcc::DartSelectTargetStatusSync* Arena::CreateMaybeMessage<::rmcc::DartSelectTargetStatusSync>(Arena*);
+template<> ::rmcc::DeployModeStatusSync* Arena::CreateMaybeMessage<::rmcc::DeployModeStatusSync>(Arena*);
+template<> ::rmcc::Event* Arena::CreateMaybeMessage<::rmcc::Event>(Arena*);
+template<> ::rmcc::GameStatus* Arena::CreateMaybeMessage<::rmcc::GameStatus>(Arena*);
+template<> ::rmcc::GlobalLogisticsStatus* Arena::CreateMaybeMessage<::rmcc::GlobalLogisticsStatus>(Arena*);
+template<> ::rmcc::GlobalSpecialMechanism* Arena::CreateMaybeMessage<::rmcc::GlobalSpecialMechanism>(Arena*);
+template<> ::rmcc::GlobalUnitStatus* Arena::CreateMaybeMessage<::rmcc::GlobalUnitStatus>(Arena*);
+template<> ::rmcc::HeroDeployModeEventCommand* Arena::CreateMaybeMessage<::rmcc::HeroDeployModeEventCommand>(Arena*);
+template<> ::rmcc::KeyboardMouseControl* Arena::CreateMaybeMessage<::rmcc::KeyboardMouseControl>(Arena*);
+template<> ::rmcc::MapClickCmd* Arena::CreateMaybeMessage<::rmcc::MapClickCmd>(Arena*);
+template<> ::rmcc::MapClickInfo* Arena::CreateMaybeMessage<::rmcc::MapClickInfo>(Arena*);
+template<> ::rmcc::PenaltyInfo* Arena::CreateMaybeMessage<::rmcc::PenaltyInfo>(Arena*);
+template<> ::rmcc::RadarInfoToClient* Arena::CreateMaybeMessage<::rmcc::RadarInfoToClient>(Arena*);
+template<> ::rmcc::RadarSingleRobotInfo* Arena::CreateMaybeMessage<::rmcc::RadarSingleRobotInfo>(Arena*);
+template<> ::rmcc::RobotDynamicStatus* Arena::CreateMaybeMessage<::rmcc::RobotDynamicStatus>(Arena*);
+template<> ::rmcc::RobotInjuryStat* Arena::CreateMaybeMessage<::rmcc::RobotInjuryStat>(Arena*);
+template<> ::rmcc::RobotModuleStatus* Arena::CreateMaybeMessage<::rmcc::RobotModuleStatus>(Arena*);
+template<> ::rmcc::RobotPathPlanInfo* Arena::CreateMaybeMessage<::rmcc::RobotPathPlanInfo>(Arena*);
+template<> ::rmcc::RobotPerformanceSelectionCommand* Arena::CreateMaybeMessage<::rmcc::RobotPerformanceSelectionCommand>(Arena*);
+template<> ::rmcc::RobotPerformanceSelectionSync* Arena::CreateMaybeMessage<::rmcc::RobotPerformanceSelectionSync>(Arena*);
+template<> ::rmcc::RobotPosition* Arena::CreateMaybeMessage<::rmcc::RobotPosition>(Arena*);
+template<> ::rmcc::RobotRespawnStatus* Arena::CreateMaybeMessage<::rmcc::RobotRespawnStatus>(Arena*);
+template<> ::rmcc::RobotStaticStatus* Arena::CreateMaybeMessage<::rmcc::RobotStaticStatus>(Arena*);
+template<> ::rmcc::RuneActivateCommand* Arena::CreateMaybeMessage<::rmcc::RuneActivateCommand>(Arena*);
+template<> ::rmcc::RuneStatusSync* Arena::CreateMaybeMessage<::rmcc::RuneStatusSync>(Arena*);
+template<> ::rmcc::SentryCtrlCommand* Arena::CreateMaybeMessage<::rmcc::SentryCtrlCommand>(Arena*);
+template<> ::rmcc::SentryCtrlResult* Arena::CreateMaybeMessage<::rmcc::SentryCtrlResult>(Arena*);
+template<> ::rmcc::SentryStatusSync* Arena::CreateMaybeMessage<::rmcc::SentryStatusSync>(Arena*);
+template<> ::rmcc::TechCoreMotionStateSync* Arena::CreateMaybeMessage<::rmcc::TechCoreMotionStateSync>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
+namespace rmcc {
 
 // ===================================================================
 
 class KeyboardMouseControl final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:KeyboardMouseControl) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.KeyboardMouseControl) */ {
  public:
   inline KeyboardMouseControl() : KeyboardMouseControl(nullptr) {}
   ~KeyboardMouseControl() override;
@@ -304,7 +311,7 @@ class KeyboardMouseControl final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "KeyboardMouseControl";
+    return "rmcc.KeyboardMouseControl";
   }
   protected:
   explicit KeyboardMouseControl(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -423,7 +430,7 @@ class KeyboardMouseControl final :
   void _internal_set_keyboard_value(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:KeyboardMouseControl)
+  // @@protoc_insertion_point(class_scope:rmcc.KeyboardMouseControl)
  private:
   class _Internal;
 
@@ -444,7 +451,7 @@ class KeyboardMouseControl final :
 // -------------------------------------------------------------------
 
 class CustomControl final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CustomControl) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.CustomControl) */ {
  public:
   inline CustomControl() : CustomControl(nullptr) {}
   ~CustomControl() override;
@@ -545,7 +552,7 @@ class CustomControl final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "CustomControl";
+    return "rmcc.CustomControl";
   }
   protected:
   explicit CustomControl(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -585,7 +592,7 @@ class CustomControl final :
   std::string* _internal_mutable_data();
   public:
 
-  // @@protoc_insertion_point(class_scope:CustomControl)
+  // @@protoc_insertion_point(class_scope:rmcc.CustomControl)
  private:
   class _Internal;
 
@@ -600,7 +607,7 @@ class CustomControl final :
 // -------------------------------------------------------------------
 
 class GameStatus final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GameStatus) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.GameStatus) */ {
  public:
   inline GameStatus() : GameStatus(nullptr) {}
   ~GameStatus() override;
@@ -701,7 +708,7 @@ class GameStatus final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "GameStatus";
+    return "rmcc.GameStatus";
   }
   protected:
   explicit GameStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -729,6 +736,8 @@ class GameStatus final :
     kStageCountdownSecFieldNumber = 6,
     kStageElapsedSecFieldNumber = 7,
     kIsPausedFieldNumber = 8,
+    kGameResultFieldNumber = 9,
+    kEndReasonFieldNumber = 10,
   };
   // optional uint32 current_round = 1;
   bool has_current_round() const;
@@ -834,7 +843,33 @@ class GameStatus final :
   void _internal_set_is_paused(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:GameStatus)
+  // optional uint32 game_result = 9;
+  bool has_game_result() const;
+  private:
+  bool _internal_has_game_result() const;
+  public:
+  void clear_game_result();
+  uint32_t game_result() const;
+  void set_game_result(uint32_t value);
+  private:
+  uint32_t _internal_game_result() const;
+  void _internal_set_game_result(uint32_t value);
+  public:
+
+  // optional uint32 end_reason = 10;
+  bool has_end_reason() const;
+  private:
+  bool _internal_has_end_reason() const;
+  public:
+  void clear_end_reason();
+  uint32_t end_reason() const;
+  void set_end_reason(uint32_t value);
+  private:
+  uint32_t _internal_end_reason() const;
+  void _internal_set_end_reason(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rmcc.GameStatus)
  private:
   class _Internal;
 
@@ -851,12 +886,14 @@ class GameStatus final :
   int32_t stage_countdown_sec_;
   int32_t stage_elapsed_sec_;
   bool is_paused_;
+  uint32_t game_result_;
+  uint32_t end_reason_;
   friend struct ::TableStruct_rmcc_2eproto;
 };
 // -------------------------------------------------------------------
 
 class GlobalUnitStatus final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GlobalUnitStatus) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.GlobalUnitStatus) */ {
  public:
   inline GlobalUnitStatus() : GlobalUnitStatus(nullptr) {}
   ~GlobalUnitStatus() override;
@@ -957,7 +994,7 @@ class GlobalUnitStatus final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "GlobalUnitStatus";
+    return "rmcc.GlobalUnitStatus";
   }
   protected:
   explicit GlobalUnitStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -1192,7 +1229,7 @@ class GlobalUnitStatus final :
   void _internal_set_total_damage_enemy(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:GlobalUnitStatus)
+  // @@protoc_insertion_point(class_scope:rmcc.GlobalUnitStatus)
  private:
   class _Internal;
 
@@ -1222,7 +1259,7 @@ class GlobalUnitStatus final :
 // -------------------------------------------------------------------
 
 class GlobalLogisticsStatus final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GlobalLogisticsStatus) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.GlobalLogisticsStatus) */ {
  public:
   inline GlobalLogisticsStatus() : GlobalLogisticsStatus(nullptr) {}
   ~GlobalLogisticsStatus() override;
@@ -1323,7 +1360,7 @@ class GlobalLogisticsStatus final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "GlobalLogisticsStatus";
+    return "rmcc.GlobalLogisticsStatus";
   }
   protected:
   explicit GlobalLogisticsStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -1400,7 +1437,7 @@ class GlobalLogisticsStatus final :
   void _internal_set_encryption_level(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:GlobalLogisticsStatus)
+  // @@protoc_insertion_point(class_scope:rmcc.GlobalLogisticsStatus)
  private:
   class _Internal;
 
@@ -1418,7 +1455,7 @@ class GlobalLogisticsStatus final :
 // -------------------------------------------------------------------
 
 class GlobalSpecialMechanism final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GlobalSpecialMechanism) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.GlobalSpecialMechanism) */ {
  public:
   inline GlobalSpecialMechanism() : GlobalSpecialMechanism(nullptr) {}
   ~GlobalSpecialMechanism() override;
@@ -1519,7 +1556,7 @@ class GlobalSpecialMechanism final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "GlobalSpecialMechanism";
+    return "rmcc.GlobalSpecialMechanism";
   }
   protected:
   explicit GlobalSpecialMechanism(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -1586,7 +1623,7 @@ class GlobalSpecialMechanism final :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
       mutable_mechanism_time_sec();
 
-  // @@protoc_insertion_point(class_scope:GlobalSpecialMechanism)
+  // @@protoc_insertion_point(class_scope:rmcc.GlobalSpecialMechanism)
  private:
   class _Internal;
 
@@ -1603,7 +1640,7 @@ class GlobalSpecialMechanism final :
 // -------------------------------------------------------------------
 
 class Event final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Event) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.Event) */ {
  public:
   inline Event() : Event(nullptr) {}
   ~Event() override;
@@ -1704,7 +1741,7 @@ class Event final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Event";
+    return "rmcc.Event";
   }
   protected:
   explicit Event(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -1758,7 +1795,7 @@ class Event final :
   void _internal_set_event_id(int32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Event)
+  // @@protoc_insertion_point(class_scope:rmcc.Event)
  private:
   class _Internal;
 
@@ -1774,7 +1811,7 @@ class Event final :
 // -------------------------------------------------------------------
 
 class RobotInjuryStat final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotInjuryStat) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotInjuryStat) */ {
  public:
   inline RobotInjuryStat() : RobotInjuryStat(nullptr) {}
   ~RobotInjuryStat() override;
@@ -1875,7 +1912,7 @@ class RobotInjuryStat final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotInjuryStat";
+    return "rmcc.RobotInjuryStat";
   }
   protected:
   explicit RobotInjuryStat(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -2036,7 +2073,7 @@ class RobotInjuryStat final :
   void _internal_set_killer_id(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotInjuryStat)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotInjuryStat)
  private:
   class _Internal;
 
@@ -2060,7 +2097,7 @@ class RobotInjuryStat final :
 // -------------------------------------------------------------------
 
 class RobotRespawnStatus final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotRespawnStatus) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotRespawnStatus) */ {
  public:
   inline RobotRespawnStatus() : RobotRespawnStatus(nullptr) {}
   ~RobotRespawnStatus() override;
@@ -2161,7 +2198,7 @@ class RobotRespawnStatus final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotRespawnStatus";
+    return "rmcc.RobotRespawnStatus";
   }
   protected:
   explicit RobotRespawnStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -2266,7 +2303,7 @@ class RobotRespawnStatus final :
   void _internal_set_gold_cost_for_respawn(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotRespawnStatus)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotRespawnStatus)
  private:
   class _Internal;
 
@@ -2286,7 +2323,7 @@ class RobotRespawnStatus final :
 // -------------------------------------------------------------------
 
 class RobotStaticStatus final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotStaticStatus) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotStaticStatus) */ {
  public:
   inline RobotStaticStatus() : RobotStaticStatus(nullptr) {}
   ~RobotStaticStatus() override;
@@ -2387,7 +2424,7 @@ class RobotStaticStatus final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotStaticStatus";
+    return "rmcc.RobotStaticStatus";
   }
   protected:
   explicit RobotStaticStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -2604,7 +2641,7 @@ class RobotStaticStatus final :
   void _internal_set_max_chassis_energy(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotStaticStatus)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotStaticStatus)
  private:
   class _Internal;
 
@@ -2632,7 +2669,7 @@ class RobotStaticStatus final :
 // -------------------------------------------------------------------
 
 class RobotDynamicStatus final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotDynamicStatus) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotDynamicStatus) */ {
  public:
   inline RobotDynamicStatus() : RobotDynamicStatus(nullptr) {}
   ~RobotDynamicStatus() override;
@@ -2733,7 +2770,7 @@ class RobotDynamicStatus final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotDynamicStatus";
+    return "rmcc.RobotDynamicStatus";
   }
   protected:
   explicit RobotDynamicStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -2936,7 +2973,7 @@ class RobotDynamicStatus final :
   void _internal_set_can_remote_ammo(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotDynamicStatus)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotDynamicStatus)
  private:
   class _Internal;
 
@@ -2963,7 +3000,7 @@ class RobotDynamicStatus final :
 // -------------------------------------------------------------------
 
 class RobotModuleStatus final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotModuleStatus) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotModuleStatus) */ {
  public:
   inline RobotModuleStatus() : RobotModuleStatus(nullptr) {}
   ~RobotModuleStatus() override;
@@ -3064,7 +3101,7 @@ class RobotModuleStatus final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotModuleStatus";
+    return "rmcc.RobotModuleStatus";
   }
   protected:
   explicit RobotModuleStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -3239,7 +3276,7 @@ class RobotModuleStatus final :
   void _internal_set_laser_detection_module(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotModuleStatus)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotModuleStatus)
  private:
   class _Internal;
 
@@ -3264,7 +3301,7 @@ class RobotModuleStatus final :
 // -------------------------------------------------------------------
 
 class RobotPosition final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotPosition) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotPosition) */ {
  public:
   inline RobotPosition() : RobotPosition(nullptr) {}
   ~RobotPosition() override;
@@ -3365,7 +3402,7 @@ class RobotPosition final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotPosition";
+    return "rmcc.RobotPosition";
   }
   protected:
   explicit RobotPosition(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -3456,7 +3493,7 @@ class RobotPosition final :
   void _internal_set_robot_id(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotPosition)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotPosition)
  private:
   class _Internal;
 
@@ -3475,7 +3512,7 @@ class RobotPosition final :
 // -------------------------------------------------------------------
 
 class Buff final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Buff) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.Buff) */ {
  public:
   inline Buff() : Buff(nullptr) {}
   ~Buff() override;
@@ -3576,7 +3613,7 @@ class Buff final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Buff";
+    return "rmcc.Buff";
   }
   protected:
   explicit Buff(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -3667,7 +3704,7 @@ class Buff final :
   void _internal_set_buff_left_time(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Buff)
+  // @@protoc_insertion_point(class_scope:rmcc.Buff)
  private:
   class _Internal;
 
@@ -3686,7 +3723,7 @@ class Buff final :
 // -------------------------------------------------------------------
 
 class PenaltyInfo final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PenaltyInfo) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.PenaltyInfo) */ {
  public:
   inline PenaltyInfo() : PenaltyInfo(nullptr) {}
   ~PenaltyInfo() override;
@@ -3787,7 +3824,7 @@ class PenaltyInfo final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "PenaltyInfo";
+    return "rmcc.PenaltyInfo";
   }
   protected:
   explicit PenaltyInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -3850,7 +3887,7 @@ class PenaltyInfo final :
   void _internal_set_total_penalty_num(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:PenaltyInfo)
+  // @@protoc_insertion_point(class_scope:rmcc.PenaltyInfo)
  private:
   class _Internal;
 
@@ -3867,7 +3904,7 @@ class PenaltyInfo final :
 // -------------------------------------------------------------------
 
 class RobotPathPlanInfo final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotPathPlanInfo) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotPathPlanInfo) */ {
  public:
   inline RobotPathPlanInfo() : RobotPathPlanInfo(nullptr) {}
   ~RobotPathPlanInfo() override;
@@ -3968,7 +4005,7 @@ class RobotPathPlanInfo final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotPathPlanInfo";
+    return "rmcc.RobotPathPlanInfo";
   }
   protected:
   explicit RobotPathPlanInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -4091,7 +4128,7 @@ class RobotPathPlanInfo final :
   void _internal_set_sender_id(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotPathPlanInfo)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotPathPlanInfo)
  private:
   class _Internal;
 
@@ -4112,24 +4149,24 @@ class RobotPathPlanInfo final :
 };
 // -------------------------------------------------------------------
 
-class MapClickInfoNotify final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:MapClickInfoNotify) */ {
+class MapClickInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.MapClickInfo) */ {
  public:
-  inline MapClickInfoNotify() : MapClickInfoNotify(nullptr) {}
-  ~MapClickInfoNotify() override;
-  explicit constexpr MapClickInfoNotify(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline MapClickInfo() : MapClickInfo(nullptr) {}
+  ~MapClickInfo() override;
+  explicit constexpr MapClickInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  MapClickInfoNotify(const MapClickInfoNotify& from);
-  MapClickInfoNotify(MapClickInfoNotify&& from) noexcept
-    : MapClickInfoNotify() {
+  MapClickInfo(const MapClickInfo& from);
+  MapClickInfo(MapClickInfo&& from) noexcept
+    : MapClickInfo() {
     *this = ::std::move(from);
   }
 
-  inline MapClickInfoNotify& operator=(const MapClickInfoNotify& from) {
+  inline MapClickInfo& operator=(const MapClickInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline MapClickInfoNotify& operator=(MapClickInfoNotify&& from) noexcept {
+  inline MapClickInfo& operator=(MapClickInfo&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -4152,20 +4189,20 @@ class MapClickInfoNotify final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const MapClickInfoNotify& default_instance() {
+  static const MapClickInfo& default_instance() {
     return *internal_default_instance();
   }
-  static inline const MapClickInfoNotify* internal_default_instance() {
-    return reinterpret_cast<const MapClickInfoNotify*>(
-               &_MapClickInfoNotify_default_instance_);
+  static inline const MapClickInfo* internal_default_instance() {
+    return reinterpret_cast<const MapClickInfo*>(
+               &_MapClickInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     16;
 
-  friend void swap(MapClickInfoNotify& a, MapClickInfoNotify& b) {
+  friend void swap(MapClickInfo& a, MapClickInfo& b) {
     a.Swap(&b);
   }
-  inline void Swap(MapClickInfoNotify* other) {
+  inline void Swap(MapClickInfo* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -4178,7 +4215,7 @@ class MapClickInfoNotify final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(MapClickInfoNotify* other) {
+  void UnsafeArenaSwap(MapClickInfo* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -4186,13 +4223,13 @@ class MapClickInfoNotify final :
 
   // implements Message ----------------------------------------------
 
-  MapClickInfoNotify* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<MapClickInfoNotify>(arena);
+  MapClickInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<MapClickInfo>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const MapClickInfoNotify& from);
+  void CopyFrom(const MapClickInfo& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const MapClickInfoNotify& from);
+  void MergeFrom(const MapClickInfo& from);
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
@@ -4209,15 +4246,15 @@ class MapClickInfoNotify final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(MapClickInfoNotify* other);
+  void InternalSwap(MapClickInfo* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "MapClickInfoNotify";
+    return "rmcc.MapClickInfo";
   }
   protected:
-  explicit MapClickInfoNotify(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit MapClickInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   private:
   static void ArenaDtor(void* object);
@@ -4352,7 +4389,268 @@ class MapClickInfoNotify final :
   void _internal_set_map_y(float value);
   public:
 
-  // @@protoc_insertion_point(class_scope:MapClickInfoNotify)
+  // @@protoc_insertion_point(class_scope:rmcc.MapClickInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr robot_id_;
+  uint32_t is_send_all_;
+  uint32_t mode_;
+  uint32_t enemy_id_;
+  uint32_t ascii_;
+  uint32_t type_;
+  float map_x_;
+  float map_y_;
+  friend struct ::TableStruct_rmcc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MapClickCmd final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.MapClickCmd) */ {
+ public:
+  inline MapClickCmd() : MapClickCmd(nullptr) {}
+  ~MapClickCmd() override;
+  explicit constexpr MapClickCmd(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  MapClickCmd(const MapClickCmd& from);
+  MapClickCmd(MapClickCmd&& from) noexcept
+    : MapClickCmd() {
+    *this = ::std::move(from);
+  }
+
+  inline MapClickCmd& operator=(const MapClickCmd& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MapClickCmd& operator=(MapClickCmd&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MapClickCmd& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const MapClickCmd* internal_default_instance() {
+    return reinterpret_cast<const MapClickCmd*>(
+               &_MapClickCmd_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  friend void swap(MapClickCmd& a, MapClickCmd& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MapClickCmd* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MapClickCmd* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MapClickCmd* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<MapClickCmd>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const MapClickCmd& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const MapClickCmd& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MapClickCmd* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rmcc.MapClickCmd";
+  }
+  protected:
+  explicit MapClickCmd(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kRobotIdFieldNumber = 2,
+    kIsSendAllFieldNumber = 1,
+    kModeFieldNumber = 3,
+    kEnemyIdFieldNumber = 4,
+    kAsciiFieldNumber = 5,
+    kTypeFieldNumber = 6,
+    kMapXFieldNumber = 7,
+    kMapYFieldNumber = 8,
+  };
+  // optional bytes robot_id = 2;
+  bool has_robot_id() const;
+  private:
+  bool _internal_has_robot_id() const;
+  public:
+  void clear_robot_id();
+  const std::string& robot_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_robot_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_robot_id();
+  PROTOBUF_NODISCARD std::string* release_robot_id();
+  void set_allocated_robot_id(std::string* robot_id);
+  private:
+  const std::string& _internal_robot_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_robot_id(const std::string& value);
+  std::string* _internal_mutable_robot_id();
+  public:
+
+  // optional uint32 is_send_all = 1;
+  bool has_is_send_all() const;
+  private:
+  bool _internal_has_is_send_all() const;
+  public:
+  void clear_is_send_all();
+  uint32_t is_send_all() const;
+  void set_is_send_all(uint32_t value);
+  private:
+  uint32_t _internal_is_send_all() const;
+  void _internal_set_is_send_all(uint32_t value);
+  public:
+
+  // optional uint32 mode = 3;
+  bool has_mode() const;
+  private:
+  bool _internal_has_mode() const;
+  public:
+  void clear_mode();
+  uint32_t mode() const;
+  void set_mode(uint32_t value);
+  private:
+  uint32_t _internal_mode() const;
+  void _internal_set_mode(uint32_t value);
+  public:
+
+  // optional uint32 enemy_id = 4;
+  bool has_enemy_id() const;
+  private:
+  bool _internal_has_enemy_id() const;
+  public:
+  void clear_enemy_id();
+  uint32_t enemy_id() const;
+  void set_enemy_id(uint32_t value);
+  private:
+  uint32_t _internal_enemy_id() const;
+  void _internal_set_enemy_id(uint32_t value);
+  public:
+
+  // optional uint32 ascii = 5;
+  bool has_ascii() const;
+  private:
+  bool _internal_has_ascii() const;
+  public:
+  void clear_ascii();
+  uint32_t ascii() const;
+  void set_ascii(uint32_t value);
+  private:
+  uint32_t _internal_ascii() const;
+  void _internal_set_ascii(uint32_t value);
+  public:
+
+  // optional uint32 type = 6;
+  bool has_type() const;
+  private:
+  bool _internal_has_type() const;
+  public:
+  void clear_type();
+  uint32_t type() const;
+  void set_type(uint32_t value);
+  private:
+  uint32_t _internal_type() const;
+  void _internal_set_type(uint32_t value);
+  public:
+
+  // optional float map_x = 7;
+  bool has_map_x() const;
+  private:
+  bool _internal_has_map_x() const;
+  public:
+  void clear_map_x();
+  float map_x() const;
+  void set_map_x(float value);
+  private:
+  float _internal_map_x() const;
+  void _internal_set_map_x(float value);
+  public:
+
+  // optional float map_y = 8;
+  bool has_map_y() const;
+  private:
+  bool _internal_has_map_y() const;
+  public:
+  void clear_map_y();
+  float map_y() const;
+  void set_map_y(float value);
+  private:
+  float _internal_map_y() const;
+  void _internal_set_map_y(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rmcc.MapClickCmd)
  private:
   class _Internal;
 
@@ -4374,7 +4672,7 @@ class MapClickInfoNotify final :
 // -------------------------------------------------------------------
 
 class RadarInfoToClient final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RadarInfoToClient) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RadarInfoToClient) */ {
  public:
   inline RadarInfoToClient() : RadarInfoToClient(nullptr) {}
   ~RadarInfoToClient() override;
@@ -4421,7 +4719,7 @@ class RadarInfoToClient final :
                &_RadarInfoToClient_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   friend void swap(RadarInfoToClient& a, RadarInfoToClient& b) {
     a.Swap(&b);
@@ -4475,7 +4773,7 @@ class RadarInfoToClient final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RadarInfoToClient";
+    return "rmcc.RadarInfoToClient";
   }
   protected:
   explicit RadarInfoToClient(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -4497,39 +4795,39 @@ class RadarInfoToClient final :
   enum : int {
     kRadarSingleRobotInfoFieldNumber = 1,
   };
-  // repeated .RadarSingleRobotInfo RadarSingleRobotInfo = 1;
+  // repeated .rmcc.RadarSingleRobotInfo RadarSingleRobotInfo = 1;
   int radarsinglerobotinfo_size() const;
   private:
   int _internal_radarsinglerobotinfo_size() const;
   public:
   void clear_radarsinglerobotinfo();
-  ::RadarSingleRobotInfo* mutable_radarsinglerobotinfo(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::RadarSingleRobotInfo >*
+  ::rmcc::RadarSingleRobotInfo* mutable_radarsinglerobotinfo(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rmcc::RadarSingleRobotInfo >*
       mutable_radarsinglerobotinfo();
   private:
-  const ::RadarSingleRobotInfo& _internal_radarsinglerobotinfo(int index) const;
-  ::RadarSingleRobotInfo* _internal_add_radarsinglerobotinfo();
+  const ::rmcc::RadarSingleRobotInfo& _internal_radarsinglerobotinfo(int index) const;
+  ::rmcc::RadarSingleRobotInfo* _internal_add_radarsinglerobotinfo();
   public:
-  const ::RadarSingleRobotInfo& radarsinglerobotinfo(int index) const;
-  ::RadarSingleRobotInfo* add_radarsinglerobotinfo();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::RadarSingleRobotInfo >&
+  const ::rmcc::RadarSingleRobotInfo& radarsinglerobotinfo(int index) const;
+  ::rmcc::RadarSingleRobotInfo* add_radarsinglerobotinfo();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rmcc::RadarSingleRobotInfo >&
       radarsinglerobotinfo() const;
 
-  // @@protoc_insertion_point(class_scope:RadarInfoToClient)
+  // @@protoc_insertion_point(class_scope:rmcc.RadarInfoToClient)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::RadarSingleRobotInfo > radarsinglerobotinfo_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rmcc::RadarSingleRobotInfo > radarsinglerobotinfo_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rmcc_2eproto;
 };
 // -------------------------------------------------------------------
 
 class RadarSingleRobotInfo final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RadarSingleRobotInfo) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RadarSingleRobotInfo) */ {
  public:
   inline RadarSingleRobotInfo() : RadarSingleRobotInfo(nullptr) {}
   ~RadarSingleRobotInfo() override;
@@ -4576,7 +4874,7 @@ class RadarSingleRobotInfo final :
                &_RadarSingleRobotInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    19;
 
   friend void swap(RadarSingleRobotInfo& a, RadarSingleRobotInfo& b) {
     a.Swap(&b);
@@ -4630,7 +4928,7 @@ class RadarSingleRobotInfo final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RadarSingleRobotInfo";
+    return "rmcc.RadarSingleRobotInfo";
   }
   protected:
   explicit RadarSingleRobotInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -4693,7 +4991,7 @@ class RadarSingleRobotInfo final :
   void _internal_set_is_high_light(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RadarSingleRobotInfo)
+  // @@protoc_insertion_point(class_scope:rmcc.RadarSingleRobotInfo)
  private:
   class _Internal;
 
@@ -4710,7 +5008,7 @@ class RadarSingleRobotInfo final :
 // -------------------------------------------------------------------
 
 class CustomByteBlock final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CustomByteBlock) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.CustomByteBlock) */ {
  public:
   inline CustomByteBlock() : CustomByteBlock(nullptr) {}
   ~CustomByteBlock() override;
@@ -4757,7 +5055,7 @@ class CustomByteBlock final :
                &_CustomByteBlock_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   friend void swap(CustomByteBlock& a, CustomByteBlock& b) {
     a.Swap(&b);
@@ -4811,7 +5109,7 @@ class CustomByteBlock final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "CustomByteBlock";
+    return "rmcc.CustomByteBlock";
   }
   protected:
   explicit CustomByteBlock(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -4851,7 +5149,7 @@ class CustomByteBlock final :
   std::string* _internal_mutable_data();
   public:
 
-  // @@protoc_insertion_point(class_scope:CustomByteBlock)
+  // @@protoc_insertion_point(class_scope:rmcc.CustomByteBlock)
  private:
   class _Internal;
 
@@ -4866,7 +5164,7 @@ class CustomByteBlock final :
 // -------------------------------------------------------------------
 
 class AssemblyCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:AssemblyCommand) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.AssemblyCommand) */ {
  public:
   inline AssemblyCommand() : AssemblyCommand(nullptr) {}
   ~AssemblyCommand() override;
@@ -4913,7 +5211,7 @@ class AssemblyCommand final :
                &_AssemblyCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    21;
 
   friend void swap(AssemblyCommand& a, AssemblyCommand& b) {
     a.Swap(&b);
@@ -4967,7 +5265,7 @@ class AssemblyCommand final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "AssemblyCommand";
+    return "rmcc.AssemblyCommand";
   }
   protected:
   explicit AssemblyCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -5016,7 +5314,7 @@ class AssemblyCommand final :
   void _internal_set_difficulty(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:AssemblyCommand)
+  // @@protoc_insertion_point(class_scope:rmcc.AssemblyCommand)
  private:
   class _Internal;
 
@@ -5032,7 +5330,7 @@ class AssemblyCommand final :
 // -------------------------------------------------------------------
 
 class TechCoreMotionStateSync final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TechCoreMotionStateSync) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.TechCoreMotionStateSync) */ {
  public:
   inline TechCoreMotionStateSync() : TechCoreMotionStateSync(nullptr) {}
   ~TechCoreMotionStateSync() override;
@@ -5079,7 +5377,7 @@ class TechCoreMotionStateSync final :
                &_TechCoreMotionStateSync_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    22;
 
   friend void swap(TechCoreMotionStateSync& a, TechCoreMotionStateSync& b) {
     a.Swap(&b);
@@ -5133,7 +5431,7 @@ class TechCoreMotionStateSync final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "TechCoreMotionStateSync";
+    return "rmcc.TechCoreMotionStateSync";
   }
   protected:
   explicit TechCoreMotionStateSync(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -5266,7 +5564,7 @@ class TechCoreMotionStateSync final :
   void _internal_set_remain_time_step(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:TechCoreMotionStateSync)
+  // @@protoc_insertion_point(class_scope:rmcc.TechCoreMotionStateSync)
  private:
   class _Internal;
 
@@ -5288,7 +5586,7 @@ class TechCoreMotionStateSync final :
 // -------------------------------------------------------------------
 
 class RobotPerformanceSelectionCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotPerformanceSelectionCommand) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotPerformanceSelectionCommand) */ {
  public:
   inline RobotPerformanceSelectionCommand() : RobotPerformanceSelectionCommand(nullptr) {}
   ~RobotPerformanceSelectionCommand() override;
@@ -5335,7 +5633,7 @@ class RobotPerformanceSelectionCommand final :
                &_RobotPerformanceSelectionCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    23;
 
   friend void swap(RobotPerformanceSelectionCommand& a, RobotPerformanceSelectionCommand& b) {
     a.Swap(&b);
@@ -5389,7 +5687,7 @@ class RobotPerformanceSelectionCommand final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotPerformanceSelectionCommand";
+    return "rmcc.RobotPerformanceSelectionCommand";
   }
   protected:
   explicit RobotPerformanceSelectionCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -5452,7 +5750,7 @@ class RobotPerformanceSelectionCommand final :
   void _internal_set_sentry_control(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotPerformanceSelectionCommand)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotPerformanceSelectionCommand)
  private:
   class _Internal;
 
@@ -5469,7 +5767,7 @@ class RobotPerformanceSelectionCommand final :
 // -------------------------------------------------------------------
 
 class RobotPerformanceSelectionSync final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RobotPerformanceSelectionSync) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RobotPerformanceSelectionSync) */ {
  public:
   inline RobotPerformanceSelectionSync() : RobotPerformanceSelectionSync(nullptr) {}
   ~RobotPerformanceSelectionSync() override;
@@ -5516,7 +5814,7 @@ class RobotPerformanceSelectionSync final :
                &_RobotPerformanceSelectionSync_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    24;
 
   friend void swap(RobotPerformanceSelectionSync& a, RobotPerformanceSelectionSync& b) {
     a.Swap(&b);
@@ -5570,7 +5868,7 @@ class RobotPerformanceSelectionSync final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RobotPerformanceSelectionSync";
+    return "rmcc.RobotPerformanceSelectionSync";
   }
   protected:
   explicit RobotPerformanceSelectionSync(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -5633,7 +5931,7 @@ class RobotPerformanceSelectionSync final :
   void _internal_set_sentry_control(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RobotPerformanceSelectionSync)
+  // @@protoc_insertion_point(class_scope:rmcc.RobotPerformanceSelectionSync)
  private:
   class _Internal;
 
@@ -5650,7 +5948,7 @@ class RobotPerformanceSelectionSync final :
 // -------------------------------------------------------------------
 
 class CommonCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CommonCommand) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.CommonCommand) */ {
  public:
   inline CommonCommand() : CommonCommand(nullptr) {}
   ~CommonCommand() override;
@@ -5697,7 +5995,7 @@ class CommonCommand final :
                &_CommonCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    25;
 
   friend void swap(CommonCommand& a, CommonCommand& b) {
     a.Swap(&b);
@@ -5751,7 +6049,7 @@ class CommonCommand final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "CommonCommand";
+    return "rmcc.CommonCommand";
   }
   protected:
   explicit CommonCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -5800,7 +6098,7 @@ class CommonCommand final :
   void _internal_set_param(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:CommonCommand)
+  // @@protoc_insertion_point(class_scope:rmcc.CommonCommand)
  private:
   class _Internal;
 
@@ -5816,7 +6114,7 @@ class CommonCommand final :
 // -------------------------------------------------------------------
 
 class HeroDeployModeEventCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:HeroDeployModeEventCommand) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.HeroDeployModeEventCommand) */ {
  public:
   inline HeroDeployModeEventCommand() : HeroDeployModeEventCommand(nullptr) {}
   ~HeroDeployModeEventCommand() override;
@@ -5863,7 +6161,7 @@ class HeroDeployModeEventCommand final :
                &_HeroDeployModeEventCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    26;
 
   friend void swap(HeroDeployModeEventCommand& a, HeroDeployModeEventCommand& b) {
     a.Swap(&b);
@@ -5917,7 +6215,7 @@ class HeroDeployModeEventCommand final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "HeroDeployModeEventCommand";
+    return "rmcc.HeroDeployModeEventCommand";
   }
   protected:
   explicit HeroDeployModeEventCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -5952,7 +6250,7 @@ class HeroDeployModeEventCommand final :
   void _internal_set_mode(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:HeroDeployModeEventCommand)
+  // @@protoc_insertion_point(class_scope:rmcc.HeroDeployModeEventCommand)
  private:
   class _Internal;
 
@@ -5967,7 +6265,7 @@ class HeroDeployModeEventCommand final :
 // -------------------------------------------------------------------
 
 class DeployModeStatusSync final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:DeployModeStatusSync) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.DeployModeStatusSync) */ {
  public:
   inline DeployModeStatusSync() : DeployModeStatusSync(nullptr) {}
   ~DeployModeStatusSync() override;
@@ -6014,7 +6312,7 @@ class DeployModeStatusSync final :
                &_DeployModeStatusSync_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    27;
 
   friend void swap(DeployModeStatusSync& a, DeployModeStatusSync& b) {
     a.Swap(&b);
@@ -6068,7 +6366,7 @@ class DeployModeStatusSync final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "DeployModeStatusSync";
+    return "rmcc.DeployModeStatusSync";
   }
   protected:
   explicit DeployModeStatusSync(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -6103,7 +6401,7 @@ class DeployModeStatusSync final :
   void _internal_set_status(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:DeployModeStatusSync)
+  // @@protoc_insertion_point(class_scope:rmcc.DeployModeStatusSync)
  private:
   class _Internal;
 
@@ -6118,7 +6416,7 @@ class DeployModeStatusSync final :
 // -------------------------------------------------------------------
 
 class RuneActivateCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RuneActivateCommand) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RuneActivateCommand) */ {
  public:
   inline RuneActivateCommand() : RuneActivateCommand(nullptr) {}
   ~RuneActivateCommand() override;
@@ -6165,7 +6463,7 @@ class RuneActivateCommand final :
                &_RuneActivateCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    28;
 
   friend void swap(RuneActivateCommand& a, RuneActivateCommand& b) {
     a.Swap(&b);
@@ -6219,7 +6517,7 @@ class RuneActivateCommand final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RuneActivateCommand";
+    return "rmcc.RuneActivateCommand";
   }
   protected:
   explicit RuneActivateCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -6254,7 +6552,7 @@ class RuneActivateCommand final :
   void _internal_set_activate(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RuneActivateCommand)
+  // @@protoc_insertion_point(class_scope:rmcc.RuneActivateCommand)
  private:
   class _Internal;
 
@@ -6269,7 +6567,7 @@ class RuneActivateCommand final :
 // -------------------------------------------------------------------
 
 class RuneStatusSync final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RuneStatusSync) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.RuneStatusSync) */ {
  public:
   inline RuneStatusSync() : RuneStatusSync(nullptr) {}
   ~RuneStatusSync() override;
@@ -6316,7 +6614,7 @@ class RuneStatusSync final :
                &_RuneStatusSync_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    29;
 
   friend void swap(RuneStatusSync& a, RuneStatusSync& b) {
     a.Swap(&b);
@@ -6370,7 +6668,7 @@ class RuneStatusSync final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RuneStatusSync";
+    return "rmcc.RuneStatusSync";
   }
   protected:
   explicit RuneStatusSync(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -6433,7 +6731,7 @@ class RuneStatusSync final :
   void _internal_set_average_rings(float value);
   public:
 
-  // @@protoc_insertion_point(class_scope:RuneStatusSync)
+  // @@protoc_insertion_point(class_scope:rmcc.RuneStatusSync)
  private:
   class _Internal;
 
@@ -6450,7 +6748,7 @@ class RuneStatusSync final :
 // -------------------------------------------------------------------
 
 class SentryStatusSync final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SentryStatusSync) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.SentryStatusSync) */ {
  public:
   inline SentryStatusSync() : SentryStatusSync(nullptr) {}
   ~SentryStatusSync() override;
@@ -6497,7 +6795,7 @@ class SentryStatusSync final :
                &_SentryStatusSync_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    30;
 
   friend void swap(SentryStatusSync& a, SentryStatusSync& b) {
     a.Swap(&b);
@@ -6551,7 +6849,7 @@ class SentryStatusSync final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "SentryStatusSync";
+    return "rmcc.SentryStatusSync";
   }
   protected:
   explicit SentryStatusSync(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -6573,6 +6871,7 @@ class SentryStatusSync final :
   enum : int {
     kPostureIdFieldNumber = 1,
     kIsWeakenedFieldNumber = 2,
+    kIsPoweredFieldNumber = 3,
   };
   // optional uint32 posture_id = 1;
   bool has_posture_id() const;
@@ -6600,7 +6899,20 @@ class SentryStatusSync final :
   void _internal_set_is_weakened(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:SentryStatusSync)
+  // optional bool is_powered = 3;
+  bool has_is_powered() const;
+  private:
+  bool _internal_has_is_powered() const;
+  public:
+  void clear_is_powered();
+  bool is_powered() const;
+  void set_is_powered(bool value);
+  private:
+  bool _internal_is_powered() const;
+  void _internal_set_is_powered(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rmcc.SentryStatusSync)
  private:
   class _Internal;
 
@@ -6611,12 +6923,13 @@ class SentryStatusSync final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   uint32_t posture_id_;
   bool is_weakened_;
+  bool is_powered_;
   friend struct ::TableStruct_rmcc_2eproto;
 };
 // -------------------------------------------------------------------
 
 class DartCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:DartCommand) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.DartCommand) */ {
  public:
   inline DartCommand() : DartCommand(nullptr) {}
   ~DartCommand() override;
@@ -6663,7 +6976,7 @@ class DartCommand final :
                &_DartCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    31;
 
   friend void swap(DartCommand& a, DartCommand& b) {
     a.Swap(&b);
@@ -6717,7 +7030,7 @@ class DartCommand final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "DartCommand";
+    return "rmcc.DartCommand";
   }
   protected:
   explicit DartCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -6780,7 +7093,7 @@ class DartCommand final :
   void _internal_set_launch_confirm(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:DartCommand)
+  // @@protoc_insertion_point(class_scope:rmcc.DartCommand)
  private:
   class _Internal;
 
@@ -6797,7 +7110,7 @@ class DartCommand final :
 // -------------------------------------------------------------------
 
 class DartSelectTargetStatusSync final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:DartSelectTargetStatusSync) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.DartSelectTargetStatusSync) */ {
  public:
   inline DartSelectTargetStatusSync() : DartSelectTargetStatusSync(nullptr) {}
   ~DartSelectTargetStatusSync() override;
@@ -6844,7 +7157,7 @@ class DartSelectTargetStatusSync final :
                &_DartSelectTargetStatusSync_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    32;
 
   friend void swap(DartSelectTargetStatusSync& a, DartSelectTargetStatusSync& b) {
     a.Swap(&b);
@@ -6898,7 +7211,7 @@ class DartSelectTargetStatusSync final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "DartSelectTargetStatusSync";
+    return "rmcc.DartSelectTargetStatusSync";
   }
   protected:
   explicit DartSelectTargetStatusSync(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -6947,7 +7260,7 @@ class DartSelectTargetStatusSync final :
   void _internal_set_open(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:DartSelectTargetStatusSync)
+  // @@protoc_insertion_point(class_scope:rmcc.DartSelectTargetStatusSync)
  private:
   class _Internal;
 
@@ -6963,7 +7276,7 @@ class DartSelectTargetStatusSync final :
 // -------------------------------------------------------------------
 
 class SentryCtrlCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SentryCtrlCommand) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.SentryCtrlCommand) */ {
  public:
   inline SentryCtrlCommand() : SentryCtrlCommand(nullptr) {}
   ~SentryCtrlCommand() override;
@@ -7010,7 +7323,7 @@ class SentryCtrlCommand final :
                &_SentryCtrlCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    33;
 
   friend void swap(SentryCtrlCommand& a, SentryCtrlCommand& b) {
     a.Swap(&b);
@@ -7064,7 +7377,7 @@ class SentryCtrlCommand final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "SentryCtrlCommand";
+    return "rmcc.SentryCtrlCommand";
   }
   protected:
   explicit SentryCtrlCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -7099,7 +7412,7 @@ class SentryCtrlCommand final :
   void _internal_set_command_id(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:SentryCtrlCommand)
+  // @@protoc_insertion_point(class_scope:rmcc.SentryCtrlCommand)
  private:
   class _Internal;
 
@@ -7114,7 +7427,7 @@ class SentryCtrlCommand final :
 // -------------------------------------------------------------------
 
 class SentryCtrlResult final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SentryCtrlResult) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.SentryCtrlResult) */ {
  public:
   inline SentryCtrlResult() : SentryCtrlResult(nullptr) {}
   ~SentryCtrlResult() override;
@@ -7161,7 +7474,7 @@ class SentryCtrlResult final :
                &_SentryCtrlResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    34;
 
   friend void swap(SentryCtrlResult& a, SentryCtrlResult& b) {
     a.Swap(&b);
@@ -7215,7 +7528,7 @@ class SentryCtrlResult final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "SentryCtrlResult";
+    return "rmcc.SentryCtrlResult";
   }
   protected:
   explicit SentryCtrlResult(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -7264,7 +7577,7 @@ class SentryCtrlResult final :
   void _internal_set_result_code(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:SentryCtrlResult)
+  // @@protoc_insertion_point(class_scope:rmcc.SentryCtrlResult)
  private:
   class _Internal;
 
@@ -7280,7 +7593,7 @@ class SentryCtrlResult final :
 // -------------------------------------------------------------------
 
 class AirSupportCommand final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:AirSupportCommand) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.AirSupportCommand) */ {
  public:
   inline AirSupportCommand() : AirSupportCommand(nullptr) {}
   ~AirSupportCommand() override;
@@ -7327,7 +7640,7 @@ class AirSupportCommand final :
                &_AirSupportCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    35;
 
   friend void swap(AirSupportCommand& a, AirSupportCommand& b) {
     a.Swap(&b);
@@ -7381,7 +7694,7 @@ class AirSupportCommand final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "AirSupportCommand";
+    return "rmcc.AirSupportCommand";
   }
   protected:
   explicit AirSupportCommand(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -7416,7 +7729,7 @@ class AirSupportCommand final :
   void _internal_set_command_id(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:AirSupportCommand)
+  // @@protoc_insertion_point(class_scope:rmcc.AirSupportCommand)
  private:
   class _Internal;
 
@@ -7431,7 +7744,7 @@ class AirSupportCommand final :
 // -------------------------------------------------------------------
 
 class AirSupportStatusSync final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:AirSupportStatusSync) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rmcc.AirSupportStatusSync) */ {
  public:
   inline AirSupportStatusSync() : AirSupportStatusSync(nullptr) {}
   ~AirSupportStatusSync() override;
@@ -7478,7 +7791,7 @@ class AirSupportStatusSync final :
                &_AirSupportStatusSync_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    36;
 
   friend void swap(AirSupportStatusSync& a, AirSupportStatusSync& b) {
     a.Swap(&b);
@@ -7532,7 +7845,7 @@ class AirSupportStatusSync final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "AirSupportStatusSync";
+    return "rmcc.AirSupportStatusSync";
   }
   protected:
   explicit AirSupportStatusSync(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -7623,7 +7936,7 @@ class AirSupportStatusSync final :
   void _internal_set_shooter_status(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:AirSupportStatusSync)
+  // @@protoc_insertion_point(class_scope:rmcc.AirSupportStatusSync)
  private:
   class _Internal;
 
@@ -7666,7 +7979,7 @@ inline int32_t KeyboardMouseControl::_internal_mouse_x() const {
   return mouse_x_;
 }
 inline int32_t KeyboardMouseControl::mouse_x() const {
-  // @@protoc_insertion_point(field_get:KeyboardMouseControl.mouse_x)
+  // @@protoc_insertion_point(field_get:rmcc.KeyboardMouseControl.mouse_x)
   return _internal_mouse_x();
 }
 inline void KeyboardMouseControl::_internal_set_mouse_x(int32_t value) {
@@ -7675,7 +7988,7 @@ inline void KeyboardMouseControl::_internal_set_mouse_x(int32_t value) {
 }
 inline void KeyboardMouseControl::set_mouse_x(int32_t value) {
   _internal_set_mouse_x(value);
-  // @@protoc_insertion_point(field_set:KeyboardMouseControl.mouse_x)
+  // @@protoc_insertion_point(field_set:rmcc.KeyboardMouseControl.mouse_x)
 }
 
 // optional int32 mouse_y = 2;
@@ -7694,7 +8007,7 @@ inline int32_t KeyboardMouseControl::_internal_mouse_y() const {
   return mouse_y_;
 }
 inline int32_t KeyboardMouseControl::mouse_y() const {
-  // @@protoc_insertion_point(field_get:KeyboardMouseControl.mouse_y)
+  // @@protoc_insertion_point(field_get:rmcc.KeyboardMouseControl.mouse_y)
   return _internal_mouse_y();
 }
 inline void KeyboardMouseControl::_internal_set_mouse_y(int32_t value) {
@@ -7703,7 +8016,7 @@ inline void KeyboardMouseControl::_internal_set_mouse_y(int32_t value) {
 }
 inline void KeyboardMouseControl::set_mouse_y(int32_t value) {
   _internal_set_mouse_y(value);
-  // @@protoc_insertion_point(field_set:KeyboardMouseControl.mouse_y)
+  // @@protoc_insertion_point(field_set:rmcc.KeyboardMouseControl.mouse_y)
 }
 
 // optional int32 mouse_z = 3;
@@ -7722,7 +8035,7 @@ inline int32_t KeyboardMouseControl::_internal_mouse_z() const {
   return mouse_z_;
 }
 inline int32_t KeyboardMouseControl::mouse_z() const {
-  // @@protoc_insertion_point(field_get:KeyboardMouseControl.mouse_z)
+  // @@protoc_insertion_point(field_get:rmcc.KeyboardMouseControl.mouse_z)
   return _internal_mouse_z();
 }
 inline void KeyboardMouseControl::_internal_set_mouse_z(int32_t value) {
@@ -7731,7 +8044,7 @@ inline void KeyboardMouseControl::_internal_set_mouse_z(int32_t value) {
 }
 inline void KeyboardMouseControl::set_mouse_z(int32_t value) {
   _internal_set_mouse_z(value);
-  // @@protoc_insertion_point(field_set:KeyboardMouseControl.mouse_z)
+  // @@protoc_insertion_point(field_set:rmcc.KeyboardMouseControl.mouse_z)
 }
 
 // optional bool left_button_down = 4;
@@ -7750,7 +8063,7 @@ inline bool KeyboardMouseControl::_internal_left_button_down() const {
   return left_button_down_;
 }
 inline bool KeyboardMouseControl::left_button_down() const {
-  // @@protoc_insertion_point(field_get:KeyboardMouseControl.left_button_down)
+  // @@protoc_insertion_point(field_get:rmcc.KeyboardMouseControl.left_button_down)
   return _internal_left_button_down();
 }
 inline void KeyboardMouseControl::_internal_set_left_button_down(bool value) {
@@ -7759,7 +8072,7 @@ inline void KeyboardMouseControl::_internal_set_left_button_down(bool value) {
 }
 inline void KeyboardMouseControl::set_left_button_down(bool value) {
   _internal_set_left_button_down(value);
-  // @@protoc_insertion_point(field_set:KeyboardMouseControl.left_button_down)
+  // @@protoc_insertion_point(field_set:rmcc.KeyboardMouseControl.left_button_down)
 }
 
 // optional bool right_button_down = 5;
@@ -7778,7 +8091,7 @@ inline bool KeyboardMouseControl::_internal_right_button_down() const {
   return right_button_down_;
 }
 inline bool KeyboardMouseControl::right_button_down() const {
-  // @@protoc_insertion_point(field_get:KeyboardMouseControl.right_button_down)
+  // @@protoc_insertion_point(field_get:rmcc.KeyboardMouseControl.right_button_down)
   return _internal_right_button_down();
 }
 inline void KeyboardMouseControl::_internal_set_right_button_down(bool value) {
@@ -7787,7 +8100,7 @@ inline void KeyboardMouseControl::_internal_set_right_button_down(bool value) {
 }
 inline void KeyboardMouseControl::set_right_button_down(bool value) {
   _internal_set_right_button_down(value);
-  // @@protoc_insertion_point(field_set:KeyboardMouseControl.right_button_down)
+  // @@protoc_insertion_point(field_set:rmcc.KeyboardMouseControl.right_button_down)
 }
 
 // optional uint32 keyboard_value = 6;
@@ -7806,7 +8119,7 @@ inline uint32_t KeyboardMouseControl::_internal_keyboard_value() const {
   return keyboard_value_;
 }
 inline uint32_t KeyboardMouseControl::keyboard_value() const {
-  // @@protoc_insertion_point(field_get:KeyboardMouseControl.keyboard_value)
+  // @@protoc_insertion_point(field_get:rmcc.KeyboardMouseControl.keyboard_value)
   return _internal_keyboard_value();
 }
 inline void KeyboardMouseControl::_internal_set_keyboard_value(uint32_t value) {
@@ -7815,7 +8128,7 @@ inline void KeyboardMouseControl::_internal_set_keyboard_value(uint32_t value) {
 }
 inline void KeyboardMouseControl::set_keyboard_value(uint32_t value) {
   _internal_set_keyboard_value(value);
-  // @@protoc_insertion_point(field_set:KeyboardMouseControl.keyboard_value)
+  // @@protoc_insertion_point(field_set:rmcc.KeyboardMouseControl.keyboard_value)
 }
 
 // optional bool mid_button_down = 7;
@@ -7834,7 +8147,7 @@ inline bool KeyboardMouseControl::_internal_mid_button_down() const {
   return mid_button_down_;
 }
 inline bool KeyboardMouseControl::mid_button_down() const {
-  // @@protoc_insertion_point(field_get:KeyboardMouseControl.mid_button_down)
+  // @@protoc_insertion_point(field_get:rmcc.KeyboardMouseControl.mid_button_down)
   return _internal_mid_button_down();
 }
 inline void KeyboardMouseControl::_internal_set_mid_button_down(bool value) {
@@ -7843,7 +8156,7 @@ inline void KeyboardMouseControl::_internal_set_mid_button_down(bool value) {
 }
 inline void KeyboardMouseControl::set_mid_button_down(bool value) {
   _internal_set_mid_button_down(value);
-  // @@protoc_insertion_point(field_set:KeyboardMouseControl.mid_button_down)
+  // @@protoc_insertion_point(field_set:rmcc.KeyboardMouseControl.mid_button_down)
 }
 
 // -------------------------------------------------------------------
@@ -7863,7 +8176,7 @@ inline void CustomControl::clear_data() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& CustomControl::data() const {
-  // @@protoc_insertion_point(field_get:CustomControl.data)
+  // @@protoc_insertion_point(field_get:rmcc.CustomControl.data)
   return _internal_data();
 }
 template <typename ArgT0, typename... ArgT>
@@ -7871,11 +8184,11 @@ inline PROTOBUF_ALWAYS_INLINE
 void CustomControl::set_data(ArgT0&& arg0, ArgT... args) {
  _has_bits_[0] |= 0x00000001u;
  data_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:CustomControl.data)
+  // @@protoc_insertion_point(field_set:rmcc.CustomControl.data)
 }
 inline std::string* CustomControl::mutable_data() {
   std::string* _s = _internal_mutable_data();
-  // @@protoc_insertion_point(field_mutable:CustomControl.data)
+  // @@protoc_insertion_point(field_mutable:rmcc.CustomControl.data)
   return _s;
 }
 inline const std::string& CustomControl::_internal_data() const {
@@ -7890,7 +8203,7 @@ inline std::string* CustomControl::_internal_mutable_data() {
   return data_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* CustomControl::release_data() {
-  // @@protoc_insertion_point(field_release:CustomControl.data)
+  // @@protoc_insertion_point(field_release:rmcc.CustomControl.data)
   if (!_internal_has_data()) {
     return nullptr;
   }
@@ -7916,7 +8229,7 @@ inline void CustomControl::set_allocated_data(std::string* data) {
     data_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:CustomControl.data)
+  // @@protoc_insertion_point(field_set_allocated:rmcc.CustomControl.data)
 }
 
 // -------------------------------------------------------------------
@@ -7939,7 +8252,7 @@ inline uint32_t GameStatus::_internal_current_round() const {
   return current_round_;
 }
 inline uint32_t GameStatus::current_round() const {
-  // @@protoc_insertion_point(field_get:GameStatus.current_round)
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.current_round)
   return _internal_current_round();
 }
 inline void GameStatus::_internal_set_current_round(uint32_t value) {
@@ -7948,7 +8261,7 @@ inline void GameStatus::_internal_set_current_round(uint32_t value) {
 }
 inline void GameStatus::set_current_round(uint32_t value) {
   _internal_set_current_round(value);
-  // @@protoc_insertion_point(field_set:GameStatus.current_round)
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.current_round)
 }
 
 // optional uint32 total_rounds = 2;
@@ -7967,7 +8280,7 @@ inline uint32_t GameStatus::_internal_total_rounds() const {
   return total_rounds_;
 }
 inline uint32_t GameStatus::total_rounds() const {
-  // @@protoc_insertion_point(field_get:GameStatus.total_rounds)
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.total_rounds)
   return _internal_total_rounds();
 }
 inline void GameStatus::_internal_set_total_rounds(uint32_t value) {
@@ -7976,7 +8289,7 @@ inline void GameStatus::_internal_set_total_rounds(uint32_t value) {
 }
 inline void GameStatus::set_total_rounds(uint32_t value) {
   _internal_set_total_rounds(value);
-  // @@protoc_insertion_point(field_set:GameStatus.total_rounds)
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.total_rounds)
 }
 
 // optional uint32 red_score = 3;
@@ -7995,7 +8308,7 @@ inline uint32_t GameStatus::_internal_red_score() const {
   return red_score_;
 }
 inline uint32_t GameStatus::red_score() const {
-  // @@protoc_insertion_point(field_get:GameStatus.red_score)
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.red_score)
   return _internal_red_score();
 }
 inline void GameStatus::_internal_set_red_score(uint32_t value) {
@@ -8004,7 +8317,7 @@ inline void GameStatus::_internal_set_red_score(uint32_t value) {
 }
 inline void GameStatus::set_red_score(uint32_t value) {
   _internal_set_red_score(value);
-  // @@protoc_insertion_point(field_set:GameStatus.red_score)
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.red_score)
 }
 
 // optional uint32 blue_score = 4;
@@ -8023,7 +8336,7 @@ inline uint32_t GameStatus::_internal_blue_score() const {
   return blue_score_;
 }
 inline uint32_t GameStatus::blue_score() const {
-  // @@protoc_insertion_point(field_get:GameStatus.blue_score)
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.blue_score)
   return _internal_blue_score();
 }
 inline void GameStatus::_internal_set_blue_score(uint32_t value) {
@@ -8032,7 +8345,7 @@ inline void GameStatus::_internal_set_blue_score(uint32_t value) {
 }
 inline void GameStatus::set_blue_score(uint32_t value) {
   _internal_set_blue_score(value);
-  // @@protoc_insertion_point(field_set:GameStatus.blue_score)
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.blue_score)
 }
 
 // optional uint32 current_stage = 5;
@@ -8051,7 +8364,7 @@ inline uint32_t GameStatus::_internal_current_stage() const {
   return current_stage_;
 }
 inline uint32_t GameStatus::current_stage() const {
-  // @@protoc_insertion_point(field_get:GameStatus.current_stage)
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.current_stage)
   return _internal_current_stage();
 }
 inline void GameStatus::_internal_set_current_stage(uint32_t value) {
@@ -8060,7 +8373,7 @@ inline void GameStatus::_internal_set_current_stage(uint32_t value) {
 }
 inline void GameStatus::set_current_stage(uint32_t value) {
   _internal_set_current_stage(value);
-  // @@protoc_insertion_point(field_set:GameStatus.current_stage)
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.current_stage)
 }
 
 // optional int32 stage_countdown_sec = 6;
@@ -8079,7 +8392,7 @@ inline int32_t GameStatus::_internal_stage_countdown_sec() const {
   return stage_countdown_sec_;
 }
 inline int32_t GameStatus::stage_countdown_sec() const {
-  // @@protoc_insertion_point(field_get:GameStatus.stage_countdown_sec)
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.stage_countdown_sec)
   return _internal_stage_countdown_sec();
 }
 inline void GameStatus::_internal_set_stage_countdown_sec(int32_t value) {
@@ -8088,7 +8401,7 @@ inline void GameStatus::_internal_set_stage_countdown_sec(int32_t value) {
 }
 inline void GameStatus::set_stage_countdown_sec(int32_t value) {
   _internal_set_stage_countdown_sec(value);
-  // @@protoc_insertion_point(field_set:GameStatus.stage_countdown_sec)
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.stage_countdown_sec)
 }
 
 // optional int32 stage_elapsed_sec = 7;
@@ -8107,7 +8420,7 @@ inline int32_t GameStatus::_internal_stage_elapsed_sec() const {
   return stage_elapsed_sec_;
 }
 inline int32_t GameStatus::stage_elapsed_sec() const {
-  // @@protoc_insertion_point(field_get:GameStatus.stage_elapsed_sec)
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.stage_elapsed_sec)
   return _internal_stage_elapsed_sec();
 }
 inline void GameStatus::_internal_set_stage_elapsed_sec(int32_t value) {
@@ -8116,7 +8429,7 @@ inline void GameStatus::_internal_set_stage_elapsed_sec(int32_t value) {
 }
 inline void GameStatus::set_stage_elapsed_sec(int32_t value) {
   _internal_set_stage_elapsed_sec(value);
-  // @@protoc_insertion_point(field_set:GameStatus.stage_elapsed_sec)
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.stage_elapsed_sec)
 }
 
 // optional bool is_paused = 8;
@@ -8135,7 +8448,7 @@ inline bool GameStatus::_internal_is_paused() const {
   return is_paused_;
 }
 inline bool GameStatus::is_paused() const {
-  // @@protoc_insertion_point(field_get:GameStatus.is_paused)
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.is_paused)
   return _internal_is_paused();
 }
 inline void GameStatus::_internal_set_is_paused(bool value) {
@@ -8144,7 +8457,63 @@ inline void GameStatus::_internal_set_is_paused(bool value) {
 }
 inline void GameStatus::set_is_paused(bool value) {
   _internal_set_is_paused(value);
-  // @@protoc_insertion_point(field_set:GameStatus.is_paused)
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.is_paused)
+}
+
+// optional uint32 game_result = 9;
+inline bool GameStatus::_internal_has_game_result() const {
+  bool value = (_has_bits_[0] & 0x00000100u) != 0;
+  return value;
+}
+inline bool GameStatus::has_game_result() const {
+  return _internal_has_game_result();
+}
+inline void GameStatus::clear_game_result() {
+  game_result_ = 0u;
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline uint32_t GameStatus::_internal_game_result() const {
+  return game_result_;
+}
+inline uint32_t GameStatus::game_result() const {
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.game_result)
+  return _internal_game_result();
+}
+inline void GameStatus::_internal_set_game_result(uint32_t value) {
+  _has_bits_[0] |= 0x00000100u;
+  game_result_ = value;
+}
+inline void GameStatus::set_game_result(uint32_t value) {
+  _internal_set_game_result(value);
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.game_result)
+}
+
+// optional uint32 end_reason = 10;
+inline bool GameStatus::_internal_has_end_reason() const {
+  bool value = (_has_bits_[0] & 0x00000200u) != 0;
+  return value;
+}
+inline bool GameStatus::has_end_reason() const {
+  return _internal_has_end_reason();
+}
+inline void GameStatus::clear_end_reason() {
+  end_reason_ = 0u;
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline uint32_t GameStatus::_internal_end_reason() const {
+  return end_reason_;
+}
+inline uint32_t GameStatus::end_reason() const {
+  // @@protoc_insertion_point(field_get:rmcc.GameStatus.end_reason)
+  return _internal_end_reason();
+}
+inline void GameStatus::_internal_set_end_reason(uint32_t value) {
+  _has_bits_[0] |= 0x00000200u;
+  end_reason_ = value;
+}
+inline void GameStatus::set_end_reason(uint32_t value) {
+  _internal_set_end_reason(value);
+  // @@protoc_insertion_point(field_set:rmcc.GameStatus.end_reason)
 }
 
 // -------------------------------------------------------------------
@@ -8167,7 +8536,7 @@ inline uint32_t GlobalUnitStatus::_internal_base_health() const {
   return base_health_;
 }
 inline uint32_t GlobalUnitStatus::base_health() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.base_health)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.base_health)
   return _internal_base_health();
 }
 inline void GlobalUnitStatus::_internal_set_base_health(uint32_t value) {
@@ -8176,7 +8545,7 @@ inline void GlobalUnitStatus::_internal_set_base_health(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_base_health(uint32_t value) {
   _internal_set_base_health(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.base_health)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.base_health)
 }
 
 // optional uint32 base_status = 2;
@@ -8195,7 +8564,7 @@ inline uint32_t GlobalUnitStatus::_internal_base_status() const {
   return base_status_;
 }
 inline uint32_t GlobalUnitStatus::base_status() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.base_status)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.base_status)
   return _internal_base_status();
 }
 inline void GlobalUnitStatus::_internal_set_base_status(uint32_t value) {
@@ -8204,7 +8573,7 @@ inline void GlobalUnitStatus::_internal_set_base_status(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_base_status(uint32_t value) {
   _internal_set_base_status(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.base_status)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.base_status)
 }
 
 // optional uint32 base_shield = 3;
@@ -8223,7 +8592,7 @@ inline uint32_t GlobalUnitStatus::_internal_base_shield() const {
   return base_shield_;
 }
 inline uint32_t GlobalUnitStatus::base_shield() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.base_shield)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.base_shield)
   return _internal_base_shield();
 }
 inline void GlobalUnitStatus::_internal_set_base_shield(uint32_t value) {
@@ -8232,7 +8601,7 @@ inline void GlobalUnitStatus::_internal_set_base_shield(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_base_shield(uint32_t value) {
   _internal_set_base_shield(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.base_shield)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.base_shield)
 }
 
 // optional uint32 outpost_health = 4;
@@ -8251,7 +8620,7 @@ inline uint32_t GlobalUnitStatus::_internal_outpost_health() const {
   return outpost_health_;
 }
 inline uint32_t GlobalUnitStatus::outpost_health() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.outpost_health)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.outpost_health)
   return _internal_outpost_health();
 }
 inline void GlobalUnitStatus::_internal_set_outpost_health(uint32_t value) {
@@ -8260,7 +8629,7 @@ inline void GlobalUnitStatus::_internal_set_outpost_health(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_outpost_health(uint32_t value) {
   _internal_set_outpost_health(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.outpost_health)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.outpost_health)
 }
 
 // optional uint32 outpost_status = 5;
@@ -8279,7 +8648,7 @@ inline uint32_t GlobalUnitStatus::_internal_outpost_status() const {
   return outpost_status_;
 }
 inline uint32_t GlobalUnitStatus::outpost_status() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.outpost_status)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.outpost_status)
   return _internal_outpost_status();
 }
 inline void GlobalUnitStatus::_internal_set_outpost_status(uint32_t value) {
@@ -8288,7 +8657,7 @@ inline void GlobalUnitStatus::_internal_set_outpost_status(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_outpost_status(uint32_t value) {
   _internal_set_outpost_status(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.outpost_status)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.outpost_status)
 }
 
 // optional uint32 enemy_base_health = 6;
@@ -8307,7 +8676,7 @@ inline uint32_t GlobalUnitStatus::_internal_enemy_base_health() const {
   return enemy_base_health_;
 }
 inline uint32_t GlobalUnitStatus::enemy_base_health() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.enemy_base_health)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.enemy_base_health)
   return _internal_enemy_base_health();
 }
 inline void GlobalUnitStatus::_internal_set_enemy_base_health(uint32_t value) {
@@ -8316,7 +8685,7 @@ inline void GlobalUnitStatus::_internal_set_enemy_base_health(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_enemy_base_health(uint32_t value) {
   _internal_set_enemy_base_health(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.enemy_base_health)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.enemy_base_health)
 }
 
 // optional uint32 enemy_base_status = 7;
@@ -8335,7 +8704,7 @@ inline uint32_t GlobalUnitStatus::_internal_enemy_base_status() const {
   return enemy_base_status_;
 }
 inline uint32_t GlobalUnitStatus::enemy_base_status() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.enemy_base_status)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.enemy_base_status)
   return _internal_enemy_base_status();
 }
 inline void GlobalUnitStatus::_internal_set_enemy_base_status(uint32_t value) {
@@ -8344,7 +8713,7 @@ inline void GlobalUnitStatus::_internal_set_enemy_base_status(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_enemy_base_status(uint32_t value) {
   _internal_set_enemy_base_status(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.enemy_base_status)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.enemy_base_status)
 }
 
 // optional uint32 enemy_base_shield = 8;
@@ -8363,7 +8732,7 @@ inline uint32_t GlobalUnitStatus::_internal_enemy_base_shield() const {
   return enemy_base_shield_;
 }
 inline uint32_t GlobalUnitStatus::enemy_base_shield() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.enemy_base_shield)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.enemy_base_shield)
   return _internal_enemy_base_shield();
 }
 inline void GlobalUnitStatus::_internal_set_enemy_base_shield(uint32_t value) {
@@ -8372,7 +8741,7 @@ inline void GlobalUnitStatus::_internal_set_enemy_base_shield(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_enemy_base_shield(uint32_t value) {
   _internal_set_enemy_base_shield(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.enemy_base_shield)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.enemy_base_shield)
 }
 
 // optional uint32 enemy_outpost_health = 9;
@@ -8391,7 +8760,7 @@ inline uint32_t GlobalUnitStatus::_internal_enemy_outpost_health() const {
   return enemy_outpost_health_;
 }
 inline uint32_t GlobalUnitStatus::enemy_outpost_health() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.enemy_outpost_health)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.enemy_outpost_health)
   return _internal_enemy_outpost_health();
 }
 inline void GlobalUnitStatus::_internal_set_enemy_outpost_health(uint32_t value) {
@@ -8400,7 +8769,7 @@ inline void GlobalUnitStatus::_internal_set_enemy_outpost_health(uint32_t value)
 }
 inline void GlobalUnitStatus::set_enemy_outpost_health(uint32_t value) {
   _internal_set_enemy_outpost_health(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.enemy_outpost_health)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.enemy_outpost_health)
 }
 
 // optional uint32 enemy_outpost_status = 10;
@@ -8419,7 +8788,7 @@ inline uint32_t GlobalUnitStatus::_internal_enemy_outpost_status() const {
   return enemy_outpost_status_;
 }
 inline uint32_t GlobalUnitStatus::enemy_outpost_status() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.enemy_outpost_status)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.enemy_outpost_status)
   return _internal_enemy_outpost_status();
 }
 inline void GlobalUnitStatus::_internal_set_enemy_outpost_status(uint32_t value) {
@@ -8428,7 +8797,7 @@ inline void GlobalUnitStatus::_internal_set_enemy_outpost_status(uint32_t value)
 }
 inline void GlobalUnitStatus::set_enemy_outpost_status(uint32_t value) {
   _internal_set_enemy_outpost_status(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.enemy_outpost_status)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.enemy_outpost_status)
 }
 
 // repeated uint32 robot_health = 11;
@@ -8445,19 +8814,19 @@ inline uint32_t GlobalUnitStatus::_internal_robot_health(int index) const {
   return robot_health_.Get(index);
 }
 inline uint32_t GlobalUnitStatus::robot_health(int index) const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.robot_health)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.robot_health)
   return _internal_robot_health(index);
 }
 inline void GlobalUnitStatus::set_robot_health(int index, uint32_t value) {
   robot_health_.Set(index, value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.robot_health)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.robot_health)
 }
 inline void GlobalUnitStatus::_internal_add_robot_health(uint32_t value) {
   robot_health_.Add(value);
 }
 inline void GlobalUnitStatus::add_robot_health(uint32_t value) {
   _internal_add_robot_health(value);
-  // @@protoc_insertion_point(field_add:GlobalUnitStatus.robot_health)
+  // @@protoc_insertion_point(field_add:rmcc.GlobalUnitStatus.robot_health)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >&
 GlobalUnitStatus::_internal_robot_health() const {
@@ -8465,7 +8834,7 @@ GlobalUnitStatus::_internal_robot_health() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >&
 GlobalUnitStatus::robot_health() const {
-  // @@protoc_insertion_point(field_list:GlobalUnitStatus.robot_health)
+  // @@protoc_insertion_point(field_list:rmcc.GlobalUnitStatus.robot_health)
   return _internal_robot_health();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >*
@@ -8474,7 +8843,7 @@ GlobalUnitStatus::_internal_mutable_robot_health() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >*
 GlobalUnitStatus::mutable_robot_health() {
-  // @@protoc_insertion_point(field_mutable_list:GlobalUnitStatus.robot_health)
+  // @@protoc_insertion_point(field_mutable_list:rmcc.GlobalUnitStatus.robot_health)
   return _internal_mutable_robot_health();
 }
 
@@ -8492,19 +8861,19 @@ inline int32_t GlobalUnitStatus::_internal_robot_bullets(int index) const {
   return robot_bullets_.Get(index);
 }
 inline int32_t GlobalUnitStatus::robot_bullets(int index) const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.robot_bullets)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.robot_bullets)
   return _internal_robot_bullets(index);
 }
 inline void GlobalUnitStatus::set_robot_bullets(int index, int32_t value) {
   robot_bullets_.Set(index, value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.robot_bullets)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.robot_bullets)
 }
 inline void GlobalUnitStatus::_internal_add_robot_bullets(int32_t value) {
   robot_bullets_.Add(value);
 }
 inline void GlobalUnitStatus::add_robot_bullets(int32_t value) {
   _internal_add_robot_bullets(value);
-  // @@protoc_insertion_point(field_add:GlobalUnitStatus.robot_bullets)
+  // @@protoc_insertion_point(field_add:rmcc.GlobalUnitStatus.robot_bullets)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
 GlobalUnitStatus::_internal_robot_bullets() const {
@@ -8512,7 +8881,7 @@ GlobalUnitStatus::_internal_robot_bullets() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
 GlobalUnitStatus::robot_bullets() const {
-  // @@protoc_insertion_point(field_list:GlobalUnitStatus.robot_bullets)
+  // @@protoc_insertion_point(field_list:rmcc.GlobalUnitStatus.robot_bullets)
   return _internal_robot_bullets();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
@@ -8521,7 +8890,7 @@ GlobalUnitStatus::_internal_mutable_robot_bullets() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
 GlobalUnitStatus::mutable_robot_bullets() {
-  // @@protoc_insertion_point(field_mutable_list:GlobalUnitStatus.robot_bullets)
+  // @@protoc_insertion_point(field_mutable_list:rmcc.GlobalUnitStatus.robot_bullets)
   return _internal_mutable_robot_bullets();
 }
 
@@ -8541,7 +8910,7 @@ inline uint32_t GlobalUnitStatus::_internal_total_damage_ally() const {
   return total_damage_ally_;
 }
 inline uint32_t GlobalUnitStatus::total_damage_ally() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.total_damage_ally)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.total_damage_ally)
   return _internal_total_damage_ally();
 }
 inline void GlobalUnitStatus::_internal_set_total_damage_ally(uint32_t value) {
@@ -8550,7 +8919,7 @@ inline void GlobalUnitStatus::_internal_set_total_damage_ally(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_total_damage_ally(uint32_t value) {
   _internal_set_total_damage_ally(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.total_damage_ally)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.total_damage_ally)
 }
 
 // optional uint32 total_damage_enemy = 14;
@@ -8569,7 +8938,7 @@ inline uint32_t GlobalUnitStatus::_internal_total_damage_enemy() const {
   return total_damage_enemy_;
 }
 inline uint32_t GlobalUnitStatus::total_damage_enemy() const {
-  // @@protoc_insertion_point(field_get:GlobalUnitStatus.total_damage_enemy)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalUnitStatus.total_damage_enemy)
   return _internal_total_damage_enemy();
 }
 inline void GlobalUnitStatus::_internal_set_total_damage_enemy(uint32_t value) {
@@ -8578,7 +8947,7 @@ inline void GlobalUnitStatus::_internal_set_total_damage_enemy(uint32_t value) {
 }
 inline void GlobalUnitStatus::set_total_damage_enemy(uint32_t value) {
   _internal_set_total_damage_enemy(value);
-  // @@protoc_insertion_point(field_set:GlobalUnitStatus.total_damage_enemy)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalUnitStatus.total_damage_enemy)
 }
 
 // -------------------------------------------------------------------
@@ -8601,7 +8970,7 @@ inline uint32_t GlobalLogisticsStatus::_internal_remaining_economy() const {
   return remaining_economy_;
 }
 inline uint32_t GlobalLogisticsStatus::remaining_economy() const {
-  // @@protoc_insertion_point(field_get:GlobalLogisticsStatus.remaining_economy)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalLogisticsStatus.remaining_economy)
   return _internal_remaining_economy();
 }
 inline void GlobalLogisticsStatus::_internal_set_remaining_economy(uint32_t value) {
@@ -8610,7 +8979,7 @@ inline void GlobalLogisticsStatus::_internal_set_remaining_economy(uint32_t valu
 }
 inline void GlobalLogisticsStatus::set_remaining_economy(uint32_t value) {
   _internal_set_remaining_economy(value);
-  // @@protoc_insertion_point(field_set:GlobalLogisticsStatus.remaining_economy)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalLogisticsStatus.remaining_economy)
 }
 
 // optional uint64 total_economy_obtained = 2;
@@ -8629,7 +8998,7 @@ inline uint64_t GlobalLogisticsStatus::_internal_total_economy_obtained() const 
   return total_economy_obtained_;
 }
 inline uint64_t GlobalLogisticsStatus::total_economy_obtained() const {
-  // @@protoc_insertion_point(field_get:GlobalLogisticsStatus.total_economy_obtained)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalLogisticsStatus.total_economy_obtained)
   return _internal_total_economy_obtained();
 }
 inline void GlobalLogisticsStatus::_internal_set_total_economy_obtained(uint64_t value) {
@@ -8638,7 +9007,7 @@ inline void GlobalLogisticsStatus::_internal_set_total_economy_obtained(uint64_t
 }
 inline void GlobalLogisticsStatus::set_total_economy_obtained(uint64_t value) {
   _internal_set_total_economy_obtained(value);
-  // @@protoc_insertion_point(field_set:GlobalLogisticsStatus.total_economy_obtained)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalLogisticsStatus.total_economy_obtained)
 }
 
 // optional uint32 tech_level = 3;
@@ -8657,7 +9026,7 @@ inline uint32_t GlobalLogisticsStatus::_internal_tech_level() const {
   return tech_level_;
 }
 inline uint32_t GlobalLogisticsStatus::tech_level() const {
-  // @@protoc_insertion_point(field_get:GlobalLogisticsStatus.tech_level)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalLogisticsStatus.tech_level)
   return _internal_tech_level();
 }
 inline void GlobalLogisticsStatus::_internal_set_tech_level(uint32_t value) {
@@ -8666,7 +9035,7 @@ inline void GlobalLogisticsStatus::_internal_set_tech_level(uint32_t value) {
 }
 inline void GlobalLogisticsStatus::set_tech_level(uint32_t value) {
   _internal_set_tech_level(value);
-  // @@protoc_insertion_point(field_set:GlobalLogisticsStatus.tech_level)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalLogisticsStatus.tech_level)
 }
 
 // optional uint32 encryption_level = 4;
@@ -8685,7 +9054,7 @@ inline uint32_t GlobalLogisticsStatus::_internal_encryption_level() const {
   return encryption_level_;
 }
 inline uint32_t GlobalLogisticsStatus::encryption_level() const {
-  // @@protoc_insertion_point(field_get:GlobalLogisticsStatus.encryption_level)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalLogisticsStatus.encryption_level)
   return _internal_encryption_level();
 }
 inline void GlobalLogisticsStatus::_internal_set_encryption_level(uint32_t value) {
@@ -8694,7 +9063,7 @@ inline void GlobalLogisticsStatus::_internal_set_encryption_level(uint32_t value
 }
 inline void GlobalLogisticsStatus::set_encryption_level(uint32_t value) {
   _internal_set_encryption_level(value);
-  // @@protoc_insertion_point(field_set:GlobalLogisticsStatus.encryption_level)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalLogisticsStatus.encryption_level)
 }
 
 // -------------------------------------------------------------------
@@ -8715,19 +9084,19 @@ inline uint32_t GlobalSpecialMechanism::_internal_mechanism_id(int index) const 
   return mechanism_id_.Get(index);
 }
 inline uint32_t GlobalSpecialMechanism::mechanism_id(int index) const {
-  // @@protoc_insertion_point(field_get:GlobalSpecialMechanism.mechanism_id)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalSpecialMechanism.mechanism_id)
   return _internal_mechanism_id(index);
 }
 inline void GlobalSpecialMechanism::set_mechanism_id(int index, uint32_t value) {
   mechanism_id_.Set(index, value);
-  // @@protoc_insertion_point(field_set:GlobalSpecialMechanism.mechanism_id)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalSpecialMechanism.mechanism_id)
 }
 inline void GlobalSpecialMechanism::_internal_add_mechanism_id(uint32_t value) {
   mechanism_id_.Add(value);
 }
 inline void GlobalSpecialMechanism::add_mechanism_id(uint32_t value) {
   _internal_add_mechanism_id(value);
-  // @@protoc_insertion_point(field_add:GlobalSpecialMechanism.mechanism_id)
+  // @@protoc_insertion_point(field_add:rmcc.GlobalSpecialMechanism.mechanism_id)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >&
 GlobalSpecialMechanism::_internal_mechanism_id() const {
@@ -8735,7 +9104,7 @@ GlobalSpecialMechanism::_internal_mechanism_id() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >&
 GlobalSpecialMechanism::mechanism_id() const {
-  // @@protoc_insertion_point(field_list:GlobalSpecialMechanism.mechanism_id)
+  // @@protoc_insertion_point(field_list:rmcc.GlobalSpecialMechanism.mechanism_id)
   return _internal_mechanism_id();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >*
@@ -8744,7 +9113,7 @@ GlobalSpecialMechanism::_internal_mutable_mechanism_id() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >*
 GlobalSpecialMechanism::mutable_mechanism_id() {
-  // @@protoc_insertion_point(field_mutable_list:GlobalSpecialMechanism.mechanism_id)
+  // @@protoc_insertion_point(field_mutable_list:rmcc.GlobalSpecialMechanism.mechanism_id)
   return _internal_mutable_mechanism_id();
 }
 
@@ -8762,19 +9131,19 @@ inline int32_t GlobalSpecialMechanism::_internal_mechanism_time_sec(int index) c
   return mechanism_time_sec_.Get(index);
 }
 inline int32_t GlobalSpecialMechanism::mechanism_time_sec(int index) const {
-  // @@protoc_insertion_point(field_get:GlobalSpecialMechanism.mechanism_time_sec)
+  // @@protoc_insertion_point(field_get:rmcc.GlobalSpecialMechanism.mechanism_time_sec)
   return _internal_mechanism_time_sec(index);
 }
 inline void GlobalSpecialMechanism::set_mechanism_time_sec(int index, int32_t value) {
   mechanism_time_sec_.Set(index, value);
-  // @@protoc_insertion_point(field_set:GlobalSpecialMechanism.mechanism_time_sec)
+  // @@protoc_insertion_point(field_set:rmcc.GlobalSpecialMechanism.mechanism_time_sec)
 }
 inline void GlobalSpecialMechanism::_internal_add_mechanism_time_sec(int32_t value) {
   mechanism_time_sec_.Add(value);
 }
 inline void GlobalSpecialMechanism::add_mechanism_time_sec(int32_t value) {
   _internal_add_mechanism_time_sec(value);
-  // @@protoc_insertion_point(field_add:GlobalSpecialMechanism.mechanism_time_sec)
+  // @@protoc_insertion_point(field_add:rmcc.GlobalSpecialMechanism.mechanism_time_sec)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
 GlobalSpecialMechanism::_internal_mechanism_time_sec() const {
@@ -8782,7 +9151,7 @@ GlobalSpecialMechanism::_internal_mechanism_time_sec() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
 GlobalSpecialMechanism::mechanism_time_sec() const {
-  // @@protoc_insertion_point(field_list:GlobalSpecialMechanism.mechanism_time_sec)
+  // @@protoc_insertion_point(field_list:rmcc.GlobalSpecialMechanism.mechanism_time_sec)
   return _internal_mechanism_time_sec();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
@@ -8791,7 +9160,7 @@ GlobalSpecialMechanism::_internal_mutable_mechanism_time_sec() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
 GlobalSpecialMechanism::mutable_mechanism_time_sec() {
-  // @@protoc_insertion_point(field_mutable_list:GlobalSpecialMechanism.mechanism_time_sec)
+  // @@protoc_insertion_point(field_mutable_list:rmcc.GlobalSpecialMechanism.mechanism_time_sec)
   return _internal_mutable_mechanism_time_sec();
 }
 
@@ -8815,7 +9184,7 @@ inline int32_t Event::_internal_event_id() const {
   return event_id_;
 }
 inline int32_t Event::event_id() const {
-  // @@protoc_insertion_point(field_get:Event.event_id)
+  // @@protoc_insertion_point(field_get:rmcc.Event.event_id)
   return _internal_event_id();
 }
 inline void Event::_internal_set_event_id(int32_t value) {
@@ -8824,7 +9193,7 @@ inline void Event::_internal_set_event_id(int32_t value) {
 }
 inline void Event::set_event_id(int32_t value) {
   _internal_set_event_id(value);
-  // @@protoc_insertion_point(field_set:Event.event_id)
+  // @@protoc_insertion_point(field_set:rmcc.Event.event_id)
 }
 
 // optional string param = 2;
@@ -8840,7 +9209,7 @@ inline void Event::clear_param() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& Event::param() const {
-  // @@protoc_insertion_point(field_get:Event.param)
+  // @@protoc_insertion_point(field_get:rmcc.Event.param)
   return _internal_param();
 }
 template <typename ArgT0, typename... ArgT>
@@ -8848,11 +9217,11 @@ inline PROTOBUF_ALWAYS_INLINE
 void Event::set_param(ArgT0&& arg0, ArgT... args) {
  _has_bits_[0] |= 0x00000001u;
  param_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Event.param)
+  // @@protoc_insertion_point(field_set:rmcc.Event.param)
 }
 inline std::string* Event::mutable_param() {
   std::string* _s = _internal_mutable_param();
-  // @@protoc_insertion_point(field_mutable:Event.param)
+  // @@protoc_insertion_point(field_mutable:rmcc.Event.param)
   return _s;
 }
 inline const std::string& Event::_internal_param() const {
@@ -8867,7 +9236,7 @@ inline std::string* Event::_internal_mutable_param() {
   return param_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* Event::release_param() {
-  // @@protoc_insertion_point(field_release:Event.param)
+  // @@protoc_insertion_point(field_release:rmcc.Event.param)
   if (!_internal_has_param()) {
     return nullptr;
   }
@@ -8893,7 +9262,7 @@ inline void Event::set_allocated_param(std::string* param) {
     param_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Event.param)
+  // @@protoc_insertion_point(field_set_allocated:rmcc.Event.param)
 }
 
 // -------------------------------------------------------------------
@@ -8916,7 +9285,7 @@ inline uint32_t RobotInjuryStat::_internal_total_damage() const {
   return total_damage_;
 }
 inline uint32_t RobotInjuryStat::total_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.total_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.total_damage)
   return _internal_total_damage();
 }
 inline void RobotInjuryStat::_internal_set_total_damage(uint32_t value) {
@@ -8925,7 +9294,7 @@ inline void RobotInjuryStat::_internal_set_total_damage(uint32_t value) {
 }
 inline void RobotInjuryStat::set_total_damage(uint32_t value) {
   _internal_set_total_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.total_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.total_damage)
 }
 
 // optional uint32 collision_damage = 2;
@@ -8944,7 +9313,7 @@ inline uint32_t RobotInjuryStat::_internal_collision_damage() const {
   return collision_damage_;
 }
 inline uint32_t RobotInjuryStat::collision_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.collision_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.collision_damage)
   return _internal_collision_damage();
 }
 inline void RobotInjuryStat::_internal_set_collision_damage(uint32_t value) {
@@ -8953,7 +9322,7 @@ inline void RobotInjuryStat::_internal_set_collision_damage(uint32_t value) {
 }
 inline void RobotInjuryStat::set_collision_damage(uint32_t value) {
   _internal_set_collision_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.collision_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.collision_damage)
 }
 
 // optional uint32 small_projectile_damage = 3;
@@ -8972,7 +9341,7 @@ inline uint32_t RobotInjuryStat::_internal_small_projectile_damage() const {
   return small_projectile_damage_;
 }
 inline uint32_t RobotInjuryStat::small_projectile_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.small_projectile_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.small_projectile_damage)
   return _internal_small_projectile_damage();
 }
 inline void RobotInjuryStat::_internal_set_small_projectile_damage(uint32_t value) {
@@ -8981,7 +9350,7 @@ inline void RobotInjuryStat::_internal_set_small_projectile_damage(uint32_t valu
 }
 inline void RobotInjuryStat::set_small_projectile_damage(uint32_t value) {
   _internal_set_small_projectile_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.small_projectile_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.small_projectile_damage)
 }
 
 // optional uint32 large_projectile_damage = 4;
@@ -9000,7 +9369,7 @@ inline uint32_t RobotInjuryStat::_internal_large_projectile_damage() const {
   return large_projectile_damage_;
 }
 inline uint32_t RobotInjuryStat::large_projectile_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.large_projectile_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.large_projectile_damage)
   return _internal_large_projectile_damage();
 }
 inline void RobotInjuryStat::_internal_set_large_projectile_damage(uint32_t value) {
@@ -9009,7 +9378,7 @@ inline void RobotInjuryStat::_internal_set_large_projectile_damage(uint32_t valu
 }
 inline void RobotInjuryStat::set_large_projectile_damage(uint32_t value) {
   _internal_set_large_projectile_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.large_projectile_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.large_projectile_damage)
 }
 
 // optional uint32 dart_splash_damage = 5;
@@ -9028,7 +9397,7 @@ inline uint32_t RobotInjuryStat::_internal_dart_splash_damage() const {
   return dart_splash_damage_;
 }
 inline uint32_t RobotInjuryStat::dart_splash_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.dart_splash_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.dart_splash_damage)
   return _internal_dart_splash_damage();
 }
 inline void RobotInjuryStat::_internal_set_dart_splash_damage(uint32_t value) {
@@ -9037,7 +9406,7 @@ inline void RobotInjuryStat::_internal_set_dart_splash_damage(uint32_t value) {
 }
 inline void RobotInjuryStat::set_dart_splash_damage(uint32_t value) {
   _internal_set_dart_splash_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.dart_splash_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.dart_splash_damage)
 }
 
 // optional uint32 module_offline_damage = 6;
@@ -9056,7 +9425,7 @@ inline uint32_t RobotInjuryStat::_internal_module_offline_damage() const {
   return module_offline_damage_;
 }
 inline uint32_t RobotInjuryStat::module_offline_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.module_offline_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.module_offline_damage)
   return _internal_module_offline_damage();
 }
 inline void RobotInjuryStat::_internal_set_module_offline_damage(uint32_t value) {
@@ -9065,7 +9434,7 @@ inline void RobotInjuryStat::_internal_set_module_offline_damage(uint32_t value)
 }
 inline void RobotInjuryStat::set_module_offline_damage(uint32_t value) {
   _internal_set_module_offline_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.module_offline_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.module_offline_damage)
 }
 
 // optional uint32 offline_damage = 7;
@@ -9084,7 +9453,7 @@ inline uint32_t RobotInjuryStat::_internal_offline_damage() const {
   return offline_damage_;
 }
 inline uint32_t RobotInjuryStat::offline_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.offline_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.offline_damage)
   return _internal_offline_damage();
 }
 inline void RobotInjuryStat::_internal_set_offline_damage(uint32_t value) {
@@ -9093,7 +9462,7 @@ inline void RobotInjuryStat::_internal_set_offline_damage(uint32_t value) {
 }
 inline void RobotInjuryStat::set_offline_damage(uint32_t value) {
   _internal_set_offline_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.offline_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.offline_damage)
 }
 
 // optional uint32 penalty_damage = 8;
@@ -9112,7 +9481,7 @@ inline uint32_t RobotInjuryStat::_internal_penalty_damage() const {
   return penalty_damage_;
 }
 inline uint32_t RobotInjuryStat::penalty_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.penalty_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.penalty_damage)
   return _internal_penalty_damage();
 }
 inline void RobotInjuryStat::_internal_set_penalty_damage(uint32_t value) {
@@ -9121,7 +9490,7 @@ inline void RobotInjuryStat::_internal_set_penalty_damage(uint32_t value) {
 }
 inline void RobotInjuryStat::set_penalty_damage(uint32_t value) {
   _internal_set_penalty_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.penalty_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.penalty_damage)
 }
 
 // optional uint32 server_kill_damage = 9;
@@ -9140,7 +9509,7 @@ inline uint32_t RobotInjuryStat::_internal_server_kill_damage() const {
   return server_kill_damage_;
 }
 inline uint32_t RobotInjuryStat::server_kill_damage() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.server_kill_damage)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.server_kill_damage)
   return _internal_server_kill_damage();
 }
 inline void RobotInjuryStat::_internal_set_server_kill_damage(uint32_t value) {
@@ -9149,7 +9518,7 @@ inline void RobotInjuryStat::_internal_set_server_kill_damage(uint32_t value) {
 }
 inline void RobotInjuryStat::set_server_kill_damage(uint32_t value) {
   _internal_set_server_kill_damage(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.server_kill_damage)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.server_kill_damage)
 }
 
 // optional uint32 killer_id = 10;
@@ -9168,7 +9537,7 @@ inline uint32_t RobotInjuryStat::_internal_killer_id() const {
   return killer_id_;
 }
 inline uint32_t RobotInjuryStat::killer_id() const {
-  // @@protoc_insertion_point(field_get:RobotInjuryStat.killer_id)
+  // @@protoc_insertion_point(field_get:rmcc.RobotInjuryStat.killer_id)
   return _internal_killer_id();
 }
 inline void RobotInjuryStat::_internal_set_killer_id(uint32_t value) {
@@ -9177,7 +9546,7 @@ inline void RobotInjuryStat::_internal_set_killer_id(uint32_t value) {
 }
 inline void RobotInjuryStat::set_killer_id(uint32_t value) {
   _internal_set_killer_id(value);
-  // @@protoc_insertion_point(field_set:RobotInjuryStat.killer_id)
+  // @@protoc_insertion_point(field_set:rmcc.RobotInjuryStat.killer_id)
 }
 
 // -------------------------------------------------------------------
@@ -9200,7 +9569,7 @@ inline bool RobotRespawnStatus::_internal_is_pending_respawn() const {
   return is_pending_respawn_;
 }
 inline bool RobotRespawnStatus::is_pending_respawn() const {
-  // @@protoc_insertion_point(field_get:RobotRespawnStatus.is_pending_respawn)
+  // @@protoc_insertion_point(field_get:rmcc.RobotRespawnStatus.is_pending_respawn)
   return _internal_is_pending_respawn();
 }
 inline void RobotRespawnStatus::_internal_set_is_pending_respawn(bool value) {
@@ -9209,7 +9578,7 @@ inline void RobotRespawnStatus::_internal_set_is_pending_respawn(bool value) {
 }
 inline void RobotRespawnStatus::set_is_pending_respawn(bool value) {
   _internal_set_is_pending_respawn(value);
-  // @@protoc_insertion_point(field_set:RobotRespawnStatus.is_pending_respawn)
+  // @@protoc_insertion_point(field_set:rmcc.RobotRespawnStatus.is_pending_respawn)
 }
 
 // optional uint32 total_respawn_progress = 2;
@@ -9228,7 +9597,7 @@ inline uint32_t RobotRespawnStatus::_internal_total_respawn_progress() const {
   return total_respawn_progress_;
 }
 inline uint32_t RobotRespawnStatus::total_respawn_progress() const {
-  // @@protoc_insertion_point(field_get:RobotRespawnStatus.total_respawn_progress)
+  // @@protoc_insertion_point(field_get:rmcc.RobotRespawnStatus.total_respawn_progress)
   return _internal_total_respawn_progress();
 }
 inline void RobotRespawnStatus::_internal_set_total_respawn_progress(uint32_t value) {
@@ -9237,7 +9606,7 @@ inline void RobotRespawnStatus::_internal_set_total_respawn_progress(uint32_t va
 }
 inline void RobotRespawnStatus::set_total_respawn_progress(uint32_t value) {
   _internal_set_total_respawn_progress(value);
-  // @@protoc_insertion_point(field_set:RobotRespawnStatus.total_respawn_progress)
+  // @@protoc_insertion_point(field_set:rmcc.RobotRespawnStatus.total_respawn_progress)
 }
 
 // optional uint32 current_respawn_progress = 3;
@@ -9256,7 +9625,7 @@ inline uint32_t RobotRespawnStatus::_internal_current_respawn_progress() const {
   return current_respawn_progress_;
 }
 inline uint32_t RobotRespawnStatus::current_respawn_progress() const {
-  // @@protoc_insertion_point(field_get:RobotRespawnStatus.current_respawn_progress)
+  // @@protoc_insertion_point(field_get:rmcc.RobotRespawnStatus.current_respawn_progress)
   return _internal_current_respawn_progress();
 }
 inline void RobotRespawnStatus::_internal_set_current_respawn_progress(uint32_t value) {
@@ -9265,7 +9634,7 @@ inline void RobotRespawnStatus::_internal_set_current_respawn_progress(uint32_t 
 }
 inline void RobotRespawnStatus::set_current_respawn_progress(uint32_t value) {
   _internal_set_current_respawn_progress(value);
-  // @@protoc_insertion_point(field_set:RobotRespawnStatus.current_respawn_progress)
+  // @@protoc_insertion_point(field_set:rmcc.RobotRespawnStatus.current_respawn_progress)
 }
 
 // optional bool can_free_respawn = 4;
@@ -9284,7 +9653,7 @@ inline bool RobotRespawnStatus::_internal_can_free_respawn() const {
   return can_free_respawn_;
 }
 inline bool RobotRespawnStatus::can_free_respawn() const {
-  // @@protoc_insertion_point(field_get:RobotRespawnStatus.can_free_respawn)
+  // @@protoc_insertion_point(field_get:rmcc.RobotRespawnStatus.can_free_respawn)
   return _internal_can_free_respawn();
 }
 inline void RobotRespawnStatus::_internal_set_can_free_respawn(bool value) {
@@ -9293,7 +9662,7 @@ inline void RobotRespawnStatus::_internal_set_can_free_respawn(bool value) {
 }
 inline void RobotRespawnStatus::set_can_free_respawn(bool value) {
   _internal_set_can_free_respawn(value);
-  // @@protoc_insertion_point(field_set:RobotRespawnStatus.can_free_respawn)
+  // @@protoc_insertion_point(field_set:rmcc.RobotRespawnStatus.can_free_respawn)
 }
 
 // optional uint32 gold_cost_for_respawn = 5;
@@ -9312,7 +9681,7 @@ inline uint32_t RobotRespawnStatus::_internal_gold_cost_for_respawn() const {
   return gold_cost_for_respawn_;
 }
 inline uint32_t RobotRespawnStatus::gold_cost_for_respawn() const {
-  // @@protoc_insertion_point(field_get:RobotRespawnStatus.gold_cost_for_respawn)
+  // @@protoc_insertion_point(field_get:rmcc.RobotRespawnStatus.gold_cost_for_respawn)
   return _internal_gold_cost_for_respawn();
 }
 inline void RobotRespawnStatus::_internal_set_gold_cost_for_respawn(uint32_t value) {
@@ -9321,7 +9690,7 @@ inline void RobotRespawnStatus::_internal_set_gold_cost_for_respawn(uint32_t val
 }
 inline void RobotRespawnStatus::set_gold_cost_for_respawn(uint32_t value) {
   _internal_set_gold_cost_for_respawn(value);
-  // @@protoc_insertion_point(field_set:RobotRespawnStatus.gold_cost_for_respawn)
+  // @@protoc_insertion_point(field_set:rmcc.RobotRespawnStatus.gold_cost_for_respawn)
 }
 
 // optional bool can_pay_for_respawn = 6;
@@ -9340,7 +9709,7 @@ inline bool RobotRespawnStatus::_internal_can_pay_for_respawn() const {
   return can_pay_for_respawn_;
 }
 inline bool RobotRespawnStatus::can_pay_for_respawn() const {
-  // @@protoc_insertion_point(field_get:RobotRespawnStatus.can_pay_for_respawn)
+  // @@protoc_insertion_point(field_get:rmcc.RobotRespawnStatus.can_pay_for_respawn)
   return _internal_can_pay_for_respawn();
 }
 inline void RobotRespawnStatus::_internal_set_can_pay_for_respawn(bool value) {
@@ -9349,7 +9718,7 @@ inline void RobotRespawnStatus::_internal_set_can_pay_for_respawn(bool value) {
 }
 inline void RobotRespawnStatus::set_can_pay_for_respawn(bool value) {
   _internal_set_can_pay_for_respawn(value);
-  // @@protoc_insertion_point(field_set:RobotRespawnStatus.can_pay_for_respawn)
+  // @@protoc_insertion_point(field_set:rmcc.RobotRespawnStatus.can_pay_for_respawn)
 }
 
 // -------------------------------------------------------------------
@@ -9372,7 +9741,7 @@ inline uint32_t RobotStaticStatus::_internal_connection_state() const {
   return connection_state_;
 }
 inline uint32_t RobotStaticStatus::connection_state() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.connection_state)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.connection_state)
   return _internal_connection_state();
 }
 inline void RobotStaticStatus::_internal_set_connection_state(uint32_t value) {
@@ -9381,7 +9750,7 @@ inline void RobotStaticStatus::_internal_set_connection_state(uint32_t value) {
 }
 inline void RobotStaticStatus::set_connection_state(uint32_t value) {
   _internal_set_connection_state(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.connection_state)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.connection_state)
 }
 
 // optional uint32 field_state = 2;
@@ -9400,7 +9769,7 @@ inline uint32_t RobotStaticStatus::_internal_field_state() const {
   return field_state_;
 }
 inline uint32_t RobotStaticStatus::field_state() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.field_state)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.field_state)
   return _internal_field_state();
 }
 inline void RobotStaticStatus::_internal_set_field_state(uint32_t value) {
@@ -9409,7 +9778,7 @@ inline void RobotStaticStatus::_internal_set_field_state(uint32_t value) {
 }
 inline void RobotStaticStatus::set_field_state(uint32_t value) {
   _internal_set_field_state(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.field_state)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.field_state)
 }
 
 // optional uint32 alive_state = 3;
@@ -9428,7 +9797,7 @@ inline uint32_t RobotStaticStatus::_internal_alive_state() const {
   return alive_state_;
 }
 inline uint32_t RobotStaticStatus::alive_state() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.alive_state)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.alive_state)
   return _internal_alive_state();
 }
 inline void RobotStaticStatus::_internal_set_alive_state(uint32_t value) {
@@ -9437,7 +9806,7 @@ inline void RobotStaticStatus::_internal_set_alive_state(uint32_t value) {
 }
 inline void RobotStaticStatus::set_alive_state(uint32_t value) {
   _internal_set_alive_state(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.alive_state)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.alive_state)
 }
 
 // optional uint32 robot_id = 4;
@@ -9456,7 +9825,7 @@ inline uint32_t RobotStaticStatus::_internal_robot_id() const {
   return robot_id_;
 }
 inline uint32_t RobotStaticStatus::robot_id() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.robot_id)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.robot_id)
   return _internal_robot_id();
 }
 inline void RobotStaticStatus::_internal_set_robot_id(uint32_t value) {
@@ -9465,7 +9834,7 @@ inline void RobotStaticStatus::_internal_set_robot_id(uint32_t value) {
 }
 inline void RobotStaticStatus::set_robot_id(uint32_t value) {
   _internal_set_robot_id(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.robot_id)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.robot_id)
 }
 
 // optional uint32 robot_type = 5;
@@ -9484,7 +9853,7 @@ inline uint32_t RobotStaticStatus::_internal_robot_type() const {
   return robot_type_;
 }
 inline uint32_t RobotStaticStatus::robot_type() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.robot_type)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.robot_type)
   return _internal_robot_type();
 }
 inline void RobotStaticStatus::_internal_set_robot_type(uint32_t value) {
@@ -9493,7 +9862,7 @@ inline void RobotStaticStatus::_internal_set_robot_type(uint32_t value) {
 }
 inline void RobotStaticStatus::set_robot_type(uint32_t value) {
   _internal_set_robot_type(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.robot_type)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.robot_type)
 }
 
 // optional uint32 performance_system_shooter = 6;
@@ -9512,7 +9881,7 @@ inline uint32_t RobotStaticStatus::_internal_performance_system_shooter() const 
   return performance_system_shooter_;
 }
 inline uint32_t RobotStaticStatus::performance_system_shooter() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.performance_system_shooter)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.performance_system_shooter)
   return _internal_performance_system_shooter();
 }
 inline void RobotStaticStatus::_internal_set_performance_system_shooter(uint32_t value) {
@@ -9521,7 +9890,7 @@ inline void RobotStaticStatus::_internal_set_performance_system_shooter(uint32_t
 }
 inline void RobotStaticStatus::set_performance_system_shooter(uint32_t value) {
   _internal_set_performance_system_shooter(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.performance_system_shooter)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.performance_system_shooter)
 }
 
 // optional uint32 performance_system_chassis = 7;
@@ -9540,7 +9909,7 @@ inline uint32_t RobotStaticStatus::_internal_performance_system_chassis() const 
   return performance_system_chassis_;
 }
 inline uint32_t RobotStaticStatus::performance_system_chassis() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.performance_system_chassis)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.performance_system_chassis)
   return _internal_performance_system_chassis();
 }
 inline void RobotStaticStatus::_internal_set_performance_system_chassis(uint32_t value) {
@@ -9549,7 +9918,7 @@ inline void RobotStaticStatus::_internal_set_performance_system_chassis(uint32_t
 }
 inline void RobotStaticStatus::set_performance_system_chassis(uint32_t value) {
   _internal_set_performance_system_chassis(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.performance_system_chassis)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.performance_system_chassis)
 }
 
 // optional uint32 level = 8;
@@ -9568,7 +9937,7 @@ inline uint32_t RobotStaticStatus::_internal_level() const {
   return level_;
 }
 inline uint32_t RobotStaticStatus::level() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.level)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.level)
   return _internal_level();
 }
 inline void RobotStaticStatus::_internal_set_level(uint32_t value) {
@@ -9577,7 +9946,7 @@ inline void RobotStaticStatus::_internal_set_level(uint32_t value) {
 }
 inline void RobotStaticStatus::set_level(uint32_t value) {
   _internal_set_level(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.level)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.level)
 }
 
 // optional uint32 max_health = 9;
@@ -9596,7 +9965,7 @@ inline uint32_t RobotStaticStatus::_internal_max_health() const {
   return max_health_;
 }
 inline uint32_t RobotStaticStatus::max_health() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.max_health)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.max_health)
   return _internal_max_health();
 }
 inline void RobotStaticStatus::_internal_set_max_health(uint32_t value) {
@@ -9605,7 +9974,7 @@ inline void RobotStaticStatus::_internal_set_max_health(uint32_t value) {
 }
 inline void RobotStaticStatus::set_max_health(uint32_t value) {
   _internal_set_max_health(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.max_health)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.max_health)
 }
 
 // optional uint32 max_heat = 10;
@@ -9624,7 +9993,7 @@ inline uint32_t RobotStaticStatus::_internal_max_heat() const {
   return max_heat_;
 }
 inline uint32_t RobotStaticStatus::max_heat() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.max_heat)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.max_heat)
   return _internal_max_heat();
 }
 inline void RobotStaticStatus::_internal_set_max_heat(uint32_t value) {
@@ -9633,7 +10002,7 @@ inline void RobotStaticStatus::_internal_set_max_heat(uint32_t value) {
 }
 inline void RobotStaticStatus::set_max_heat(uint32_t value) {
   _internal_set_max_heat(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.max_heat)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.max_heat)
 }
 
 // optional float heat_cooldown_rate = 11;
@@ -9652,7 +10021,7 @@ inline float RobotStaticStatus::_internal_heat_cooldown_rate() const {
   return heat_cooldown_rate_;
 }
 inline float RobotStaticStatus::heat_cooldown_rate() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.heat_cooldown_rate)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.heat_cooldown_rate)
   return _internal_heat_cooldown_rate();
 }
 inline void RobotStaticStatus::_internal_set_heat_cooldown_rate(float value) {
@@ -9661,7 +10030,7 @@ inline void RobotStaticStatus::_internal_set_heat_cooldown_rate(float value) {
 }
 inline void RobotStaticStatus::set_heat_cooldown_rate(float value) {
   _internal_set_heat_cooldown_rate(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.heat_cooldown_rate)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.heat_cooldown_rate)
 }
 
 // optional uint32 max_power = 12;
@@ -9680,7 +10049,7 @@ inline uint32_t RobotStaticStatus::_internal_max_power() const {
   return max_power_;
 }
 inline uint32_t RobotStaticStatus::max_power() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.max_power)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.max_power)
   return _internal_max_power();
 }
 inline void RobotStaticStatus::_internal_set_max_power(uint32_t value) {
@@ -9689,7 +10058,7 @@ inline void RobotStaticStatus::_internal_set_max_power(uint32_t value) {
 }
 inline void RobotStaticStatus::set_max_power(uint32_t value) {
   _internal_set_max_power(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.max_power)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.max_power)
 }
 
 // optional uint32 max_buffer_energy = 13;
@@ -9708,7 +10077,7 @@ inline uint32_t RobotStaticStatus::_internal_max_buffer_energy() const {
   return max_buffer_energy_;
 }
 inline uint32_t RobotStaticStatus::max_buffer_energy() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.max_buffer_energy)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.max_buffer_energy)
   return _internal_max_buffer_energy();
 }
 inline void RobotStaticStatus::_internal_set_max_buffer_energy(uint32_t value) {
@@ -9717,7 +10086,7 @@ inline void RobotStaticStatus::_internal_set_max_buffer_energy(uint32_t value) {
 }
 inline void RobotStaticStatus::set_max_buffer_energy(uint32_t value) {
   _internal_set_max_buffer_energy(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.max_buffer_energy)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.max_buffer_energy)
 }
 
 // optional uint32 max_chassis_energy = 14;
@@ -9736,7 +10105,7 @@ inline uint32_t RobotStaticStatus::_internal_max_chassis_energy() const {
   return max_chassis_energy_;
 }
 inline uint32_t RobotStaticStatus::max_chassis_energy() const {
-  // @@protoc_insertion_point(field_get:RobotStaticStatus.max_chassis_energy)
+  // @@protoc_insertion_point(field_get:rmcc.RobotStaticStatus.max_chassis_energy)
   return _internal_max_chassis_energy();
 }
 inline void RobotStaticStatus::_internal_set_max_chassis_energy(uint32_t value) {
@@ -9745,7 +10114,7 @@ inline void RobotStaticStatus::_internal_set_max_chassis_energy(uint32_t value) 
 }
 inline void RobotStaticStatus::set_max_chassis_energy(uint32_t value) {
   _internal_set_max_chassis_energy(value);
-  // @@protoc_insertion_point(field_set:RobotStaticStatus.max_chassis_energy)
+  // @@protoc_insertion_point(field_set:rmcc.RobotStaticStatus.max_chassis_energy)
 }
 
 // -------------------------------------------------------------------
@@ -9768,7 +10137,7 @@ inline uint32_t RobotDynamicStatus::_internal_current_health() const {
   return current_health_;
 }
 inline uint32_t RobotDynamicStatus::current_health() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.current_health)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.current_health)
   return _internal_current_health();
 }
 inline void RobotDynamicStatus::_internal_set_current_health(uint32_t value) {
@@ -9777,7 +10146,7 @@ inline void RobotDynamicStatus::_internal_set_current_health(uint32_t value) {
 }
 inline void RobotDynamicStatus::set_current_health(uint32_t value) {
   _internal_set_current_health(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.current_health)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.current_health)
 }
 
 // optional float current_heat = 2;
@@ -9796,7 +10165,7 @@ inline float RobotDynamicStatus::_internal_current_heat() const {
   return current_heat_;
 }
 inline float RobotDynamicStatus::current_heat() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.current_heat)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.current_heat)
   return _internal_current_heat();
 }
 inline void RobotDynamicStatus::_internal_set_current_heat(float value) {
@@ -9805,7 +10174,7 @@ inline void RobotDynamicStatus::_internal_set_current_heat(float value) {
 }
 inline void RobotDynamicStatus::set_current_heat(float value) {
   _internal_set_current_heat(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.current_heat)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.current_heat)
 }
 
 // optional float last_projectile_fire_rate = 3;
@@ -9824,7 +10193,7 @@ inline float RobotDynamicStatus::_internal_last_projectile_fire_rate() const {
   return last_projectile_fire_rate_;
 }
 inline float RobotDynamicStatus::last_projectile_fire_rate() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.last_projectile_fire_rate)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.last_projectile_fire_rate)
   return _internal_last_projectile_fire_rate();
 }
 inline void RobotDynamicStatus::_internal_set_last_projectile_fire_rate(float value) {
@@ -9833,7 +10202,7 @@ inline void RobotDynamicStatus::_internal_set_last_projectile_fire_rate(float va
 }
 inline void RobotDynamicStatus::set_last_projectile_fire_rate(float value) {
   _internal_set_last_projectile_fire_rate(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.last_projectile_fire_rate)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.last_projectile_fire_rate)
 }
 
 // optional uint32 current_chassis_energy = 4;
@@ -9852,7 +10221,7 @@ inline uint32_t RobotDynamicStatus::_internal_current_chassis_energy() const {
   return current_chassis_energy_;
 }
 inline uint32_t RobotDynamicStatus::current_chassis_energy() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.current_chassis_energy)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.current_chassis_energy)
   return _internal_current_chassis_energy();
 }
 inline void RobotDynamicStatus::_internal_set_current_chassis_energy(uint32_t value) {
@@ -9861,7 +10230,7 @@ inline void RobotDynamicStatus::_internal_set_current_chassis_energy(uint32_t va
 }
 inline void RobotDynamicStatus::set_current_chassis_energy(uint32_t value) {
   _internal_set_current_chassis_energy(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.current_chassis_energy)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.current_chassis_energy)
 }
 
 // optional uint32 current_buffer_energy = 5;
@@ -9880,7 +10249,7 @@ inline uint32_t RobotDynamicStatus::_internal_current_buffer_energy() const {
   return current_buffer_energy_;
 }
 inline uint32_t RobotDynamicStatus::current_buffer_energy() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.current_buffer_energy)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.current_buffer_energy)
   return _internal_current_buffer_energy();
 }
 inline void RobotDynamicStatus::_internal_set_current_buffer_energy(uint32_t value) {
@@ -9889,7 +10258,7 @@ inline void RobotDynamicStatus::_internal_set_current_buffer_energy(uint32_t val
 }
 inline void RobotDynamicStatus::set_current_buffer_energy(uint32_t value) {
   _internal_set_current_buffer_energy(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.current_buffer_energy)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.current_buffer_energy)
 }
 
 // optional uint32 current_experience = 6;
@@ -9908,7 +10277,7 @@ inline uint32_t RobotDynamicStatus::_internal_current_experience() const {
   return current_experience_;
 }
 inline uint32_t RobotDynamicStatus::current_experience() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.current_experience)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.current_experience)
   return _internal_current_experience();
 }
 inline void RobotDynamicStatus::_internal_set_current_experience(uint32_t value) {
@@ -9917,7 +10286,7 @@ inline void RobotDynamicStatus::_internal_set_current_experience(uint32_t value)
 }
 inline void RobotDynamicStatus::set_current_experience(uint32_t value) {
   _internal_set_current_experience(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.current_experience)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.current_experience)
 }
 
 // optional uint32 experience_for_upgrade = 7;
@@ -9936,7 +10305,7 @@ inline uint32_t RobotDynamicStatus::_internal_experience_for_upgrade() const {
   return experience_for_upgrade_;
 }
 inline uint32_t RobotDynamicStatus::experience_for_upgrade() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.experience_for_upgrade)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.experience_for_upgrade)
   return _internal_experience_for_upgrade();
 }
 inline void RobotDynamicStatus::_internal_set_experience_for_upgrade(uint32_t value) {
@@ -9945,7 +10314,7 @@ inline void RobotDynamicStatus::_internal_set_experience_for_upgrade(uint32_t va
 }
 inline void RobotDynamicStatus::set_experience_for_upgrade(uint32_t value) {
   _internal_set_experience_for_upgrade(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.experience_for_upgrade)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.experience_for_upgrade)
 }
 
 // optional uint32 total_projectiles_fired = 8;
@@ -9964,7 +10333,7 @@ inline uint32_t RobotDynamicStatus::_internal_total_projectiles_fired() const {
   return total_projectiles_fired_;
 }
 inline uint32_t RobotDynamicStatus::total_projectiles_fired() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.total_projectiles_fired)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.total_projectiles_fired)
   return _internal_total_projectiles_fired();
 }
 inline void RobotDynamicStatus::_internal_set_total_projectiles_fired(uint32_t value) {
@@ -9973,7 +10342,7 @@ inline void RobotDynamicStatus::_internal_set_total_projectiles_fired(uint32_t v
 }
 inline void RobotDynamicStatus::set_total_projectiles_fired(uint32_t value) {
   _internal_set_total_projectiles_fired(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.total_projectiles_fired)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.total_projectiles_fired)
 }
 
 // optional uint32 remaining_ammo = 9;
@@ -9992,7 +10361,7 @@ inline uint32_t RobotDynamicStatus::_internal_remaining_ammo() const {
   return remaining_ammo_;
 }
 inline uint32_t RobotDynamicStatus::remaining_ammo() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.remaining_ammo)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.remaining_ammo)
   return _internal_remaining_ammo();
 }
 inline void RobotDynamicStatus::_internal_set_remaining_ammo(uint32_t value) {
@@ -10001,7 +10370,7 @@ inline void RobotDynamicStatus::_internal_set_remaining_ammo(uint32_t value) {
 }
 inline void RobotDynamicStatus::set_remaining_ammo(uint32_t value) {
   _internal_set_remaining_ammo(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.remaining_ammo)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.remaining_ammo)
 }
 
 // optional bool is_out_of_combat = 10;
@@ -10020,7 +10389,7 @@ inline bool RobotDynamicStatus::_internal_is_out_of_combat() const {
   return is_out_of_combat_;
 }
 inline bool RobotDynamicStatus::is_out_of_combat() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.is_out_of_combat)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.is_out_of_combat)
   return _internal_is_out_of_combat();
 }
 inline void RobotDynamicStatus::_internal_set_is_out_of_combat(bool value) {
@@ -10029,7 +10398,7 @@ inline void RobotDynamicStatus::_internal_set_is_out_of_combat(bool value) {
 }
 inline void RobotDynamicStatus::set_is_out_of_combat(bool value) {
   _internal_set_is_out_of_combat(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.is_out_of_combat)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.is_out_of_combat)
 }
 
 // optional uint32 out_of_combat_countdown = 11;
@@ -10048,7 +10417,7 @@ inline uint32_t RobotDynamicStatus::_internal_out_of_combat_countdown() const {
   return out_of_combat_countdown_;
 }
 inline uint32_t RobotDynamicStatus::out_of_combat_countdown() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.out_of_combat_countdown)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.out_of_combat_countdown)
   return _internal_out_of_combat_countdown();
 }
 inline void RobotDynamicStatus::_internal_set_out_of_combat_countdown(uint32_t value) {
@@ -10057,7 +10426,7 @@ inline void RobotDynamicStatus::_internal_set_out_of_combat_countdown(uint32_t v
 }
 inline void RobotDynamicStatus::set_out_of_combat_countdown(uint32_t value) {
   _internal_set_out_of_combat_countdown(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.out_of_combat_countdown)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.out_of_combat_countdown)
 }
 
 // optional bool can_remote_heal = 12;
@@ -10076,7 +10445,7 @@ inline bool RobotDynamicStatus::_internal_can_remote_heal() const {
   return can_remote_heal_;
 }
 inline bool RobotDynamicStatus::can_remote_heal() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.can_remote_heal)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.can_remote_heal)
   return _internal_can_remote_heal();
 }
 inline void RobotDynamicStatus::_internal_set_can_remote_heal(bool value) {
@@ -10085,7 +10454,7 @@ inline void RobotDynamicStatus::_internal_set_can_remote_heal(bool value) {
 }
 inline void RobotDynamicStatus::set_can_remote_heal(bool value) {
   _internal_set_can_remote_heal(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.can_remote_heal)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.can_remote_heal)
 }
 
 // optional bool can_remote_ammo = 13;
@@ -10104,7 +10473,7 @@ inline bool RobotDynamicStatus::_internal_can_remote_ammo() const {
   return can_remote_ammo_;
 }
 inline bool RobotDynamicStatus::can_remote_ammo() const {
-  // @@protoc_insertion_point(field_get:RobotDynamicStatus.can_remote_ammo)
+  // @@protoc_insertion_point(field_get:rmcc.RobotDynamicStatus.can_remote_ammo)
   return _internal_can_remote_ammo();
 }
 inline void RobotDynamicStatus::_internal_set_can_remote_ammo(bool value) {
@@ -10113,7 +10482,7 @@ inline void RobotDynamicStatus::_internal_set_can_remote_ammo(bool value) {
 }
 inline void RobotDynamicStatus::set_can_remote_ammo(bool value) {
   _internal_set_can_remote_ammo(value);
-  // @@protoc_insertion_point(field_set:RobotDynamicStatus.can_remote_ammo)
+  // @@protoc_insertion_point(field_set:rmcc.RobotDynamicStatus.can_remote_ammo)
 }
 
 // -------------------------------------------------------------------
@@ -10136,7 +10505,7 @@ inline uint32_t RobotModuleStatus::_internal_power_manager() const {
   return power_manager_;
 }
 inline uint32_t RobotModuleStatus::power_manager() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.power_manager)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.power_manager)
   return _internal_power_manager();
 }
 inline void RobotModuleStatus::_internal_set_power_manager(uint32_t value) {
@@ -10145,7 +10514,7 @@ inline void RobotModuleStatus::_internal_set_power_manager(uint32_t value) {
 }
 inline void RobotModuleStatus::set_power_manager(uint32_t value) {
   _internal_set_power_manager(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.power_manager)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.power_manager)
 }
 
 // optional uint32 rfid = 2;
@@ -10164,7 +10533,7 @@ inline uint32_t RobotModuleStatus::_internal_rfid() const {
   return rfid_;
 }
 inline uint32_t RobotModuleStatus::rfid() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.rfid)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.rfid)
   return _internal_rfid();
 }
 inline void RobotModuleStatus::_internal_set_rfid(uint32_t value) {
@@ -10173,7 +10542,7 @@ inline void RobotModuleStatus::_internal_set_rfid(uint32_t value) {
 }
 inline void RobotModuleStatus::set_rfid(uint32_t value) {
   _internal_set_rfid(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.rfid)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.rfid)
 }
 
 // optional uint32 light_strip = 3;
@@ -10192,7 +10561,7 @@ inline uint32_t RobotModuleStatus::_internal_light_strip() const {
   return light_strip_;
 }
 inline uint32_t RobotModuleStatus::light_strip() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.light_strip)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.light_strip)
   return _internal_light_strip();
 }
 inline void RobotModuleStatus::_internal_set_light_strip(uint32_t value) {
@@ -10201,7 +10570,7 @@ inline void RobotModuleStatus::_internal_set_light_strip(uint32_t value) {
 }
 inline void RobotModuleStatus::set_light_strip(uint32_t value) {
   _internal_set_light_strip(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.light_strip)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.light_strip)
 }
 
 // optional uint32 small_shooter = 4;
@@ -10220,7 +10589,7 @@ inline uint32_t RobotModuleStatus::_internal_small_shooter() const {
   return small_shooter_;
 }
 inline uint32_t RobotModuleStatus::small_shooter() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.small_shooter)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.small_shooter)
   return _internal_small_shooter();
 }
 inline void RobotModuleStatus::_internal_set_small_shooter(uint32_t value) {
@@ -10229,7 +10598,7 @@ inline void RobotModuleStatus::_internal_set_small_shooter(uint32_t value) {
 }
 inline void RobotModuleStatus::set_small_shooter(uint32_t value) {
   _internal_set_small_shooter(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.small_shooter)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.small_shooter)
 }
 
 // optional uint32 big_shooter = 5;
@@ -10248,7 +10617,7 @@ inline uint32_t RobotModuleStatus::_internal_big_shooter() const {
   return big_shooter_;
 }
 inline uint32_t RobotModuleStatus::big_shooter() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.big_shooter)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.big_shooter)
   return _internal_big_shooter();
 }
 inline void RobotModuleStatus::_internal_set_big_shooter(uint32_t value) {
@@ -10257,7 +10626,7 @@ inline void RobotModuleStatus::_internal_set_big_shooter(uint32_t value) {
 }
 inline void RobotModuleStatus::set_big_shooter(uint32_t value) {
   _internal_set_big_shooter(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.big_shooter)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.big_shooter)
 }
 
 // optional uint32 uwb = 6;
@@ -10276,7 +10645,7 @@ inline uint32_t RobotModuleStatus::_internal_uwb() const {
   return uwb_;
 }
 inline uint32_t RobotModuleStatus::uwb() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.uwb)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.uwb)
   return _internal_uwb();
 }
 inline void RobotModuleStatus::_internal_set_uwb(uint32_t value) {
@@ -10285,7 +10654,7 @@ inline void RobotModuleStatus::_internal_set_uwb(uint32_t value) {
 }
 inline void RobotModuleStatus::set_uwb(uint32_t value) {
   _internal_set_uwb(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.uwb)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.uwb)
 }
 
 // optional uint32 armor = 7;
@@ -10304,7 +10673,7 @@ inline uint32_t RobotModuleStatus::_internal_armor() const {
   return armor_;
 }
 inline uint32_t RobotModuleStatus::armor() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.armor)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.armor)
   return _internal_armor();
 }
 inline void RobotModuleStatus::_internal_set_armor(uint32_t value) {
@@ -10313,7 +10682,7 @@ inline void RobotModuleStatus::_internal_set_armor(uint32_t value) {
 }
 inline void RobotModuleStatus::set_armor(uint32_t value) {
   _internal_set_armor(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.armor)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.armor)
 }
 
 // optional uint32 video_transmission = 8;
@@ -10332,7 +10701,7 @@ inline uint32_t RobotModuleStatus::_internal_video_transmission() const {
   return video_transmission_;
 }
 inline uint32_t RobotModuleStatus::video_transmission() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.video_transmission)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.video_transmission)
   return _internal_video_transmission();
 }
 inline void RobotModuleStatus::_internal_set_video_transmission(uint32_t value) {
@@ -10341,7 +10710,7 @@ inline void RobotModuleStatus::_internal_set_video_transmission(uint32_t value) 
 }
 inline void RobotModuleStatus::set_video_transmission(uint32_t value) {
   _internal_set_video_transmission(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.video_transmission)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.video_transmission)
 }
 
 // optional uint32 capacitor = 9;
@@ -10360,7 +10729,7 @@ inline uint32_t RobotModuleStatus::_internal_capacitor() const {
   return capacitor_;
 }
 inline uint32_t RobotModuleStatus::capacitor() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.capacitor)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.capacitor)
   return _internal_capacitor();
 }
 inline void RobotModuleStatus::_internal_set_capacitor(uint32_t value) {
@@ -10369,7 +10738,7 @@ inline void RobotModuleStatus::_internal_set_capacitor(uint32_t value) {
 }
 inline void RobotModuleStatus::set_capacitor(uint32_t value) {
   _internal_set_capacitor(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.capacitor)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.capacitor)
 }
 
 // optional uint32 main_controller = 10;
@@ -10388,7 +10757,7 @@ inline uint32_t RobotModuleStatus::_internal_main_controller() const {
   return main_controller_;
 }
 inline uint32_t RobotModuleStatus::main_controller() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.main_controller)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.main_controller)
   return _internal_main_controller();
 }
 inline void RobotModuleStatus::_internal_set_main_controller(uint32_t value) {
@@ -10397,7 +10766,7 @@ inline void RobotModuleStatus::_internal_set_main_controller(uint32_t value) {
 }
 inline void RobotModuleStatus::set_main_controller(uint32_t value) {
   _internal_set_main_controller(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.main_controller)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.main_controller)
 }
 
 // optional uint32 laser_detection_module = 11;
@@ -10416,7 +10785,7 @@ inline uint32_t RobotModuleStatus::_internal_laser_detection_module() const {
   return laser_detection_module_;
 }
 inline uint32_t RobotModuleStatus::laser_detection_module() const {
-  // @@protoc_insertion_point(field_get:RobotModuleStatus.laser_detection_module)
+  // @@protoc_insertion_point(field_get:rmcc.RobotModuleStatus.laser_detection_module)
   return _internal_laser_detection_module();
 }
 inline void RobotModuleStatus::_internal_set_laser_detection_module(uint32_t value) {
@@ -10425,7 +10794,7 @@ inline void RobotModuleStatus::_internal_set_laser_detection_module(uint32_t val
 }
 inline void RobotModuleStatus::set_laser_detection_module(uint32_t value) {
   _internal_set_laser_detection_module(value);
-  // @@protoc_insertion_point(field_set:RobotModuleStatus.laser_detection_module)
+  // @@protoc_insertion_point(field_set:rmcc.RobotModuleStatus.laser_detection_module)
 }
 
 // -------------------------------------------------------------------
@@ -10448,7 +10817,7 @@ inline float RobotPosition::_internal_x() const {
   return x_;
 }
 inline float RobotPosition::x() const {
-  // @@protoc_insertion_point(field_get:RobotPosition.x)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPosition.x)
   return _internal_x();
 }
 inline void RobotPosition::_internal_set_x(float value) {
@@ -10457,7 +10826,7 @@ inline void RobotPosition::_internal_set_x(float value) {
 }
 inline void RobotPosition::set_x(float value) {
   _internal_set_x(value);
-  // @@protoc_insertion_point(field_set:RobotPosition.x)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPosition.x)
 }
 
 // optional float y = 2;
@@ -10476,7 +10845,7 @@ inline float RobotPosition::_internal_y() const {
   return y_;
 }
 inline float RobotPosition::y() const {
-  // @@protoc_insertion_point(field_get:RobotPosition.y)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPosition.y)
   return _internal_y();
 }
 inline void RobotPosition::_internal_set_y(float value) {
@@ -10485,7 +10854,7 @@ inline void RobotPosition::_internal_set_y(float value) {
 }
 inline void RobotPosition::set_y(float value) {
   _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:RobotPosition.y)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPosition.y)
 }
 
 // optional float z = 3;
@@ -10504,7 +10873,7 @@ inline float RobotPosition::_internal_z() const {
   return z_;
 }
 inline float RobotPosition::z() const {
-  // @@protoc_insertion_point(field_get:RobotPosition.z)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPosition.z)
   return _internal_z();
 }
 inline void RobotPosition::_internal_set_z(float value) {
@@ -10513,7 +10882,7 @@ inline void RobotPosition::_internal_set_z(float value) {
 }
 inline void RobotPosition::set_z(float value) {
   _internal_set_z(value);
-  // @@protoc_insertion_point(field_set:RobotPosition.z)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPosition.z)
 }
 
 // optional float yaw = 4;
@@ -10532,7 +10901,7 @@ inline float RobotPosition::_internal_yaw() const {
   return yaw_;
 }
 inline float RobotPosition::yaw() const {
-  // @@protoc_insertion_point(field_get:RobotPosition.yaw)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPosition.yaw)
   return _internal_yaw();
 }
 inline void RobotPosition::_internal_set_yaw(float value) {
@@ -10541,7 +10910,7 @@ inline void RobotPosition::_internal_set_yaw(float value) {
 }
 inline void RobotPosition::set_yaw(float value) {
   _internal_set_yaw(value);
-  // @@protoc_insertion_point(field_set:RobotPosition.yaw)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPosition.yaw)
 }
 
 // optional uint32 robot_id = 5;
@@ -10560,7 +10929,7 @@ inline uint32_t RobotPosition::_internal_robot_id() const {
   return robot_id_;
 }
 inline uint32_t RobotPosition::robot_id() const {
-  // @@protoc_insertion_point(field_get:RobotPosition.robot_id)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPosition.robot_id)
   return _internal_robot_id();
 }
 inline void RobotPosition::_internal_set_robot_id(uint32_t value) {
@@ -10569,7 +10938,7 @@ inline void RobotPosition::_internal_set_robot_id(uint32_t value) {
 }
 inline void RobotPosition::set_robot_id(uint32_t value) {
   _internal_set_robot_id(value);
-  // @@protoc_insertion_point(field_set:RobotPosition.robot_id)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPosition.robot_id)
 }
 
 // -------------------------------------------------------------------
@@ -10592,7 +10961,7 @@ inline uint32_t Buff::_internal_robot_id() const {
   return robot_id_;
 }
 inline uint32_t Buff::robot_id() const {
-  // @@protoc_insertion_point(field_get:Buff.robot_id)
+  // @@protoc_insertion_point(field_get:rmcc.Buff.robot_id)
   return _internal_robot_id();
 }
 inline void Buff::_internal_set_robot_id(uint32_t value) {
@@ -10601,7 +10970,7 @@ inline void Buff::_internal_set_robot_id(uint32_t value) {
 }
 inline void Buff::set_robot_id(uint32_t value) {
   _internal_set_robot_id(value);
-  // @@protoc_insertion_point(field_set:Buff.robot_id)
+  // @@protoc_insertion_point(field_set:rmcc.Buff.robot_id)
 }
 
 // optional uint32 buff_type = 2;
@@ -10620,7 +10989,7 @@ inline uint32_t Buff::_internal_buff_type() const {
   return buff_type_;
 }
 inline uint32_t Buff::buff_type() const {
-  // @@protoc_insertion_point(field_get:Buff.buff_type)
+  // @@protoc_insertion_point(field_get:rmcc.Buff.buff_type)
   return _internal_buff_type();
 }
 inline void Buff::_internal_set_buff_type(uint32_t value) {
@@ -10629,7 +10998,7 @@ inline void Buff::_internal_set_buff_type(uint32_t value) {
 }
 inline void Buff::set_buff_type(uint32_t value) {
   _internal_set_buff_type(value);
-  // @@protoc_insertion_point(field_set:Buff.buff_type)
+  // @@protoc_insertion_point(field_set:rmcc.Buff.buff_type)
 }
 
 // optional int32 buff_level = 3;
@@ -10648,7 +11017,7 @@ inline int32_t Buff::_internal_buff_level() const {
   return buff_level_;
 }
 inline int32_t Buff::buff_level() const {
-  // @@protoc_insertion_point(field_get:Buff.buff_level)
+  // @@protoc_insertion_point(field_get:rmcc.Buff.buff_level)
   return _internal_buff_level();
 }
 inline void Buff::_internal_set_buff_level(int32_t value) {
@@ -10657,7 +11026,7 @@ inline void Buff::_internal_set_buff_level(int32_t value) {
 }
 inline void Buff::set_buff_level(int32_t value) {
   _internal_set_buff_level(value);
-  // @@protoc_insertion_point(field_set:Buff.buff_level)
+  // @@protoc_insertion_point(field_set:rmcc.Buff.buff_level)
 }
 
 // optional uint32 buff_max_time = 4;
@@ -10676,7 +11045,7 @@ inline uint32_t Buff::_internal_buff_max_time() const {
   return buff_max_time_;
 }
 inline uint32_t Buff::buff_max_time() const {
-  // @@protoc_insertion_point(field_get:Buff.buff_max_time)
+  // @@protoc_insertion_point(field_get:rmcc.Buff.buff_max_time)
   return _internal_buff_max_time();
 }
 inline void Buff::_internal_set_buff_max_time(uint32_t value) {
@@ -10685,7 +11054,7 @@ inline void Buff::_internal_set_buff_max_time(uint32_t value) {
 }
 inline void Buff::set_buff_max_time(uint32_t value) {
   _internal_set_buff_max_time(value);
-  // @@protoc_insertion_point(field_set:Buff.buff_max_time)
+  // @@protoc_insertion_point(field_set:rmcc.Buff.buff_max_time)
 }
 
 // optional uint32 buff_left_time = 5;
@@ -10704,7 +11073,7 @@ inline uint32_t Buff::_internal_buff_left_time() const {
   return buff_left_time_;
 }
 inline uint32_t Buff::buff_left_time() const {
-  // @@protoc_insertion_point(field_get:Buff.buff_left_time)
+  // @@protoc_insertion_point(field_get:rmcc.Buff.buff_left_time)
   return _internal_buff_left_time();
 }
 inline void Buff::_internal_set_buff_left_time(uint32_t value) {
@@ -10713,7 +11082,7 @@ inline void Buff::_internal_set_buff_left_time(uint32_t value) {
 }
 inline void Buff::set_buff_left_time(uint32_t value) {
   _internal_set_buff_left_time(value);
-  // @@protoc_insertion_point(field_set:Buff.buff_left_time)
+  // @@protoc_insertion_point(field_set:rmcc.Buff.buff_left_time)
 }
 
 // -------------------------------------------------------------------
@@ -10736,7 +11105,7 @@ inline uint32_t PenaltyInfo::_internal_penalty_type() const {
   return penalty_type_;
 }
 inline uint32_t PenaltyInfo::penalty_type() const {
-  // @@protoc_insertion_point(field_get:PenaltyInfo.penalty_type)
+  // @@protoc_insertion_point(field_get:rmcc.PenaltyInfo.penalty_type)
   return _internal_penalty_type();
 }
 inline void PenaltyInfo::_internal_set_penalty_type(uint32_t value) {
@@ -10745,7 +11114,7 @@ inline void PenaltyInfo::_internal_set_penalty_type(uint32_t value) {
 }
 inline void PenaltyInfo::set_penalty_type(uint32_t value) {
   _internal_set_penalty_type(value);
-  // @@protoc_insertion_point(field_set:PenaltyInfo.penalty_type)
+  // @@protoc_insertion_point(field_set:rmcc.PenaltyInfo.penalty_type)
 }
 
 // optional uint32 penalty_effect_sec = 2;
@@ -10764,7 +11133,7 @@ inline uint32_t PenaltyInfo::_internal_penalty_effect_sec() const {
   return penalty_effect_sec_;
 }
 inline uint32_t PenaltyInfo::penalty_effect_sec() const {
-  // @@protoc_insertion_point(field_get:PenaltyInfo.penalty_effect_sec)
+  // @@protoc_insertion_point(field_get:rmcc.PenaltyInfo.penalty_effect_sec)
   return _internal_penalty_effect_sec();
 }
 inline void PenaltyInfo::_internal_set_penalty_effect_sec(uint32_t value) {
@@ -10773,7 +11142,7 @@ inline void PenaltyInfo::_internal_set_penalty_effect_sec(uint32_t value) {
 }
 inline void PenaltyInfo::set_penalty_effect_sec(uint32_t value) {
   _internal_set_penalty_effect_sec(value);
-  // @@protoc_insertion_point(field_set:PenaltyInfo.penalty_effect_sec)
+  // @@protoc_insertion_point(field_set:rmcc.PenaltyInfo.penalty_effect_sec)
 }
 
 // optional uint32 total_penalty_num = 3;
@@ -10792,7 +11161,7 @@ inline uint32_t PenaltyInfo::_internal_total_penalty_num() const {
   return total_penalty_num_;
 }
 inline uint32_t PenaltyInfo::total_penalty_num() const {
-  // @@protoc_insertion_point(field_get:PenaltyInfo.total_penalty_num)
+  // @@protoc_insertion_point(field_get:rmcc.PenaltyInfo.total_penalty_num)
   return _internal_total_penalty_num();
 }
 inline void PenaltyInfo::_internal_set_total_penalty_num(uint32_t value) {
@@ -10801,7 +11170,7 @@ inline void PenaltyInfo::_internal_set_total_penalty_num(uint32_t value) {
 }
 inline void PenaltyInfo::set_total_penalty_num(uint32_t value) {
   _internal_set_total_penalty_num(value);
-  // @@protoc_insertion_point(field_set:PenaltyInfo.total_penalty_num)
+  // @@protoc_insertion_point(field_set:rmcc.PenaltyInfo.total_penalty_num)
 }
 
 // -------------------------------------------------------------------
@@ -10824,7 +11193,7 @@ inline uint32_t RobotPathPlanInfo::_internal_intention() const {
   return intention_;
 }
 inline uint32_t RobotPathPlanInfo::intention() const {
-  // @@protoc_insertion_point(field_get:RobotPathPlanInfo.intention)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPathPlanInfo.intention)
   return _internal_intention();
 }
 inline void RobotPathPlanInfo::_internal_set_intention(uint32_t value) {
@@ -10833,7 +11202,7 @@ inline void RobotPathPlanInfo::_internal_set_intention(uint32_t value) {
 }
 inline void RobotPathPlanInfo::set_intention(uint32_t value) {
   _internal_set_intention(value);
-  // @@protoc_insertion_point(field_set:RobotPathPlanInfo.intention)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPathPlanInfo.intention)
 }
 
 // optional uint32 start_pos_x = 2;
@@ -10852,7 +11221,7 @@ inline uint32_t RobotPathPlanInfo::_internal_start_pos_x() const {
   return start_pos_x_;
 }
 inline uint32_t RobotPathPlanInfo::start_pos_x() const {
-  // @@protoc_insertion_point(field_get:RobotPathPlanInfo.start_pos_x)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPathPlanInfo.start_pos_x)
   return _internal_start_pos_x();
 }
 inline void RobotPathPlanInfo::_internal_set_start_pos_x(uint32_t value) {
@@ -10861,7 +11230,7 @@ inline void RobotPathPlanInfo::_internal_set_start_pos_x(uint32_t value) {
 }
 inline void RobotPathPlanInfo::set_start_pos_x(uint32_t value) {
   _internal_set_start_pos_x(value);
-  // @@protoc_insertion_point(field_set:RobotPathPlanInfo.start_pos_x)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPathPlanInfo.start_pos_x)
 }
 
 // optional uint32 start_pos_y = 3;
@@ -10880,7 +11249,7 @@ inline uint32_t RobotPathPlanInfo::_internal_start_pos_y() const {
   return start_pos_y_;
 }
 inline uint32_t RobotPathPlanInfo::start_pos_y() const {
-  // @@protoc_insertion_point(field_get:RobotPathPlanInfo.start_pos_y)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPathPlanInfo.start_pos_y)
   return _internal_start_pos_y();
 }
 inline void RobotPathPlanInfo::_internal_set_start_pos_y(uint32_t value) {
@@ -10889,7 +11258,7 @@ inline void RobotPathPlanInfo::_internal_set_start_pos_y(uint32_t value) {
 }
 inline void RobotPathPlanInfo::set_start_pos_y(uint32_t value) {
   _internal_set_start_pos_y(value);
-  // @@protoc_insertion_point(field_set:RobotPathPlanInfo.start_pos_y)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPathPlanInfo.start_pos_y)
 }
 
 // repeated int32 offset_x = 4 [packed = true];
@@ -10906,19 +11275,19 @@ inline int32_t RobotPathPlanInfo::_internal_offset_x(int index) const {
   return offset_x_.Get(index);
 }
 inline int32_t RobotPathPlanInfo::offset_x(int index) const {
-  // @@protoc_insertion_point(field_get:RobotPathPlanInfo.offset_x)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPathPlanInfo.offset_x)
   return _internal_offset_x(index);
 }
 inline void RobotPathPlanInfo::set_offset_x(int index, int32_t value) {
   offset_x_.Set(index, value);
-  // @@protoc_insertion_point(field_set:RobotPathPlanInfo.offset_x)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPathPlanInfo.offset_x)
 }
 inline void RobotPathPlanInfo::_internal_add_offset_x(int32_t value) {
   offset_x_.Add(value);
 }
 inline void RobotPathPlanInfo::add_offset_x(int32_t value) {
   _internal_add_offset_x(value);
-  // @@protoc_insertion_point(field_add:RobotPathPlanInfo.offset_x)
+  // @@protoc_insertion_point(field_add:rmcc.RobotPathPlanInfo.offset_x)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
 RobotPathPlanInfo::_internal_offset_x() const {
@@ -10926,7 +11295,7 @@ RobotPathPlanInfo::_internal_offset_x() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
 RobotPathPlanInfo::offset_x() const {
-  // @@protoc_insertion_point(field_list:RobotPathPlanInfo.offset_x)
+  // @@protoc_insertion_point(field_list:rmcc.RobotPathPlanInfo.offset_x)
   return _internal_offset_x();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
@@ -10935,7 +11304,7 @@ RobotPathPlanInfo::_internal_mutable_offset_x() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
 RobotPathPlanInfo::mutable_offset_x() {
-  // @@protoc_insertion_point(field_mutable_list:RobotPathPlanInfo.offset_x)
+  // @@protoc_insertion_point(field_mutable_list:rmcc.RobotPathPlanInfo.offset_x)
   return _internal_mutable_offset_x();
 }
 
@@ -10953,19 +11322,19 @@ inline int32_t RobotPathPlanInfo::_internal_offset_y(int index) const {
   return offset_y_.Get(index);
 }
 inline int32_t RobotPathPlanInfo::offset_y(int index) const {
-  // @@protoc_insertion_point(field_get:RobotPathPlanInfo.offset_y)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPathPlanInfo.offset_y)
   return _internal_offset_y(index);
 }
 inline void RobotPathPlanInfo::set_offset_y(int index, int32_t value) {
   offset_y_.Set(index, value);
-  // @@protoc_insertion_point(field_set:RobotPathPlanInfo.offset_y)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPathPlanInfo.offset_y)
 }
 inline void RobotPathPlanInfo::_internal_add_offset_y(int32_t value) {
   offset_y_.Add(value);
 }
 inline void RobotPathPlanInfo::add_offset_y(int32_t value) {
   _internal_add_offset_y(value);
-  // @@protoc_insertion_point(field_add:RobotPathPlanInfo.offset_y)
+  // @@protoc_insertion_point(field_add:rmcc.RobotPathPlanInfo.offset_y)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
 RobotPathPlanInfo::_internal_offset_y() const {
@@ -10973,7 +11342,7 @@ RobotPathPlanInfo::_internal_offset_y() const {
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
 RobotPathPlanInfo::offset_y() const {
-  // @@protoc_insertion_point(field_list:RobotPathPlanInfo.offset_y)
+  // @@protoc_insertion_point(field_list:rmcc.RobotPathPlanInfo.offset_y)
   return _internal_offset_y();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
@@ -10982,7 +11351,7 @@ RobotPathPlanInfo::_internal_mutable_offset_y() {
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
 RobotPathPlanInfo::mutable_offset_y() {
-  // @@protoc_insertion_point(field_mutable_list:RobotPathPlanInfo.offset_y)
+  // @@protoc_insertion_point(field_mutable_list:rmcc.RobotPathPlanInfo.offset_y)
   return _internal_mutable_offset_y();
 }
 
@@ -11002,7 +11371,7 @@ inline uint32_t RobotPathPlanInfo::_internal_sender_id() const {
   return sender_id_;
 }
 inline uint32_t RobotPathPlanInfo::sender_id() const {
-  // @@protoc_insertion_point(field_get:RobotPathPlanInfo.sender_id)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPathPlanInfo.sender_id)
   return _internal_sender_id();
 }
 inline void RobotPathPlanInfo::_internal_set_sender_id(uint32_t value) {
@@ -11011,82 +11380,82 @@ inline void RobotPathPlanInfo::_internal_set_sender_id(uint32_t value) {
 }
 inline void RobotPathPlanInfo::set_sender_id(uint32_t value) {
   _internal_set_sender_id(value);
-  // @@protoc_insertion_point(field_set:RobotPathPlanInfo.sender_id)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPathPlanInfo.sender_id)
 }
 
 // -------------------------------------------------------------------
 
-// MapClickInfoNotify
+// MapClickInfo
 
 // optional uint32 is_send_all = 1;
-inline bool MapClickInfoNotify::_internal_has_is_send_all() const {
+inline bool MapClickInfo::_internal_has_is_send_all() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline bool MapClickInfoNotify::has_is_send_all() const {
+inline bool MapClickInfo::has_is_send_all() const {
   return _internal_has_is_send_all();
 }
-inline void MapClickInfoNotify::clear_is_send_all() {
+inline void MapClickInfo::clear_is_send_all() {
   is_send_all_ = 0u;
   _has_bits_[0] &= ~0x00000002u;
 }
-inline uint32_t MapClickInfoNotify::_internal_is_send_all() const {
+inline uint32_t MapClickInfo::_internal_is_send_all() const {
   return is_send_all_;
 }
-inline uint32_t MapClickInfoNotify::is_send_all() const {
-  // @@protoc_insertion_point(field_get:MapClickInfoNotify.is_send_all)
+inline uint32_t MapClickInfo::is_send_all() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickInfo.is_send_all)
   return _internal_is_send_all();
 }
-inline void MapClickInfoNotify::_internal_set_is_send_all(uint32_t value) {
+inline void MapClickInfo::_internal_set_is_send_all(uint32_t value) {
   _has_bits_[0] |= 0x00000002u;
   is_send_all_ = value;
 }
-inline void MapClickInfoNotify::set_is_send_all(uint32_t value) {
+inline void MapClickInfo::set_is_send_all(uint32_t value) {
   _internal_set_is_send_all(value);
-  // @@protoc_insertion_point(field_set:MapClickInfoNotify.is_send_all)
+  // @@protoc_insertion_point(field_set:rmcc.MapClickInfo.is_send_all)
 }
 
 // optional bytes robot_id = 2;
-inline bool MapClickInfoNotify::_internal_has_robot_id() const {
+inline bool MapClickInfo::_internal_has_robot_id() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool MapClickInfoNotify::has_robot_id() const {
+inline bool MapClickInfo::has_robot_id() const {
   return _internal_has_robot_id();
 }
-inline void MapClickInfoNotify::clear_robot_id() {
+inline void MapClickInfo::clear_robot_id() {
   robot_id_.ClearToEmpty();
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& MapClickInfoNotify::robot_id() const {
-  // @@protoc_insertion_point(field_get:MapClickInfoNotify.robot_id)
+inline const std::string& MapClickInfo::robot_id() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickInfo.robot_id)
   return _internal_robot_id();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void MapClickInfoNotify::set_robot_id(ArgT0&& arg0, ArgT... args) {
+void MapClickInfo::set_robot_id(ArgT0&& arg0, ArgT... args) {
  _has_bits_[0] |= 0x00000001u;
  robot_id_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:MapClickInfoNotify.robot_id)
+  // @@protoc_insertion_point(field_set:rmcc.MapClickInfo.robot_id)
 }
-inline std::string* MapClickInfoNotify::mutable_robot_id() {
+inline std::string* MapClickInfo::mutable_robot_id() {
   std::string* _s = _internal_mutable_robot_id();
-  // @@protoc_insertion_point(field_mutable:MapClickInfoNotify.robot_id)
+  // @@protoc_insertion_point(field_mutable:rmcc.MapClickInfo.robot_id)
   return _s;
 }
-inline const std::string& MapClickInfoNotify::_internal_robot_id() const {
+inline const std::string& MapClickInfo::_internal_robot_id() const {
   return robot_id_.Get();
 }
-inline void MapClickInfoNotify::_internal_set_robot_id(const std::string& value) {
+inline void MapClickInfo::_internal_set_robot_id(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
   robot_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
-inline std::string* MapClickInfoNotify::_internal_mutable_robot_id() {
+inline std::string* MapClickInfo::_internal_mutable_robot_id() {
   _has_bits_[0] |= 0x00000001u;
   return robot_id_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
-inline std::string* MapClickInfoNotify::release_robot_id() {
-  // @@protoc_insertion_point(field_release:MapClickInfoNotify.robot_id)
+inline std::string* MapClickInfo::release_robot_id() {
+  // @@protoc_insertion_point(field_release:rmcc.MapClickInfo.robot_id)
   if (!_internal_has_robot_id()) {
     return nullptr;
   }
@@ -11099,7 +11468,7 @@ inline std::string* MapClickInfoNotify::release_robot_id() {
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   return p;
 }
-inline void MapClickInfoNotify::set_allocated_robot_id(std::string* robot_id) {
+inline void MapClickInfo::set_allocated_robot_id(std::string* robot_id) {
   if (robot_id != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
@@ -11112,182 +11481,451 @@ inline void MapClickInfoNotify::set_allocated_robot_id(std::string* robot_id) {
     robot_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:MapClickInfoNotify.robot_id)
+  // @@protoc_insertion_point(field_set_allocated:rmcc.MapClickInfo.robot_id)
 }
 
 // optional uint32 mode = 3;
-inline bool MapClickInfoNotify::_internal_has_mode() const {
+inline bool MapClickInfo::_internal_has_mode() const {
   bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
-inline bool MapClickInfoNotify::has_mode() const {
+inline bool MapClickInfo::has_mode() const {
   return _internal_has_mode();
 }
-inline void MapClickInfoNotify::clear_mode() {
+inline void MapClickInfo::clear_mode() {
   mode_ = 0u;
   _has_bits_[0] &= ~0x00000004u;
 }
-inline uint32_t MapClickInfoNotify::_internal_mode() const {
+inline uint32_t MapClickInfo::_internal_mode() const {
   return mode_;
 }
-inline uint32_t MapClickInfoNotify::mode() const {
-  // @@protoc_insertion_point(field_get:MapClickInfoNotify.mode)
+inline uint32_t MapClickInfo::mode() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickInfo.mode)
   return _internal_mode();
 }
-inline void MapClickInfoNotify::_internal_set_mode(uint32_t value) {
+inline void MapClickInfo::_internal_set_mode(uint32_t value) {
   _has_bits_[0] |= 0x00000004u;
   mode_ = value;
 }
-inline void MapClickInfoNotify::set_mode(uint32_t value) {
+inline void MapClickInfo::set_mode(uint32_t value) {
   _internal_set_mode(value);
-  // @@protoc_insertion_point(field_set:MapClickInfoNotify.mode)
+  // @@protoc_insertion_point(field_set:rmcc.MapClickInfo.mode)
 }
 
 // optional uint32 enemy_id = 4;
-inline bool MapClickInfoNotify::_internal_has_enemy_id() const {
+inline bool MapClickInfo::_internal_has_enemy_id() const {
   bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
-inline bool MapClickInfoNotify::has_enemy_id() const {
+inline bool MapClickInfo::has_enemy_id() const {
   return _internal_has_enemy_id();
 }
-inline void MapClickInfoNotify::clear_enemy_id() {
+inline void MapClickInfo::clear_enemy_id() {
   enemy_id_ = 0u;
   _has_bits_[0] &= ~0x00000008u;
 }
-inline uint32_t MapClickInfoNotify::_internal_enemy_id() const {
+inline uint32_t MapClickInfo::_internal_enemy_id() const {
   return enemy_id_;
 }
-inline uint32_t MapClickInfoNotify::enemy_id() const {
-  // @@protoc_insertion_point(field_get:MapClickInfoNotify.enemy_id)
+inline uint32_t MapClickInfo::enemy_id() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickInfo.enemy_id)
   return _internal_enemy_id();
 }
-inline void MapClickInfoNotify::_internal_set_enemy_id(uint32_t value) {
+inline void MapClickInfo::_internal_set_enemy_id(uint32_t value) {
   _has_bits_[0] |= 0x00000008u;
   enemy_id_ = value;
 }
-inline void MapClickInfoNotify::set_enemy_id(uint32_t value) {
+inline void MapClickInfo::set_enemy_id(uint32_t value) {
   _internal_set_enemy_id(value);
-  // @@protoc_insertion_point(field_set:MapClickInfoNotify.enemy_id)
+  // @@protoc_insertion_point(field_set:rmcc.MapClickInfo.enemy_id)
 }
 
 // optional uint32 ascii = 5;
-inline bool MapClickInfoNotify::_internal_has_ascii() const {
+inline bool MapClickInfo::_internal_has_ascii() const {
   bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
-inline bool MapClickInfoNotify::has_ascii() const {
+inline bool MapClickInfo::has_ascii() const {
   return _internal_has_ascii();
 }
-inline void MapClickInfoNotify::clear_ascii() {
+inline void MapClickInfo::clear_ascii() {
   ascii_ = 0u;
   _has_bits_[0] &= ~0x00000010u;
 }
-inline uint32_t MapClickInfoNotify::_internal_ascii() const {
+inline uint32_t MapClickInfo::_internal_ascii() const {
   return ascii_;
 }
-inline uint32_t MapClickInfoNotify::ascii() const {
-  // @@protoc_insertion_point(field_get:MapClickInfoNotify.ascii)
+inline uint32_t MapClickInfo::ascii() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickInfo.ascii)
   return _internal_ascii();
 }
-inline void MapClickInfoNotify::_internal_set_ascii(uint32_t value) {
+inline void MapClickInfo::_internal_set_ascii(uint32_t value) {
   _has_bits_[0] |= 0x00000010u;
   ascii_ = value;
 }
-inline void MapClickInfoNotify::set_ascii(uint32_t value) {
+inline void MapClickInfo::set_ascii(uint32_t value) {
   _internal_set_ascii(value);
-  // @@protoc_insertion_point(field_set:MapClickInfoNotify.ascii)
+  // @@protoc_insertion_point(field_set:rmcc.MapClickInfo.ascii)
 }
 
 // optional uint32 type = 6;
-inline bool MapClickInfoNotify::_internal_has_type() const {
+inline bool MapClickInfo::_internal_has_type() const {
   bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
-inline bool MapClickInfoNotify::has_type() const {
+inline bool MapClickInfo::has_type() const {
   return _internal_has_type();
 }
-inline void MapClickInfoNotify::clear_type() {
+inline void MapClickInfo::clear_type() {
   type_ = 0u;
   _has_bits_[0] &= ~0x00000020u;
 }
-inline uint32_t MapClickInfoNotify::_internal_type() const {
+inline uint32_t MapClickInfo::_internal_type() const {
   return type_;
 }
-inline uint32_t MapClickInfoNotify::type() const {
-  // @@protoc_insertion_point(field_get:MapClickInfoNotify.type)
+inline uint32_t MapClickInfo::type() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickInfo.type)
   return _internal_type();
 }
-inline void MapClickInfoNotify::_internal_set_type(uint32_t value) {
+inline void MapClickInfo::_internal_set_type(uint32_t value) {
   _has_bits_[0] |= 0x00000020u;
   type_ = value;
 }
-inline void MapClickInfoNotify::set_type(uint32_t value) {
+inline void MapClickInfo::set_type(uint32_t value) {
   _internal_set_type(value);
-  // @@protoc_insertion_point(field_set:MapClickInfoNotify.type)
+  // @@protoc_insertion_point(field_set:rmcc.MapClickInfo.type)
 }
 
 // optional float map_x = 7;
-inline bool MapClickInfoNotify::_internal_has_map_x() const {
+inline bool MapClickInfo::_internal_has_map_x() const {
   bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
-inline bool MapClickInfoNotify::has_map_x() const {
+inline bool MapClickInfo::has_map_x() const {
   return _internal_has_map_x();
 }
-inline void MapClickInfoNotify::clear_map_x() {
+inline void MapClickInfo::clear_map_x() {
   map_x_ = 0;
   _has_bits_[0] &= ~0x00000040u;
 }
-inline float MapClickInfoNotify::_internal_map_x() const {
+inline float MapClickInfo::_internal_map_x() const {
   return map_x_;
 }
-inline float MapClickInfoNotify::map_x() const {
-  // @@protoc_insertion_point(field_get:MapClickInfoNotify.map_x)
+inline float MapClickInfo::map_x() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickInfo.map_x)
   return _internal_map_x();
 }
-inline void MapClickInfoNotify::_internal_set_map_x(float value) {
+inline void MapClickInfo::_internal_set_map_x(float value) {
   _has_bits_[0] |= 0x00000040u;
   map_x_ = value;
 }
-inline void MapClickInfoNotify::set_map_x(float value) {
+inline void MapClickInfo::set_map_x(float value) {
   _internal_set_map_x(value);
-  // @@protoc_insertion_point(field_set:MapClickInfoNotify.map_x)
+  // @@protoc_insertion_point(field_set:rmcc.MapClickInfo.map_x)
 }
 
 // optional float map_y = 8;
-inline bool MapClickInfoNotify::_internal_has_map_y() const {
+inline bool MapClickInfo::_internal_has_map_y() const {
   bool value = (_has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
-inline bool MapClickInfoNotify::has_map_y() const {
+inline bool MapClickInfo::has_map_y() const {
   return _internal_has_map_y();
 }
-inline void MapClickInfoNotify::clear_map_y() {
+inline void MapClickInfo::clear_map_y() {
   map_y_ = 0;
   _has_bits_[0] &= ~0x00000080u;
 }
-inline float MapClickInfoNotify::_internal_map_y() const {
+inline float MapClickInfo::_internal_map_y() const {
   return map_y_;
 }
-inline float MapClickInfoNotify::map_y() const {
-  // @@protoc_insertion_point(field_get:MapClickInfoNotify.map_y)
+inline float MapClickInfo::map_y() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickInfo.map_y)
   return _internal_map_y();
 }
-inline void MapClickInfoNotify::_internal_set_map_y(float value) {
+inline void MapClickInfo::_internal_set_map_y(float value) {
   _has_bits_[0] |= 0x00000080u;
   map_y_ = value;
 }
-inline void MapClickInfoNotify::set_map_y(float value) {
+inline void MapClickInfo::set_map_y(float value) {
   _internal_set_map_y(value);
-  // @@protoc_insertion_point(field_set:MapClickInfoNotify.map_y)
+  // @@protoc_insertion_point(field_set:rmcc.MapClickInfo.map_y)
+}
+
+// -------------------------------------------------------------------
+
+// MapClickCmd
+
+// optional uint32 is_send_all = 1;
+inline bool MapClickCmd::_internal_has_is_send_all() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool MapClickCmd::has_is_send_all() const {
+  return _internal_has_is_send_all();
+}
+inline void MapClickCmd::clear_is_send_all() {
+  is_send_all_ = 0u;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline uint32_t MapClickCmd::_internal_is_send_all() const {
+  return is_send_all_;
+}
+inline uint32_t MapClickCmd::is_send_all() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickCmd.is_send_all)
+  return _internal_is_send_all();
+}
+inline void MapClickCmd::_internal_set_is_send_all(uint32_t value) {
+  _has_bits_[0] |= 0x00000002u;
+  is_send_all_ = value;
+}
+inline void MapClickCmd::set_is_send_all(uint32_t value) {
+  _internal_set_is_send_all(value);
+  // @@protoc_insertion_point(field_set:rmcc.MapClickCmd.is_send_all)
+}
+
+// optional bytes robot_id = 2;
+inline bool MapClickCmd::_internal_has_robot_id() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool MapClickCmd::has_robot_id() const {
+  return _internal_has_robot_id();
+}
+inline void MapClickCmd::clear_robot_id() {
+  robot_id_.ClearToEmpty();
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& MapClickCmd::robot_id() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickCmd.robot_id)
+  return _internal_robot_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void MapClickCmd::set_robot_id(ArgT0&& arg0, ArgT... args) {
+ _has_bits_[0] |= 0x00000001u;
+ robot_id_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rmcc.MapClickCmd.robot_id)
+}
+inline std::string* MapClickCmd::mutable_robot_id() {
+  std::string* _s = _internal_mutable_robot_id();
+  // @@protoc_insertion_point(field_mutable:rmcc.MapClickCmd.robot_id)
+  return _s;
+}
+inline const std::string& MapClickCmd::_internal_robot_id() const {
+  return robot_id_.Get();
+}
+inline void MapClickCmd::_internal_set_robot_id(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  robot_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* MapClickCmd::_internal_mutable_robot_id() {
+  _has_bits_[0] |= 0x00000001u;
+  return robot_id_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* MapClickCmd::release_robot_id() {
+  // @@protoc_insertion_point(field_release:rmcc.MapClickCmd.robot_id)
+  if (!_internal_has_robot_id()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  auto* p = robot_id_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (robot_id_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    robot_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  return p;
+}
+inline void MapClickCmd::set_allocated_robot_id(std::string* robot_id) {
+  if (robot_id != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  robot_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), robot_id,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (robot_id_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    robot_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rmcc.MapClickCmd.robot_id)
+}
+
+// optional uint32 mode = 3;
+inline bool MapClickCmd::_internal_has_mode() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool MapClickCmd::has_mode() const {
+  return _internal_has_mode();
+}
+inline void MapClickCmd::clear_mode() {
+  mode_ = 0u;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline uint32_t MapClickCmd::_internal_mode() const {
+  return mode_;
+}
+inline uint32_t MapClickCmd::mode() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickCmd.mode)
+  return _internal_mode();
+}
+inline void MapClickCmd::_internal_set_mode(uint32_t value) {
+  _has_bits_[0] |= 0x00000004u;
+  mode_ = value;
+}
+inline void MapClickCmd::set_mode(uint32_t value) {
+  _internal_set_mode(value);
+  // @@protoc_insertion_point(field_set:rmcc.MapClickCmd.mode)
+}
+
+// optional uint32 enemy_id = 4;
+inline bool MapClickCmd::_internal_has_enemy_id() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool MapClickCmd::has_enemy_id() const {
+  return _internal_has_enemy_id();
+}
+inline void MapClickCmd::clear_enemy_id() {
+  enemy_id_ = 0u;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline uint32_t MapClickCmd::_internal_enemy_id() const {
+  return enemy_id_;
+}
+inline uint32_t MapClickCmd::enemy_id() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickCmd.enemy_id)
+  return _internal_enemy_id();
+}
+inline void MapClickCmd::_internal_set_enemy_id(uint32_t value) {
+  _has_bits_[0] |= 0x00000008u;
+  enemy_id_ = value;
+}
+inline void MapClickCmd::set_enemy_id(uint32_t value) {
+  _internal_set_enemy_id(value);
+  // @@protoc_insertion_point(field_set:rmcc.MapClickCmd.enemy_id)
+}
+
+// optional uint32 ascii = 5;
+inline bool MapClickCmd::_internal_has_ascii() const {
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  return value;
+}
+inline bool MapClickCmd::has_ascii() const {
+  return _internal_has_ascii();
+}
+inline void MapClickCmd::clear_ascii() {
+  ascii_ = 0u;
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline uint32_t MapClickCmd::_internal_ascii() const {
+  return ascii_;
+}
+inline uint32_t MapClickCmd::ascii() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickCmd.ascii)
+  return _internal_ascii();
+}
+inline void MapClickCmd::_internal_set_ascii(uint32_t value) {
+  _has_bits_[0] |= 0x00000010u;
+  ascii_ = value;
+}
+inline void MapClickCmd::set_ascii(uint32_t value) {
+  _internal_set_ascii(value);
+  // @@protoc_insertion_point(field_set:rmcc.MapClickCmd.ascii)
+}
+
+// optional uint32 type = 6;
+inline bool MapClickCmd::_internal_has_type() const {
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  return value;
+}
+inline bool MapClickCmd::has_type() const {
+  return _internal_has_type();
+}
+inline void MapClickCmd::clear_type() {
+  type_ = 0u;
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline uint32_t MapClickCmd::_internal_type() const {
+  return type_;
+}
+inline uint32_t MapClickCmd::type() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickCmd.type)
+  return _internal_type();
+}
+inline void MapClickCmd::_internal_set_type(uint32_t value) {
+  _has_bits_[0] |= 0x00000020u;
+  type_ = value;
+}
+inline void MapClickCmd::set_type(uint32_t value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:rmcc.MapClickCmd.type)
+}
+
+// optional float map_x = 7;
+inline bool MapClickCmd::_internal_has_map_x() const {
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  return value;
+}
+inline bool MapClickCmd::has_map_x() const {
+  return _internal_has_map_x();
+}
+inline void MapClickCmd::clear_map_x() {
+  map_x_ = 0;
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline float MapClickCmd::_internal_map_x() const {
+  return map_x_;
+}
+inline float MapClickCmd::map_x() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickCmd.map_x)
+  return _internal_map_x();
+}
+inline void MapClickCmd::_internal_set_map_x(float value) {
+  _has_bits_[0] |= 0x00000040u;
+  map_x_ = value;
+}
+inline void MapClickCmd::set_map_x(float value) {
+  _internal_set_map_x(value);
+  // @@protoc_insertion_point(field_set:rmcc.MapClickCmd.map_x)
+}
+
+// optional float map_y = 8;
+inline bool MapClickCmd::_internal_has_map_y() const {
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  return value;
+}
+inline bool MapClickCmd::has_map_y() const {
+  return _internal_has_map_y();
+}
+inline void MapClickCmd::clear_map_y() {
+  map_y_ = 0;
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline float MapClickCmd::_internal_map_y() const {
+  return map_y_;
+}
+inline float MapClickCmd::map_y() const {
+  // @@protoc_insertion_point(field_get:rmcc.MapClickCmd.map_y)
+  return _internal_map_y();
+}
+inline void MapClickCmd::_internal_set_map_y(float value) {
+  _has_bits_[0] |= 0x00000080u;
+  map_y_ = value;
+}
+inline void MapClickCmd::set_map_y(float value) {
+  _internal_set_map_y(value);
+  // @@protoc_insertion_point(field_set:rmcc.MapClickCmd.map_y)
 }
 
 // -------------------------------------------------------------------
 
 // RadarInfoToClient
 
-// repeated .RadarSingleRobotInfo RadarSingleRobotInfo = 1;
+// repeated .rmcc.RadarSingleRobotInfo RadarSingleRobotInfo = 1;
 inline int RadarInfoToClient::_internal_radarsinglerobotinfo_size() const {
   return radarsinglerobotinfo_.size();
 }
@@ -11297,33 +11935,33 @@ inline int RadarInfoToClient::radarsinglerobotinfo_size() const {
 inline void RadarInfoToClient::clear_radarsinglerobotinfo() {
   radarsinglerobotinfo_.Clear();
 }
-inline ::RadarSingleRobotInfo* RadarInfoToClient::mutable_radarsinglerobotinfo(int index) {
-  // @@protoc_insertion_point(field_mutable:RadarInfoToClient.RadarSingleRobotInfo)
+inline ::rmcc::RadarSingleRobotInfo* RadarInfoToClient::mutable_radarsinglerobotinfo(int index) {
+  // @@protoc_insertion_point(field_mutable:rmcc.RadarInfoToClient.RadarSingleRobotInfo)
   return radarsinglerobotinfo_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::RadarSingleRobotInfo >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rmcc::RadarSingleRobotInfo >*
 RadarInfoToClient::mutable_radarsinglerobotinfo() {
-  // @@protoc_insertion_point(field_mutable_list:RadarInfoToClient.RadarSingleRobotInfo)
+  // @@protoc_insertion_point(field_mutable_list:rmcc.RadarInfoToClient.RadarSingleRobotInfo)
   return &radarsinglerobotinfo_;
 }
-inline const ::RadarSingleRobotInfo& RadarInfoToClient::_internal_radarsinglerobotinfo(int index) const {
+inline const ::rmcc::RadarSingleRobotInfo& RadarInfoToClient::_internal_radarsinglerobotinfo(int index) const {
   return radarsinglerobotinfo_.Get(index);
 }
-inline const ::RadarSingleRobotInfo& RadarInfoToClient::radarsinglerobotinfo(int index) const {
-  // @@protoc_insertion_point(field_get:RadarInfoToClient.RadarSingleRobotInfo)
+inline const ::rmcc::RadarSingleRobotInfo& RadarInfoToClient::radarsinglerobotinfo(int index) const {
+  // @@protoc_insertion_point(field_get:rmcc.RadarInfoToClient.RadarSingleRobotInfo)
   return _internal_radarsinglerobotinfo(index);
 }
-inline ::RadarSingleRobotInfo* RadarInfoToClient::_internal_add_radarsinglerobotinfo() {
+inline ::rmcc::RadarSingleRobotInfo* RadarInfoToClient::_internal_add_radarsinglerobotinfo() {
   return radarsinglerobotinfo_.Add();
 }
-inline ::RadarSingleRobotInfo* RadarInfoToClient::add_radarsinglerobotinfo() {
-  ::RadarSingleRobotInfo* _add = _internal_add_radarsinglerobotinfo();
-  // @@protoc_insertion_point(field_add:RadarInfoToClient.RadarSingleRobotInfo)
+inline ::rmcc::RadarSingleRobotInfo* RadarInfoToClient::add_radarsinglerobotinfo() {
+  ::rmcc::RadarSingleRobotInfo* _add = _internal_add_radarsinglerobotinfo();
+  // @@protoc_insertion_point(field_add:rmcc.RadarInfoToClient.RadarSingleRobotInfo)
   return _add;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::RadarSingleRobotInfo >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rmcc::RadarSingleRobotInfo >&
 RadarInfoToClient::radarsinglerobotinfo() const {
-  // @@protoc_insertion_point(field_list:RadarInfoToClient.RadarSingleRobotInfo)
+  // @@protoc_insertion_point(field_list:rmcc.RadarInfoToClient.RadarSingleRobotInfo)
   return radarsinglerobotinfo_;
 }
 
@@ -11347,7 +11985,7 @@ inline uint32_t RadarSingleRobotInfo::_internal_target_pos_x() const {
   return target_pos_x_;
 }
 inline uint32_t RadarSingleRobotInfo::target_pos_x() const {
-  // @@protoc_insertion_point(field_get:RadarSingleRobotInfo.target_pos_x)
+  // @@protoc_insertion_point(field_get:rmcc.RadarSingleRobotInfo.target_pos_x)
   return _internal_target_pos_x();
 }
 inline void RadarSingleRobotInfo::_internal_set_target_pos_x(uint32_t value) {
@@ -11356,7 +11994,7 @@ inline void RadarSingleRobotInfo::_internal_set_target_pos_x(uint32_t value) {
 }
 inline void RadarSingleRobotInfo::set_target_pos_x(uint32_t value) {
   _internal_set_target_pos_x(value);
-  // @@protoc_insertion_point(field_set:RadarSingleRobotInfo.target_pos_x)
+  // @@protoc_insertion_point(field_set:rmcc.RadarSingleRobotInfo.target_pos_x)
 }
 
 // optional uint32 target_pos_y = 2;
@@ -11375,7 +12013,7 @@ inline uint32_t RadarSingleRobotInfo::_internal_target_pos_y() const {
   return target_pos_y_;
 }
 inline uint32_t RadarSingleRobotInfo::target_pos_y() const {
-  // @@protoc_insertion_point(field_get:RadarSingleRobotInfo.target_pos_y)
+  // @@protoc_insertion_point(field_get:rmcc.RadarSingleRobotInfo.target_pos_y)
   return _internal_target_pos_y();
 }
 inline void RadarSingleRobotInfo::_internal_set_target_pos_y(uint32_t value) {
@@ -11384,7 +12022,7 @@ inline void RadarSingleRobotInfo::_internal_set_target_pos_y(uint32_t value) {
 }
 inline void RadarSingleRobotInfo::set_target_pos_y(uint32_t value) {
   _internal_set_target_pos_y(value);
-  // @@protoc_insertion_point(field_set:RadarSingleRobotInfo.target_pos_y)
+  // @@protoc_insertion_point(field_set:rmcc.RadarSingleRobotInfo.target_pos_y)
 }
 
 // optional uint32 is_high_light = 3;
@@ -11403,7 +12041,7 @@ inline uint32_t RadarSingleRobotInfo::_internal_is_high_light() const {
   return is_high_light_;
 }
 inline uint32_t RadarSingleRobotInfo::is_high_light() const {
-  // @@protoc_insertion_point(field_get:RadarSingleRobotInfo.is_high_light)
+  // @@protoc_insertion_point(field_get:rmcc.RadarSingleRobotInfo.is_high_light)
   return _internal_is_high_light();
 }
 inline void RadarSingleRobotInfo::_internal_set_is_high_light(uint32_t value) {
@@ -11412,7 +12050,7 @@ inline void RadarSingleRobotInfo::_internal_set_is_high_light(uint32_t value) {
 }
 inline void RadarSingleRobotInfo::set_is_high_light(uint32_t value) {
   _internal_set_is_high_light(value);
-  // @@protoc_insertion_point(field_set:RadarSingleRobotInfo.is_high_light)
+  // @@protoc_insertion_point(field_set:rmcc.RadarSingleRobotInfo.is_high_light)
 }
 
 // -------------------------------------------------------------------
@@ -11432,7 +12070,7 @@ inline void CustomByteBlock::clear_data() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& CustomByteBlock::data() const {
-  // @@protoc_insertion_point(field_get:CustomByteBlock.data)
+  // @@protoc_insertion_point(field_get:rmcc.CustomByteBlock.data)
   return _internal_data();
 }
 template <typename ArgT0, typename... ArgT>
@@ -11440,11 +12078,11 @@ inline PROTOBUF_ALWAYS_INLINE
 void CustomByteBlock::set_data(ArgT0&& arg0, ArgT... args) {
  _has_bits_[0] |= 0x00000001u;
  data_.SetBytes(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:CustomByteBlock.data)
+  // @@protoc_insertion_point(field_set:rmcc.CustomByteBlock.data)
 }
 inline std::string* CustomByteBlock::mutable_data() {
   std::string* _s = _internal_mutable_data();
-  // @@protoc_insertion_point(field_mutable:CustomByteBlock.data)
+  // @@protoc_insertion_point(field_mutable:rmcc.CustomByteBlock.data)
   return _s;
 }
 inline const std::string& CustomByteBlock::_internal_data() const {
@@ -11459,7 +12097,7 @@ inline std::string* CustomByteBlock::_internal_mutable_data() {
   return data_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* CustomByteBlock::release_data() {
-  // @@protoc_insertion_point(field_release:CustomByteBlock.data)
+  // @@protoc_insertion_point(field_release:rmcc.CustomByteBlock.data)
   if (!_internal_has_data()) {
     return nullptr;
   }
@@ -11485,7 +12123,7 @@ inline void CustomByteBlock::set_allocated_data(std::string* data) {
     data_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:CustomByteBlock.data)
+  // @@protoc_insertion_point(field_set_allocated:rmcc.CustomByteBlock.data)
 }
 
 // -------------------------------------------------------------------
@@ -11508,7 +12146,7 @@ inline uint32_t AssemblyCommand::_internal_operation() const {
   return operation_;
 }
 inline uint32_t AssemblyCommand::operation() const {
-  // @@protoc_insertion_point(field_get:AssemblyCommand.operation)
+  // @@protoc_insertion_point(field_get:rmcc.AssemblyCommand.operation)
   return _internal_operation();
 }
 inline void AssemblyCommand::_internal_set_operation(uint32_t value) {
@@ -11517,7 +12155,7 @@ inline void AssemblyCommand::_internal_set_operation(uint32_t value) {
 }
 inline void AssemblyCommand::set_operation(uint32_t value) {
   _internal_set_operation(value);
-  // @@protoc_insertion_point(field_set:AssemblyCommand.operation)
+  // @@protoc_insertion_point(field_set:rmcc.AssemblyCommand.operation)
 }
 
 // optional uint32 difficulty = 2;
@@ -11536,7 +12174,7 @@ inline uint32_t AssemblyCommand::_internal_difficulty() const {
   return difficulty_;
 }
 inline uint32_t AssemblyCommand::difficulty() const {
-  // @@protoc_insertion_point(field_get:AssemblyCommand.difficulty)
+  // @@protoc_insertion_point(field_get:rmcc.AssemblyCommand.difficulty)
   return _internal_difficulty();
 }
 inline void AssemblyCommand::_internal_set_difficulty(uint32_t value) {
@@ -11545,7 +12183,7 @@ inline void AssemblyCommand::_internal_set_difficulty(uint32_t value) {
 }
 inline void AssemblyCommand::set_difficulty(uint32_t value) {
   _internal_set_difficulty(value);
-  // @@protoc_insertion_point(field_set:AssemblyCommand.difficulty)
+  // @@protoc_insertion_point(field_set:rmcc.AssemblyCommand.difficulty)
 }
 
 // -------------------------------------------------------------------
@@ -11568,7 +12206,7 @@ inline uint32_t TechCoreMotionStateSync::_internal_maximum_difficulty_level() co
   return maximum_difficulty_level_;
 }
 inline uint32_t TechCoreMotionStateSync::maximum_difficulty_level() const {
-  // @@protoc_insertion_point(field_get:TechCoreMotionStateSync.maximum_difficulty_level)
+  // @@protoc_insertion_point(field_get:rmcc.TechCoreMotionStateSync.maximum_difficulty_level)
   return _internal_maximum_difficulty_level();
 }
 inline void TechCoreMotionStateSync::_internal_set_maximum_difficulty_level(uint32_t value) {
@@ -11577,7 +12215,7 @@ inline void TechCoreMotionStateSync::_internal_set_maximum_difficulty_level(uint
 }
 inline void TechCoreMotionStateSync::set_maximum_difficulty_level(uint32_t value) {
   _internal_set_maximum_difficulty_level(value);
-  // @@protoc_insertion_point(field_set:TechCoreMotionStateSync.maximum_difficulty_level)
+  // @@protoc_insertion_point(field_set:rmcc.TechCoreMotionStateSync.maximum_difficulty_level)
 }
 
 // optional uint32 basic_state = 2;
@@ -11596,7 +12234,7 @@ inline uint32_t TechCoreMotionStateSync::_internal_basic_state() const {
   return basic_state_;
 }
 inline uint32_t TechCoreMotionStateSync::basic_state() const {
-  // @@protoc_insertion_point(field_get:TechCoreMotionStateSync.basic_state)
+  // @@protoc_insertion_point(field_get:rmcc.TechCoreMotionStateSync.basic_state)
   return _internal_basic_state();
 }
 inline void TechCoreMotionStateSync::_internal_set_basic_state(uint32_t value) {
@@ -11605,7 +12243,7 @@ inline void TechCoreMotionStateSync::_internal_set_basic_state(uint32_t value) {
 }
 inline void TechCoreMotionStateSync::set_basic_state(uint32_t value) {
   _internal_set_basic_state(value);
-  // @@protoc_insertion_point(field_set:TechCoreMotionStateSync.basic_state)
+  // @@protoc_insertion_point(field_set:rmcc.TechCoreMotionStateSync.basic_state)
 }
 
 // optional uint32 putin_state = 3;
@@ -11624,7 +12262,7 @@ inline uint32_t TechCoreMotionStateSync::_internal_putin_state() const {
   return putin_state_;
 }
 inline uint32_t TechCoreMotionStateSync::putin_state() const {
-  // @@protoc_insertion_point(field_get:TechCoreMotionStateSync.putin_state)
+  // @@protoc_insertion_point(field_get:rmcc.TechCoreMotionStateSync.putin_state)
   return _internal_putin_state();
 }
 inline void TechCoreMotionStateSync::_internal_set_putin_state(uint32_t value) {
@@ -11633,7 +12271,7 @@ inline void TechCoreMotionStateSync::_internal_set_putin_state(uint32_t value) {
 }
 inline void TechCoreMotionStateSync::set_putin_state(uint32_t value) {
   _internal_set_putin_state(value);
-  // @@protoc_insertion_point(field_set:TechCoreMotionStateSync.putin_state)
+  // @@protoc_insertion_point(field_set:rmcc.TechCoreMotionStateSync.putin_state)
 }
 
 // optional uint32 move_state = 4;
@@ -11652,7 +12290,7 @@ inline uint32_t TechCoreMotionStateSync::_internal_move_state() const {
   return move_state_;
 }
 inline uint32_t TechCoreMotionStateSync::move_state() const {
-  // @@protoc_insertion_point(field_get:TechCoreMotionStateSync.move_state)
+  // @@protoc_insertion_point(field_get:rmcc.TechCoreMotionStateSync.move_state)
   return _internal_move_state();
 }
 inline void TechCoreMotionStateSync::_internal_set_move_state(uint32_t value) {
@@ -11661,7 +12299,7 @@ inline void TechCoreMotionStateSync::_internal_set_move_state(uint32_t value) {
 }
 inline void TechCoreMotionStateSync::set_move_state(uint32_t value) {
   _internal_set_move_state(value);
-  // @@protoc_insertion_point(field_set:TechCoreMotionStateSync.move_state)
+  // @@protoc_insertion_point(field_set:rmcc.TechCoreMotionStateSync.move_state)
 }
 
 // optional uint32 rotate_state = 5;
@@ -11680,7 +12318,7 @@ inline uint32_t TechCoreMotionStateSync::_internal_rotate_state() const {
   return rotate_state_;
 }
 inline uint32_t TechCoreMotionStateSync::rotate_state() const {
-  // @@protoc_insertion_point(field_get:TechCoreMotionStateSync.rotate_state)
+  // @@protoc_insertion_point(field_get:rmcc.TechCoreMotionStateSync.rotate_state)
   return _internal_rotate_state();
 }
 inline void TechCoreMotionStateSync::_internal_set_rotate_state(uint32_t value) {
@@ -11689,7 +12327,7 @@ inline void TechCoreMotionStateSync::_internal_set_rotate_state(uint32_t value) 
 }
 inline void TechCoreMotionStateSync::set_rotate_state(uint32_t value) {
   _internal_set_rotate_state(value);
-  // @@protoc_insertion_point(field_set:TechCoreMotionStateSync.rotate_state)
+  // @@protoc_insertion_point(field_set:rmcc.TechCoreMotionStateSync.rotate_state)
 }
 
 // optional uint32 enemy_core_status = 6;
@@ -11708,7 +12346,7 @@ inline uint32_t TechCoreMotionStateSync::_internal_enemy_core_status() const {
   return enemy_core_status_;
 }
 inline uint32_t TechCoreMotionStateSync::enemy_core_status() const {
-  // @@protoc_insertion_point(field_get:TechCoreMotionStateSync.enemy_core_status)
+  // @@protoc_insertion_point(field_get:rmcc.TechCoreMotionStateSync.enemy_core_status)
   return _internal_enemy_core_status();
 }
 inline void TechCoreMotionStateSync::_internal_set_enemy_core_status(uint32_t value) {
@@ -11717,7 +12355,7 @@ inline void TechCoreMotionStateSync::_internal_set_enemy_core_status(uint32_t va
 }
 inline void TechCoreMotionStateSync::set_enemy_core_status(uint32_t value) {
   _internal_set_enemy_core_status(value);
-  // @@protoc_insertion_point(field_set:TechCoreMotionStateSync.enemy_core_status)
+  // @@protoc_insertion_point(field_set:rmcc.TechCoreMotionStateSync.enemy_core_status)
 }
 
 // optional uint32 remain_time_all = 7;
@@ -11736,7 +12374,7 @@ inline uint32_t TechCoreMotionStateSync::_internal_remain_time_all() const {
   return remain_time_all_;
 }
 inline uint32_t TechCoreMotionStateSync::remain_time_all() const {
-  // @@protoc_insertion_point(field_get:TechCoreMotionStateSync.remain_time_all)
+  // @@protoc_insertion_point(field_get:rmcc.TechCoreMotionStateSync.remain_time_all)
   return _internal_remain_time_all();
 }
 inline void TechCoreMotionStateSync::_internal_set_remain_time_all(uint32_t value) {
@@ -11745,7 +12383,7 @@ inline void TechCoreMotionStateSync::_internal_set_remain_time_all(uint32_t valu
 }
 inline void TechCoreMotionStateSync::set_remain_time_all(uint32_t value) {
   _internal_set_remain_time_all(value);
-  // @@protoc_insertion_point(field_set:TechCoreMotionStateSync.remain_time_all)
+  // @@protoc_insertion_point(field_set:rmcc.TechCoreMotionStateSync.remain_time_all)
 }
 
 // optional uint32 remain_time_step = 8;
@@ -11764,7 +12402,7 @@ inline uint32_t TechCoreMotionStateSync::_internal_remain_time_step() const {
   return remain_time_step_;
 }
 inline uint32_t TechCoreMotionStateSync::remain_time_step() const {
-  // @@protoc_insertion_point(field_get:TechCoreMotionStateSync.remain_time_step)
+  // @@protoc_insertion_point(field_get:rmcc.TechCoreMotionStateSync.remain_time_step)
   return _internal_remain_time_step();
 }
 inline void TechCoreMotionStateSync::_internal_set_remain_time_step(uint32_t value) {
@@ -11773,7 +12411,7 @@ inline void TechCoreMotionStateSync::_internal_set_remain_time_step(uint32_t val
 }
 inline void TechCoreMotionStateSync::set_remain_time_step(uint32_t value) {
   _internal_set_remain_time_step(value);
-  // @@protoc_insertion_point(field_set:TechCoreMotionStateSync.remain_time_step)
+  // @@protoc_insertion_point(field_set:rmcc.TechCoreMotionStateSync.remain_time_step)
 }
 
 // -------------------------------------------------------------------
@@ -11796,7 +12434,7 @@ inline uint32_t RobotPerformanceSelectionCommand::_internal_shooter() const {
   return shooter_;
 }
 inline uint32_t RobotPerformanceSelectionCommand::shooter() const {
-  // @@protoc_insertion_point(field_get:RobotPerformanceSelectionCommand.shooter)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPerformanceSelectionCommand.shooter)
   return _internal_shooter();
 }
 inline void RobotPerformanceSelectionCommand::_internal_set_shooter(uint32_t value) {
@@ -11805,7 +12443,7 @@ inline void RobotPerformanceSelectionCommand::_internal_set_shooter(uint32_t val
 }
 inline void RobotPerformanceSelectionCommand::set_shooter(uint32_t value) {
   _internal_set_shooter(value);
-  // @@protoc_insertion_point(field_set:RobotPerformanceSelectionCommand.shooter)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPerformanceSelectionCommand.shooter)
 }
 
 // optional uint32 chassis = 2;
@@ -11824,7 +12462,7 @@ inline uint32_t RobotPerformanceSelectionCommand::_internal_chassis() const {
   return chassis_;
 }
 inline uint32_t RobotPerformanceSelectionCommand::chassis() const {
-  // @@protoc_insertion_point(field_get:RobotPerformanceSelectionCommand.chassis)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPerformanceSelectionCommand.chassis)
   return _internal_chassis();
 }
 inline void RobotPerformanceSelectionCommand::_internal_set_chassis(uint32_t value) {
@@ -11833,7 +12471,7 @@ inline void RobotPerformanceSelectionCommand::_internal_set_chassis(uint32_t val
 }
 inline void RobotPerformanceSelectionCommand::set_chassis(uint32_t value) {
   _internal_set_chassis(value);
-  // @@protoc_insertion_point(field_set:RobotPerformanceSelectionCommand.chassis)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPerformanceSelectionCommand.chassis)
 }
 
 // optional uint32 sentry_control = 3;
@@ -11852,7 +12490,7 @@ inline uint32_t RobotPerformanceSelectionCommand::_internal_sentry_control() con
   return sentry_control_;
 }
 inline uint32_t RobotPerformanceSelectionCommand::sentry_control() const {
-  // @@protoc_insertion_point(field_get:RobotPerformanceSelectionCommand.sentry_control)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPerformanceSelectionCommand.sentry_control)
   return _internal_sentry_control();
 }
 inline void RobotPerformanceSelectionCommand::_internal_set_sentry_control(uint32_t value) {
@@ -11861,7 +12499,7 @@ inline void RobotPerformanceSelectionCommand::_internal_set_sentry_control(uint3
 }
 inline void RobotPerformanceSelectionCommand::set_sentry_control(uint32_t value) {
   _internal_set_sentry_control(value);
-  // @@protoc_insertion_point(field_set:RobotPerformanceSelectionCommand.sentry_control)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPerformanceSelectionCommand.sentry_control)
 }
 
 // -------------------------------------------------------------------
@@ -11884,7 +12522,7 @@ inline uint32_t RobotPerformanceSelectionSync::_internal_shooter() const {
   return shooter_;
 }
 inline uint32_t RobotPerformanceSelectionSync::shooter() const {
-  // @@protoc_insertion_point(field_get:RobotPerformanceSelectionSync.shooter)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPerformanceSelectionSync.shooter)
   return _internal_shooter();
 }
 inline void RobotPerformanceSelectionSync::_internal_set_shooter(uint32_t value) {
@@ -11893,7 +12531,7 @@ inline void RobotPerformanceSelectionSync::_internal_set_shooter(uint32_t value)
 }
 inline void RobotPerformanceSelectionSync::set_shooter(uint32_t value) {
   _internal_set_shooter(value);
-  // @@protoc_insertion_point(field_set:RobotPerformanceSelectionSync.shooter)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPerformanceSelectionSync.shooter)
 }
 
 // optional uint32 chassis = 2;
@@ -11912,7 +12550,7 @@ inline uint32_t RobotPerformanceSelectionSync::_internal_chassis() const {
   return chassis_;
 }
 inline uint32_t RobotPerformanceSelectionSync::chassis() const {
-  // @@protoc_insertion_point(field_get:RobotPerformanceSelectionSync.chassis)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPerformanceSelectionSync.chassis)
   return _internal_chassis();
 }
 inline void RobotPerformanceSelectionSync::_internal_set_chassis(uint32_t value) {
@@ -11921,7 +12559,7 @@ inline void RobotPerformanceSelectionSync::_internal_set_chassis(uint32_t value)
 }
 inline void RobotPerformanceSelectionSync::set_chassis(uint32_t value) {
   _internal_set_chassis(value);
-  // @@protoc_insertion_point(field_set:RobotPerformanceSelectionSync.chassis)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPerformanceSelectionSync.chassis)
 }
 
 // optional uint32 sentry_control = 3;
@@ -11940,7 +12578,7 @@ inline uint32_t RobotPerformanceSelectionSync::_internal_sentry_control() const 
   return sentry_control_;
 }
 inline uint32_t RobotPerformanceSelectionSync::sentry_control() const {
-  // @@protoc_insertion_point(field_get:RobotPerformanceSelectionSync.sentry_control)
+  // @@protoc_insertion_point(field_get:rmcc.RobotPerformanceSelectionSync.sentry_control)
   return _internal_sentry_control();
 }
 inline void RobotPerformanceSelectionSync::_internal_set_sentry_control(uint32_t value) {
@@ -11949,7 +12587,7 @@ inline void RobotPerformanceSelectionSync::_internal_set_sentry_control(uint32_t
 }
 inline void RobotPerformanceSelectionSync::set_sentry_control(uint32_t value) {
   _internal_set_sentry_control(value);
-  // @@protoc_insertion_point(field_set:RobotPerformanceSelectionSync.sentry_control)
+  // @@protoc_insertion_point(field_set:rmcc.RobotPerformanceSelectionSync.sentry_control)
 }
 
 // -------------------------------------------------------------------
@@ -11972,7 +12610,7 @@ inline uint32_t CommonCommand::_internal_cmd_type() const {
   return cmd_type_;
 }
 inline uint32_t CommonCommand::cmd_type() const {
-  // @@protoc_insertion_point(field_get:CommonCommand.cmd_type)
+  // @@protoc_insertion_point(field_get:rmcc.CommonCommand.cmd_type)
   return _internal_cmd_type();
 }
 inline void CommonCommand::_internal_set_cmd_type(uint32_t value) {
@@ -11981,7 +12619,7 @@ inline void CommonCommand::_internal_set_cmd_type(uint32_t value) {
 }
 inline void CommonCommand::set_cmd_type(uint32_t value) {
   _internal_set_cmd_type(value);
-  // @@protoc_insertion_point(field_set:CommonCommand.cmd_type)
+  // @@protoc_insertion_point(field_set:rmcc.CommonCommand.cmd_type)
 }
 
 // optional uint32 param = 2;
@@ -12000,7 +12638,7 @@ inline uint32_t CommonCommand::_internal_param() const {
   return param_;
 }
 inline uint32_t CommonCommand::param() const {
-  // @@protoc_insertion_point(field_get:CommonCommand.param)
+  // @@protoc_insertion_point(field_get:rmcc.CommonCommand.param)
   return _internal_param();
 }
 inline void CommonCommand::_internal_set_param(uint32_t value) {
@@ -12009,7 +12647,7 @@ inline void CommonCommand::_internal_set_param(uint32_t value) {
 }
 inline void CommonCommand::set_param(uint32_t value) {
   _internal_set_param(value);
-  // @@protoc_insertion_point(field_set:CommonCommand.param)
+  // @@protoc_insertion_point(field_set:rmcc.CommonCommand.param)
 }
 
 // -------------------------------------------------------------------
@@ -12032,7 +12670,7 @@ inline uint32_t HeroDeployModeEventCommand::_internal_mode() const {
   return mode_;
 }
 inline uint32_t HeroDeployModeEventCommand::mode() const {
-  // @@protoc_insertion_point(field_get:HeroDeployModeEventCommand.mode)
+  // @@protoc_insertion_point(field_get:rmcc.HeroDeployModeEventCommand.mode)
   return _internal_mode();
 }
 inline void HeroDeployModeEventCommand::_internal_set_mode(uint32_t value) {
@@ -12041,7 +12679,7 @@ inline void HeroDeployModeEventCommand::_internal_set_mode(uint32_t value) {
 }
 inline void HeroDeployModeEventCommand::set_mode(uint32_t value) {
   _internal_set_mode(value);
-  // @@protoc_insertion_point(field_set:HeroDeployModeEventCommand.mode)
+  // @@protoc_insertion_point(field_set:rmcc.HeroDeployModeEventCommand.mode)
 }
 
 // -------------------------------------------------------------------
@@ -12064,7 +12702,7 @@ inline uint32_t DeployModeStatusSync::_internal_status() const {
   return status_;
 }
 inline uint32_t DeployModeStatusSync::status() const {
-  // @@protoc_insertion_point(field_get:DeployModeStatusSync.status)
+  // @@protoc_insertion_point(field_get:rmcc.DeployModeStatusSync.status)
   return _internal_status();
 }
 inline void DeployModeStatusSync::_internal_set_status(uint32_t value) {
@@ -12073,7 +12711,7 @@ inline void DeployModeStatusSync::_internal_set_status(uint32_t value) {
 }
 inline void DeployModeStatusSync::set_status(uint32_t value) {
   _internal_set_status(value);
-  // @@protoc_insertion_point(field_set:DeployModeStatusSync.status)
+  // @@protoc_insertion_point(field_set:rmcc.DeployModeStatusSync.status)
 }
 
 // -------------------------------------------------------------------
@@ -12096,7 +12734,7 @@ inline uint32_t RuneActivateCommand::_internal_activate() const {
   return activate_;
 }
 inline uint32_t RuneActivateCommand::activate() const {
-  // @@protoc_insertion_point(field_get:RuneActivateCommand.activate)
+  // @@protoc_insertion_point(field_get:rmcc.RuneActivateCommand.activate)
   return _internal_activate();
 }
 inline void RuneActivateCommand::_internal_set_activate(uint32_t value) {
@@ -12105,7 +12743,7 @@ inline void RuneActivateCommand::_internal_set_activate(uint32_t value) {
 }
 inline void RuneActivateCommand::set_activate(uint32_t value) {
   _internal_set_activate(value);
-  // @@protoc_insertion_point(field_set:RuneActivateCommand.activate)
+  // @@protoc_insertion_point(field_set:rmcc.RuneActivateCommand.activate)
 }
 
 // -------------------------------------------------------------------
@@ -12128,7 +12766,7 @@ inline uint32_t RuneStatusSync::_internal_rune_status() const {
   return rune_status_;
 }
 inline uint32_t RuneStatusSync::rune_status() const {
-  // @@protoc_insertion_point(field_get:RuneStatusSync.rune_status)
+  // @@protoc_insertion_point(field_get:rmcc.RuneStatusSync.rune_status)
   return _internal_rune_status();
 }
 inline void RuneStatusSync::_internal_set_rune_status(uint32_t value) {
@@ -12137,7 +12775,7 @@ inline void RuneStatusSync::_internal_set_rune_status(uint32_t value) {
 }
 inline void RuneStatusSync::set_rune_status(uint32_t value) {
   _internal_set_rune_status(value);
-  // @@protoc_insertion_point(field_set:RuneStatusSync.rune_status)
+  // @@protoc_insertion_point(field_set:rmcc.RuneStatusSync.rune_status)
 }
 
 // optional uint32 activated_arms = 2;
@@ -12156,7 +12794,7 @@ inline uint32_t RuneStatusSync::_internal_activated_arms() const {
   return activated_arms_;
 }
 inline uint32_t RuneStatusSync::activated_arms() const {
-  // @@protoc_insertion_point(field_get:RuneStatusSync.activated_arms)
+  // @@protoc_insertion_point(field_get:rmcc.RuneStatusSync.activated_arms)
   return _internal_activated_arms();
 }
 inline void RuneStatusSync::_internal_set_activated_arms(uint32_t value) {
@@ -12165,7 +12803,7 @@ inline void RuneStatusSync::_internal_set_activated_arms(uint32_t value) {
 }
 inline void RuneStatusSync::set_activated_arms(uint32_t value) {
   _internal_set_activated_arms(value);
-  // @@protoc_insertion_point(field_set:RuneStatusSync.activated_arms)
+  // @@protoc_insertion_point(field_set:rmcc.RuneStatusSync.activated_arms)
 }
 
 // optional float average_rings = 3;
@@ -12184,7 +12822,7 @@ inline float RuneStatusSync::_internal_average_rings() const {
   return average_rings_;
 }
 inline float RuneStatusSync::average_rings() const {
-  // @@protoc_insertion_point(field_get:RuneStatusSync.average_rings)
+  // @@protoc_insertion_point(field_get:rmcc.RuneStatusSync.average_rings)
   return _internal_average_rings();
 }
 inline void RuneStatusSync::_internal_set_average_rings(float value) {
@@ -12193,7 +12831,7 @@ inline void RuneStatusSync::_internal_set_average_rings(float value) {
 }
 inline void RuneStatusSync::set_average_rings(float value) {
   _internal_set_average_rings(value);
-  // @@protoc_insertion_point(field_set:RuneStatusSync.average_rings)
+  // @@protoc_insertion_point(field_set:rmcc.RuneStatusSync.average_rings)
 }
 
 // -------------------------------------------------------------------
@@ -12216,7 +12854,7 @@ inline uint32_t SentryStatusSync::_internal_posture_id() const {
   return posture_id_;
 }
 inline uint32_t SentryStatusSync::posture_id() const {
-  // @@protoc_insertion_point(field_get:SentryStatusSync.posture_id)
+  // @@protoc_insertion_point(field_get:rmcc.SentryStatusSync.posture_id)
   return _internal_posture_id();
 }
 inline void SentryStatusSync::_internal_set_posture_id(uint32_t value) {
@@ -12225,7 +12863,7 @@ inline void SentryStatusSync::_internal_set_posture_id(uint32_t value) {
 }
 inline void SentryStatusSync::set_posture_id(uint32_t value) {
   _internal_set_posture_id(value);
-  // @@protoc_insertion_point(field_set:SentryStatusSync.posture_id)
+  // @@protoc_insertion_point(field_set:rmcc.SentryStatusSync.posture_id)
 }
 
 // optional bool is_weakened = 2;
@@ -12244,7 +12882,7 @@ inline bool SentryStatusSync::_internal_is_weakened() const {
   return is_weakened_;
 }
 inline bool SentryStatusSync::is_weakened() const {
-  // @@protoc_insertion_point(field_get:SentryStatusSync.is_weakened)
+  // @@protoc_insertion_point(field_get:rmcc.SentryStatusSync.is_weakened)
   return _internal_is_weakened();
 }
 inline void SentryStatusSync::_internal_set_is_weakened(bool value) {
@@ -12253,7 +12891,35 @@ inline void SentryStatusSync::_internal_set_is_weakened(bool value) {
 }
 inline void SentryStatusSync::set_is_weakened(bool value) {
   _internal_set_is_weakened(value);
-  // @@protoc_insertion_point(field_set:SentryStatusSync.is_weakened)
+  // @@protoc_insertion_point(field_set:rmcc.SentryStatusSync.is_weakened)
+}
+
+// optional bool is_powered = 3;
+inline bool SentryStatusSync::_internal_has_is_powered() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool SentryStatusSync::has_is_powered() const {
+  return _internal_has_is_powered();
+}
+inline void SentryStatusSync::clear_is_powered() {
+  is_powered_ = false;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline bool SentryStatusSync::_internal_is_powered() const {
+  return is_powered_;
+}
+inline bool SentryStatusSync::is_powered() const {
+  // @@protoc_insertion_point(field_get:rmcc.SentryStatusSync.is_powered)
+  return _internal_is_powered();
+}
+inline void SentryStatusSync::_internal_set_is_powered(bool value) {
+  _has_bits_[0] |= 0x00000004u;
+  is_powered_ = value;
+}
+inline void SentryStatusSync::set_is_powered(bool value) {
+  _internal_set_is_powered(value);
+  // @@protoc_insertion_point(field_set:rmcc.SentryStatusSync.is_powered)
 }
 
 // -------------------------------------------------------------------
@@ -12276,7 +12942,7 @@ inline uint32_t DartCommand::_internal_target_id() const {
   return target_id_;
 }
 inline uint32_t DartCommand::target_id() const {
-  // @@protoc_insertion_point(field_get:DartCommand.target_id)
+  // @@protoc_insertion_point(field_get:rmcc.DartCommand.target_id)
   return _internal_target_id();
 }
 inline void DartCommand::_internal_set_target_id(uint32_t value) {
@@ -12285,7 +12951,7 @@ inline void DartCommand::_internal_set_target_id(uint32_t value) {
 }
 inline void DartCommand::set_target_id(uint32_t value) {
   _internal_set_target_id(value);
-  // @@protoc_insertion_point(field_set:DartCommand.target_id)
+  // @@protoc_insertion_point(field_set:rmcc.DartCommand.target_id)
 }
 
 // optional bool open = 2;
@@ -12304,7 +12970,7 @@ inline bool DartCommand::_internal_open() const {
   return open_;
 }
 inline bool DartCommand::open() const {
-  // @@protoc_insertion_point(field_get:DartCommand.open)
+  // @@protoc_insertion_point(field_get:rmcc.DartCommand.open)
   return _internal_open();
 }
 inline void DartCommand::_internal_set_open(bool value) {
@@ -12313,7 +12979,7 @@ inline void DartCommand::_internal_set_open(bool value) {
 }
 inline void DartCommand::set_open(bool value) {
   _internal_set_open(value);
-  // @@protoc_insertion_point(field_set:DartCommand.open)
+  // @@protoc_insertion_point(field_set:rmcc.DartCommand.open)
 }
 
 // optional bool launch_confirm = 3;
@@ -12332,7 +12998,7 @@ inline bool DartCommand::_internal_launch_confirm() const {
   return launch_confirm_;
 }
 inline bool DartCommand::launch_confirm() const {
-  // @@protoc_insertion_point(field_get:DartCommand.launch_confirm)
+  // @@protoc_insertion_point(field_get:rmcc.DartCommand.launch_confirm)
   return _internal_launch_confirm();
 }
 inline void DartCommand::_internal_set_launch_confirm(bool value) {
@@ -12341,7 +13007,7 @@ inline void DartCommand::_internal_set_launch_confirm(bool value) {
 }
 inline void DartCommand::set_launch_confirm(bool value) {
   _internal_set_launch_confirm(value);
-  // @@protoc_insertion_point(field_set:DartCommand.launch_confirm)
+  // @@protoc_insertion_point(field_set:rmcc.DartCommand.launch_confirm)
 }
 
 // -------------------------------------------------------------------
@@ -12364,7 +13030,7 @@ inline uint32_t DartSelectTargetStatusSync::_internal_target_id() const {
   return target_id_;
 }
 inline uint32_t DartSelectTargetStatusSync::target_id() const {
-  // @@protoc_insertion_point(field_get:DartSelectTargetStatusSync.target_id)
+  // @@protoc_insertion_point(field_get:rmcc.DartSelectTargetStatusSync.target_id)
   return _internal_target_id();
 }
 inline void DartSelectTargetStatusSync::_internal_set_target_id(uint32_t value) {
@@ -12373,7 +13039,7 @@ inline void DartSelectTargetStatusSync::_internal_set_target_id(uint32_t value) 
 }
 inline void DartSelectTargetStatusSync::set_target_id(uint32_t value) {
   _internal_set_target_id(value);
-  // @@protoc_insertion_point(field_set:DartSelectTargetStatusSync.target_id)
+  // @@protoc_insertion_point(field_set:rmcc.DartSelectTargetStatusSync.target_id)
 }
 
 // optional bool open = 2;
@@ -12392,7 +13058,7 @@ inline bool DartSelectTargetStatusSync::_internal_open() const {
   return open_;
 }
 inline bool DartSelectTargetStatusSync::open() const {
-  // @@protoc_insertion_point(field_get:DartSelectTargetStatusSync.open)
+  // @@protoc_insertion_point(field_get:rmcc.DartSelectTargetStatusSync.open)
   return _internal_open();
 }
 inline void DartSelectTargetStatusSync::_internal_set_open(bool value) {
@@ -12401,7 +13067,7 @@ inline void DartSelectTargetStatusSync::_internal_set_open(bool value) {
 }
 inline void DartSelectTargetStatusSync::set_open(bool value) {
   _internal_set_open(value);
-  // @@protoc_insertion_point(field_set:DartSelectTargetStatusSync.open)
+  // @@protoc_insertion_point(field_set:rmcc.DartSelectTargetStatusSync.open)
 }
 
 // -------------------------------------------------------------------
@@ -12424,7 +13090,7 @@ inline uint32_t SentryCtrlCommand::_internal_command_id() const {
   return command_id_;
 }
 inline uint32_t SentryCtrlCommand::command_id() const {
-  // @@protoc_insertion_point(field_get:SentryCtrlCommand.command_id)
+  // @@protoc_insertion_point(field_get:rmcc.SentryCtrlCommand.command_id)
   return _internal_command_id();
 }
 inline void SentryCtrlCommand::_internal_set_command_id(uint32_t value) {
@@ -12433,7 +13099,7 @@ inline void SentryCtrlCommand::_internal_set_command_id(uint32_t value) {
 }
 inline void SentryCtrlCommand::set_command_id(uint32_t value) {
   _internal_set_command_id(value);
-  // @@protoc_insertion_point(field_set:SentryCtrlCommand.command_id)
+  // @@protoc_insertion_point(field_set:rmcc.SentryCtrlCommand.command_id)
 }
 
 // -------------------------------------------------------------------
@@ -12456,7 +13122,7 @@ inline uint32_t SentryCtrlResult::_internal_command_id() const {
   return command_id_;
 }
 inline uint32_t SentryCtrlResult::command_id() const {
-  // @@protoc_insertion_point(field_get:SentryCtrlResult.command_id)
+  // @@protoc_insertion_point(field_get:rmcc.SentryCtrlResult.command_id)
   return _internal_command_id();
 }
 inline void SentryCtrlResult::_internal_set_command_id(uint32_t value) {
@@ -12465,7 +13131,7 @@ inline void SentryCtrlResult::_internal_set_command_id(uint32_t value) {
 }
 inline void SentryCtrlResult::set_command_id(uint32_t value) {
   _internal_set_command_id(value);
-  // @@protoc_insertion_point(field_set:SentryCtrlResult.command_id)
+  // @@protoc_insertion_point(field_set:rmcc.SentryCtrlResult.command_id)
 }
 
 // optional uint32 result_code = 2;
@@ -12484,7 +13150,7 @@ inline uint32_t SentryCtrlResult::_internal_result_code() const {
   return result_code_;
 }
 inline uint32_t SentryCtrlResult::result_code() const {
-  // @@protoc_insertion_point(field_get:SentryCtrlResult.result_code)
+  // @@protoc_insertion_point(field_get:rmcc.SentryCtrlResult.result_code)
   return _internal_result_code();
 }
 inline void SentryCtrlResult::_internal_set_result_code(uint32_t value) {
@@ -12493,7 +13159,7 @@ inline void SentryCtrlResult::_internal_set_result_code(uint32_t value) {
 }
 inline void SentryCtrlResult::set_result_code(uint32_t value) {
   _internal_set_result_code(value);
-  // @@protoc_insertion_point(field_set:SentryCtrlResult.result_code)
+  // @@protoc_insertion_point(field_set:rmcc.SentryCtrlResult.result_code)
 }
 
 // -------------------------------------------------------------------
@@ -12516,7 +13182,7 @@ inline uint32_t AirSupportCommand::_internal_command_id() const {
   return command_id_;
 }
 inline uint32_t AirSupportCommand::command_id() const {
-  // @@protoc_insertion_point(field_get:AirSupportCommand.command_id)
+  // @@protoc_insertion_point(field_get:rmcc.AirSupportCommand.command_id)
   return _internal_command_id();
 }
 inline void AirSupportCommand::_internal_set_command_id(uint32_t value) {
@@ -12525,7 +13191,7 @@ inline void AirSupportCommand::_internal_set_command_id(uint32_t value) {
 }
 inline void AirSupportCommand::set_command_id(uint32_t value) {
   _internal_set_command_id(value);
-  // @@protoc_insertion_point(field_set:AirSupportCommand.command_id)
+  // @@protoc_insertion_point(field_set:rmcc.AirSupportCommand.command_id)
 }
 
 // -------------------------------------------------------------------
@@ -12548,7 +13214,7 @@ inline uint32_t AirSupportStatusSync::_internal_airsupport_status() const {
   return airsupport_status_;
 }
 inline uint32_t AirSupportStatusSync::airsupport_status() const {
-  // @@protoc_insertion_point(field_get:AirSupportStatusSync.airsupport_status)
+  // @@protoc_insertion_point(field_get:rmcc.AirSupportStatusSync.airsupport_status)
   return _internal_airsupport_status();
 }
 inline void AirSupportStatusSync::_internal_set_airsupport_status(uint32_t value) {
@@ -12557,7 +13223,7 @@ inline void AirSupportStatusSync::_internal_set_airsupport_status(uint32_t value
 }
 inline void AirSupportStatusSync::set_airsupport_status(uint32_t value) {
   _internal_set_airsupport_status(value);
-  // @@protoc_insertion_point(field_set:AirSupportStatusSync.airsupport_status)
+  // @@protoc_insertion_point(field_set:rmcc.AirSupportStatusSync.airsupport_status)
 }
 
 // optional uint32 left_time = 2;
@@ -12576,7 +13242,7 @@ inline uint32_t AirSupportStatusSync::_internal_left_time() const {
   return left_time_;
 }
 inline uint32_t AirSupportStatusSync::left_time() const {
-  // @@protoc_insertion_point(field_get:AirSupportStatusSync.left_time)
+  // @@protoc_insertion_point(field_get:rmcc.AirSupportStatusSync.left_time)
   return _internal_left_time();
 }
 inline void AirSupportStatusSync::_internal_set_left_time(uint32_t value) {
@@ -12585,7 +13251,7 @@ inline void AirSupportStatusSync::_internal_set_left_time(uint32_t value) {
 }
 inline void AirSupportStatusSync::set_left_time(uint32_t value) {
   _internal_set_left_time(value);
-  // @@protoc_insertion_point(field_set:AirSupportStatusSync.left_time)
+  // @@protoc_insertion_point(field_set:rmcc.AirSupportStatusSync.left_time)
 }
 
 // optional uint32 cost_coins = 3;
@@ -12604,7 +13270,7 @@ inline uint32_t AirSupportStatusSync::_internal_cost_coins() const {
   return cost_coins_;
 }
 inline uint32_t AirSupportStatusSync::cost_coins() const {
-  // @@protoc_insertion_point(field_get:AirSupportStatusSync.cost_coins)
+  // @@protoc_insertion_point(field_get:rmcc.AirSupportStatusSync.cost_coins)
   return _internal_cost_coins();
 }
 inline void AirSupportStatusSync::_internal_set_cost_coins(uint32_t value) {
@@ -12613,7 +13279,7 @@ inline void AirSupportStatusSync::_internal_set_cost_coins(uint32_t value) {
 }
 inline void AirSupportStatusSync::set_cost_coins(uint32_t value) {
   _internal_set_cost_coins(value);
-  // @@protoc_insertion_point(field_set:AirSupportStatusSync.cost_coins)
+  // @@protoc_insertion_point(field_set:rmcc.AirSupportStatusSync.cost_coins)
 }
 
 // optional uint32 is_being_targeted = 4;
@@ -12632,7 +13298,7 @@ inline uint32_t AirSupportStatusSync::_internal_is_being_targeted() const {
   return is_being_targeted_;
 }
 inline uint32_t AirSupportStatusSync::is_being_targeted() const {
-  // @@protoc_insertion_point(field_get:AirSupportStatusSync.is_being_targeted)
+  // @@protoc_insertion_point(field_get:rmcc.AirSupportStatusSync.is_being_targeted)
   return _internal_is_being_targeted();
 }
 inline void AirSupportStatusSync::_internal_set_is_being_targeted(uint32_t value) {
@@ -12641,7 +13307,7 @@ inline void AirSupportStatusSync::_internal_set_is_being_targeted(uint32_t value
 }
 inline void AirSupportStatusSync::set_is_being_targeted(uint32_t value) {
   _internal_set_is_being_targeted(value);
-  // @@protoc_insertion_point(field_set:AirSupportStatusSync.is_being_targeted)
+  // @@protoc_insertion_point(field_set:rmcc.AirSupportStatusSync.is_being_targeted)
 }
 
 // optional uint32 shooter_status = 5;
@@ -12660,7 +13326,7 @@ inline uint32_t AirSupportStatusSync::_internal_shooter_status() const {
   return shooter_status_;
 }
 inline uint32_t AirSupportStatusSync::shooter_status() const {
-  // @@protoc_insertion_point(field_get:AirSupportStatusSync.shooter_status)
+  // @@protoc_insertion_point(field_get:rmcc.AirSupportStatusSync.shooter_status)
   return _internal_shooter_status();
 }
 inline void AirSupportStatusSync::_internal_set_shooter_status(uint32_t value) {
@@ -12669,7 +13335,7 @@ inline void AirSupportStatusSync::_internal_set_shooter_status(uint32_t value) {
 }
 inline void AirSupportStatusSync::set_shooter_status(uint32_t value) {
   _internal_set_shooter_status(value);
-  // @@protoc_insertion_point(field_set:AirSupportStatusSync.shooter_status)
+  // @@protoc_insertion_point(field_set:rmcc.AirSupportStatusSync.shooter_status)
 }
 
 #ifdef __GNUC__
@@ -12745,9 +13411,12 @@ inline void AirSupportStatusSync::set_shooter_status(uint32_t value) {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace rmcc
 
 // @@protoc_insertion_point(global_scope)
 

@@ -1,5 +1,8 @@
+// RoboMaster Client Protocol V2.0.0
 syntax = "proto3";
-option go_package = "pkg/rmcp;rmcp"; // RoboMaster Client Protocol V1.2.0
+package rmcc;
+option go_package = "pkg/rmcc;rmcc";
+option csharp_namespace = "RMCC";
 
 // KeyboardMouseControl - 传输鼠标键盘输入
 // 发送方: 自定义客户端 → 图传链路 → 机器人
@@ -33,6 +36,8 @@ message GameStatus {
   optional int32 stage_countdown_sec = 6;      // 当前阶段倒计时（秒）
   optional int32 stage_elapsed_sec = 7;        // 当前阶段已用时间（秒）
   optional bool is_paused = 8;                 // 比赛是否暂停
+  optional uint32 game_result = 9;             // 当局胜者。0 为平局，1 为红方胜利，2 为蓝方胜利
+  optional uint32 end_reason =10;              // 比赛结束原因
 }
 
 // GlobalUnitStatus - 同步基地、前哨站和所有机器人状态
@@ -69,16 +74,16 @@ message GlobalLogisticsStatus {
 // 发送方: 服务器 → 自定义客户端
 // 频率: 1Hz, QoS: 1
 message GlobalSpecialMechanism {
-  repeated uint32 mechanism_id = 1;   // 机制 ID 列表
-  repeated int32 mechanism_time_sec = 2; // 机制剩余时间（秒）
+  repeated uint32 mechanism_id = 1;             // 机制 ID 列表
+  repeated int32 mechanism_time_sec = 2;        // 机制剩余时间（秒）
 }
 
 // Event - 全局事件通知
 // 发送方: 服务器 → 自定义客户端
 // 频率: 触发式发送, QoS: 1
 message Event {
-  optional int32 event_id = 1;                 // 事件 ID
-  optional string param = 2;                   // 事件参数
+  optional int32 event_id = 1;                  // 事件 ID
+  optional string param = 2;                    // 事件参数
 }
 
 // RobotInjuryStat - 机器人一次存活期间累计受伤统计
@@ -203,26 +208,40 @@ message RobotPathPlanInfo {
   optional uint32 intention = 1;                 // 意图
   optional uint32 start_pos_x = 2;               // 起始位置 X
   optional uint32 start_pos_y = 3;               // 起始位置 Y
-  repeated int32 offset_x = 4 [packed = true]; // X 偏移数组
-  repeated int32 offset_y = 5 [packed = true]; // Y 偏移数组
+  repeated int32 offset_x = 4 [packed = true];   // X 偏移数组
+  repeated int32 offset_y = 5 [packed = true];   // Y 偏移数组
   optional uint32 sender_id = 6;                 // 发送者 ID
 }
 
-// MapClickInfoNotify - 云台手地图点击标记
-// 发送方: 自定义客户端 → 服务器
+// MapClickInfo - 地图点击标记信息同步
+// 发送方: 服务器 → 自定义客户端
 // 频率: 触发式发送（频率限制与 1.3.1 选手端下发数据小节一致）, QoS: 1
-message MapClickInfoNotify {
-  optional uint32 is_send_all = 1;    // 发送范围（0=指定客户端, 1=除哨兵, 2=包含哨兵）
-  optional bytes robot_id = 2;        // 目标机器人 ID 列表
-  optional uint32 mode = 3;           // 标记类型（1=攻击, 2=防御, 3=警戒, 4=自定义）
-  optional uint32 enemy_id = 4;       // 标定的对方 ID
-  optional uint32 ascii = 5;          // 自定义图标 ASCII 码
-  optional uint32 type = 6;           // 标记模式（1=地图, 2=对方机器人）
-  optional float map_x = 7;           // 地图坐标 X
-  optional float map_y = 8;           // 地图坐标 Y
+message MapClickInfo {
+  optional uint32 is_send_all = 1;               // 发送范围（0=指定客户端, 1=除哨兵, 2=包含哨兵）
+  optional bytes robot_id = 2;                   // 目标机器人 ID 列表
+  optional uint32 mode = 3;                      // 标记类型（1=攻击, 2=防御, 3=警戒, 4=自定义）
+  optional uint32 enemy_id = 4;                  // 标定的对方 ID
+  optional uint32 ascii = 5;                     // 自定义图标 ASCII 码
+  optional uint32 type = 6;                      // 标记模式（1=地图, 2=对方机器人）
+  optional float map_x = 7;                      // 地图坐标 X
+  optional float map_y = 8;                      // 地图坐标 Y
 }
 
-// RadarInfoToClient - 雷达信息同步
+// MapClickCmd - 地图点击标记指令
+// 发送方: 自定义客户端 → 服务器
+// 频率: 触发式发送（频率限制与 1.3.1 选手端下发数据小节一致）, QoS: 1
+message MapClickCmd {
+  optional uint32 is_send_all = 1;               // 发送范围（0=指定客户端, 1=除哨兵, 2=包含哨兵）
+  optional bytes robot_id = 2;                   // 目标机器人 ID 列表
+  optional uint32 mode = 3;                      // 标记类型（1=攻击, 2=防御, 3=警戒, 4=自定义）
+  optional uint32 enemy_id = 4;                  // 标定的对方 ID
+  optional uint32 ascii = 5;                     // 自定义图标 ASCII 码
+  optional uint32 type = 6;                      // 标记模式（1=地图, 2=对方机器人）
+  optional float map_x = 7;                      // 地图坐标 X
+  optional float map_y = 8;                      // 地图坐标 Y
+}
+
+// RadarInfoToClient - 雷达发送的机器人位置信息
 // 发送方: 服务器 → 自定义客户端
 // 频率: 触发式发送 QoS: 1
 message RadarInfoToClient 
@@ -231,9 +250,9 @@ message RadarInfoToClient
 }
 message RadarSingleRobotInfo
 {
-  optional uint32 target_pos_x=1;  // 机器人位置 x（cm）
-  optional uint32 target_pos_y=2;  // 机器人位置 y（cm）
-  optional uint32 is_high_light=3; // 机器人是否特殊标识（0=否；1=是；2=是，但目标机器人此时定位模块为离线状态）
+  optional uint32 target_pos_x=1;                // 机器人位置 x（cm）
+  optional uint32 target_pos_y=2;                // 机器人位置 y（cm）
+  optional uint32 is_high_light=3;               // 机器人是否特殊标识（0=否；1=是；2=是，但目标机器人此时定位模块为离线状态）
 }
 
 // CustomByteBlock - 机器人自定义上传数据流
@@ -326,7 +345,8 @@ message RuneStatusSync {
 // 频率: 1Hz, QoS: 1
 message SentryStatusSync {
   optional uint32 posture_id = 1;                // 姿态 ID
-  optional bool is_weakened = 2;                 // 是否被削弱
+  optional bool is_weakened = 2;                 // 是否弱化
+  optional bool is_powered = 3;                  // 是否强化
 }
 
 // DartCommand - 飞镖控制指令

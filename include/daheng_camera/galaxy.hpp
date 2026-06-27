@@ -34,6 +34,10 @@ public:
     double acquisition_fps = 60.0;
     bool balance_white_auto = true;
     bool trigger_mode = false;
+    bool gamma_enable = false;
+    int gamma_mode = GX_GAMMA_SELECTOR_SRGB;
+    double gamma = 1.0;
+    double gamma_param = 1.0;
   };
 
   GalaxyCamera();

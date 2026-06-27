@@ -32,7 +32,7 @@ constexpr const char * kMqttTopic = "CustomByteBlock";
 constexpr const char * kMqttClientId = "doorlock_sniper";
 constexpr int kMqttQos = 1;
 
-constexpr bool kEnableDisplay = true;
+constexpr bool kEnableDisplay = true; // 调试窗口
 
 void OnSignal(int)
 {

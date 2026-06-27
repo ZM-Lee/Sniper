@@ -115,7 +115,7 @@ bool MqttCustomByteBlockSender::sendPayload(const std::vector<uint8_t> & payload
 		return false;
 	}
 
-	CustomByteBlock msg;
+	rmcc::CustomByteBlock msg;
 	if (payload.empty()) {
 		msg.set_data(std::string{});
 	} else {

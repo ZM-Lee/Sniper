@@ -84,6 +84,12 @@ VideoEncoder::VideoEncoder(Options options)
     LogWarn("output_fps forced to fixed 50Hz");
   }
   options_.output_fps = kFixedOutputFps;
+  if (options_.output_width <= 0 || options_.output_height <= 0) {
+    throw std::runtime_error("Invalid output size, width and height must be positive");
+  }
+  if ((options_.output_width % 2) != 0 || (options_.output_height % 2) != 0) {
+    throw std::runtime_error("Invalid output size, width and height must be even");
+  }
   if (options_.packet_size != kVideoPacketBytes) {
     LogWarn("packet_size overridden to fixed 300 bytes");
     options_.packet_size = kVideoPacketBytes;
@@ -164,7 +170,7 @@ VideoEncoder::VideoEncoder(Options options)
   }
 
   std::ostringstream oss;
-  oss << "Encoder initialized: " << options_.output_size << "x" << options_.output_size
+  oss << "Encoder initialized: " << options_.output_width << "x" << options_.output_height
       << "@" << options_.output_fps << "fps bitrate=" << options_.target_bitrate
       << " chain=" << options_.send_chain;
   if (options_.send_chain == "serial") {
@@ -223,8 +229,8 @@ void VideoEncoder::initialize_gstreamer()
   GstCaps * caps = gst_caps_new_simple(
     "video/x-raw",
     "format", G_TYPE_STRING, "BGR",
-    "width", G_TYPE_INT, options_.output_size,
-    "height", G_TYPE_INT, options_.output_size,
+    "width", G_TYPE_INT, options_.output_width,
+    "height", G_TYPE_INT, options_.output_height,
     "framerate", GST_TYPE_FRACTION, options_.output_fps, 1,
     nullptr);
 
@@ -239,8 +245,8 @@ void VideoEncoder::initialize_gstreamer()
   gst_caps_unref(caps);
 
   const bool low_bitrate_mode = (options_.target_bitrate <= 80);
-  const int key_int = std::max(options_.output_fps, 40); // 关键帧间隔设置为1秒或更短，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久，尤其在极低比特率下更容易出现质量崩溃和解码失败的情况
-  // const int key_int = 30; // 固定关键帧间隔为40帧，约0.8秒，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
+  // const int key_int = std::max(options_.output_fps, 40); // 关键帧间隔设置为1秒或更短，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久，尤其在极低比特率下更容易出现质量崩溃和解码失败的情况
+  const int key_int = 100; // 固定关键帧间隔为40帧，约0.8秒，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
   const int default_speed_preset = low_bitrate_mode ? 9 : 3;
   int speed_preset = default_speed_preset;
 
@@ -369,7 +375,7 @@ void VideoEncoder::shutdown_gstreamer()
 
 cv::Mat VideoEncoder::preprocess_image(const cv::Mat & input,cv::Mat * roi_downsample,cv::Mat * static_removed)
 {
-  int x = (input.cols - options_.crop_size) / 2; // 计算水平裁剪起点：从图像中心开始，使裁剪区域居中
+  int x = (input.cols - options_.crop_size) / 2 -60; // 计算水平裁剪起点：从图像中心开始，使裁剪区域居中
   int y = 0; // 垂直裁剪起点设为0，仅在水平方向上居中
   x = std::max(0, x); // 确保x坐标不为负数，防止越界访问
   y = std::max(0, y); // 确保y坐标不为负数
@@ -378,7 +384,7 @@ cv::Mat VideoEncoder::preprocess_image(const cv::Mat & input,cv::Mat * roi_downs
 
   cv::Mat cropped = input(cv::Rect(x, y, w, h)); // 从输入图像中提取感兴趣区域（ROI）
   cv::Mat resized;
-  cv::resize(cropped, resized, cv::Size(options_.output_size, options_.output_size), 0, 0, cv::INTER_LINEAR); // 调整图像大小到输出分辨率
+  cv::resize(cropped, resized, cv::Size(options_.output_width, options_.output_height), 0, 0, cv::INTER_LINEAR); // 调整图像大小到输出分辨率
 
   if (roi_downsample) { // 如果提供了roi_downsample指针，将缩放后的图像复制到该指针指向的矩阵
     resized.copyTo(*roi_downsample);
@@ -436,8 +442,8 @@ cv::Mat VideoEncoder::preprocess_image(const cv::Mat & input,cv::Mat * roi_downs
 
   if (options_.center_clear_size > 0) { // 如果启用中心清除，在中心区域填充运动掩模为白色（强制显示）
     const int clear_size = std::min({options_.center_clear_size, working.cols, working.rows}); // 计算清除区域的实际大小
-    const int x0 = std::max(0, working.cols / 2 - clear_size / 2); // 计算清除区域的起始坐标（图像中心）
-    const int y0 = std::max(0, working.rows / 2 - clear_size / 2); // 计算清除区域的起始坐标（图像中心）
+    const int x0 = std::max(0, working.cols / 2 - clear_size / 2 + 10); // 计算清除区域的起始坐标（图像中心）
+    const int y0 = std::max(0, working.rows / 2 - clear_size / 2 - 20); // 计算清除区域的起始坐标（图像中心）
     const int cw = std::min(clear_size, working.cols - x0); // 计算清除区域的实际宽度和高度
     const int ch = std::min(clear_size, working.rows - y0); // 计算清除区域的实际高度
     cv::rectangle(motion_mask, cv::Rect(x0, y0, cw, ch), cv::Scalar(255), cv::FILLED); // 在中心区域绘制白色矩形
@@ -1033,9 +1039,9 @@ void VideoEncoder::display_loop()
   cv::namedWindow("Doorlock Sniper Static", cv::WINDOW_NORMAL);
   cv::namedWindow("Doorlock Sniper", cv::WINDOW_NORMAL);
   cv::setWindowProperty("Doorlock Sniper Raw", cv::WND_PROP_ASPECT_RATIO, cv::WINDOW_KEEPRATIO);
-  cv::resizeWindow("Doorlock Sniper ROI", options_.output_size, options_.output_size);
-  cv::resizeWindow("Doorlock Sniper Static", options_.output_size, options_.output_size);
-  cv::resizeWindow("Doorlock Sniper", options_.output_size, options_.output_size);
+  cv::resizeWindow("Doorlock Sniper ROI", options_.output_width, options_.output_height);
+  cv::resizeWindow("Doorlock Sniper Static", options_.output_width, options_.output_height);
+  cv::resizeWindow("Doorlock Sniper", options_.output_width, options_.output_height);
 
   while (display_running_) {
     cv::Mat raw_frame;

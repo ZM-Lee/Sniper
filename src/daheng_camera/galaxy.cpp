@@ -135,6 +135,18 @@ bool GalaxyCamera::openFromYaml(const std::string & yaml_path)
 		if (node["TriggerMode"]) {
 			config.trigger_mode = (node["TriggerMode"].as<int>() != 0);
 		}
+		if (node["GammaEnable"]) {
+			config.gamma_enable = (node["GammaEnable"].as<int>() != 0);
+		}
+		if (node["GammaMode"]) {
+			config.gamma_mode = node["GammaMode"].as<int>();
+		}
+		if (node["Gamma"]) {
+			config.gamma = node["Gamma"].as<double>();
+		}
+		if (node["GammaParam"]) {
+			config.gamma_param = node["GammaParam"].as<double>();
+		}
 
 		return open(config);
 	} catch (const std::exception & e) {
@@ -246,6 +258,15 @@ void GalaxyCamera::applyConfig(const Config & config)
 		device_handle_,
 		GX_ENUM_TRIGGER_MODE,
 		config.trigger_mode ? GX_TRIGGER_MODE_ON : GX_TRIGGER_MODE_OFF);
+
+	GXSetBool(device_handle_, GX_BOOL_GAMMA_ENABLE, config.gamma_enable);
+	if (config.gamma_enable) {
+		GXSetEnum(device_handle_, GX_ENUM_GAMMA_MODE, config.gamma_mode);
+		if (config.gamma_mode == GX_GAMMA_SELECTOR_USER && config.gamma > 0.0) {
+			GXSetFloat(device_handle_, GX_FLOAT_GAMMA, config.gamma);
+		}
+	}
+
 	GXSetEnum(device_handle_, GX_ENUM_ACQUISITION_MODE, GX_ACQ_MODE_CONTINUOUS);
 
 	if (config.acquisition_fps > 0.0) {
