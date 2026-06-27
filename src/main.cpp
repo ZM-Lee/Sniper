@@ -18,7 +18,7 @@ namespace
 
 std::atomic<bool> g_running{true};
 
-constexpr const char * kTransport = "mqtt";  // "serial" or "mqtt"
+constexpr const char * kTransport = "serial";  // "serial" or "mqtt"
 constexpr const char * kCameraConfig = "../config/daheng_camera/feature.yaml";
 constexpr const char * kMqttConfig = "../config/mqtt/server.yaml";
 constexpr const char * kSerialConfig = "../config/serial/serial.yaml";
@@ -32,7 +32,7 @@ constexpr const char * kMqttTopic = "CustomByteBlock";
 constexpr const char * kMqttClientId = "doorlock_sniper";
 constexpr int kMqttQos = 1;
 
-constexpr bool kEnableDisplay = true; // 调试窗口
+constexpr bool kEnableDisplay = false; // 调试窗口
 
 void OnSignal(int)
 {
