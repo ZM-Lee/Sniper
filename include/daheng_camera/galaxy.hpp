@@ -31,7 +31,7 @@ public:
     double gain = 24.0;
     int width = 1920;
     int height = 1080;
-    double acquisition_fps = 60.0;
+    double acquisition_fps = 50.0;
     bool balance_white_auto = true;
     bool trigger_mode = false;
     bool gamma_enable = false;

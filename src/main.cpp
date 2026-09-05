@@ -18,7 +18,7 @@ namespace
 
 std::atomic<bool> g_running{true};
 
-constexpr const char * kTransport = "serial";  // "serial" or "mqtt"
+constexpr const char * kTransport = "mqtt";  // "serial" or "mqtt"
 constexpr const char * kCameraConfig = "../config/daheng_camera/feature.yaml";
 constexpr const char * kMqttConfig = "../config/mqtt/server.yaml";
 constexpr const char * kSerialConfig = "../config/serial/serial.yaml";
@@ -30,9 +30,9 @@ constexpr const char * kMqttHost = "127.0.0.1";
 constexpr int kMqttPort = 3333;
 constexpr const char * kMqttTopic = "CustomByteBlock";
 constexpr const char * kMqttClientId = "doorlock_sniper";
-constexpr int kMqttQos = 1;
+constexpr int kMqttQos = 0;
 
-constexpr bool kEnableDisplay = false; // 调试窗口
+constexpr bool kEnableDisplay = true; // 调试窗口
 
 void OnSignal(int)
 {
@@ -145,7 +145,15 @@ int main()
     while (g_running) {
       if (camera.read(frame, &frame_info, 100) && !frame.empty()) {
         ++read_success_count;
-        encoder.processImage(frame, frame_info.host_receive_time_ns, frame_info.frame_id);
+        const int64_t capture_time_ns =
+          (frame_info.capture_time_valid && frame_info.capture_time_ns > 0)
+          ? frame_info.capture_time_ns
+          : frame_info.host_receive_time_ns;
+        encoder.processImage(
+          frame,
+          capture_time_ns,
+          frame_info.host_receive_time_ns,
+          frame_info.frame_id);
       } else {
         ++read_timeout_count;
         if ((read_timeout_count % 50U) == 0U) {

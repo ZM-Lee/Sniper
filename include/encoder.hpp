@@ -15,6 +15,7 @@
 #include <gst/app/gstappsink.h>
 #include <gst/app/gstappsrc.h>
 #include <gst/gst.h>
+#include <gst/video/video.h>
 #include <opencv2/opencv.hpp>
 
 #include "sender/mqtt.hpp"
@@ -32,7 +33,7 @@ public:
     int crop_size = 800; // 设置为0以禁用裁剪
     int output_width = 532; // 输出视频宽度，必须是偶数
     int output_height = 300; // 输出视频高度，必须是偶数
-    int output_fps = 60;  // 输出视频帧率
+    int output_fps = 50;  // 输出视频帧率，与相机采集帧率保持一致
     int target_bitrate = 65; // 目标视频比特率，单位kbps
     int packet_size = 300; // 每个数据包的字节数，必须小于等于300
     bool static_simplify = true; // 启用静态区域简化以减少编码复杂度
@@ -45,7 +46,7 @@ public:
     double bg_blur_sigma = 0.3; // 背景模糊的高斯核标准差，有助于减少细节并降低编码复杂度
     int center_clear_size = 100; // 中心清除区域大小（像素），在门锁场景中可以去除中心区域的运动检测以减少误报
     bool force_monochrome = false; // 强制输出单色视频，即使输入是彩色的，这在极低比特率下可能有助于降低编码复杂度
-    double bandwidth_limit_kbytes = 14.9; // 发送带宽限制，单位KB/s，用于动态调整发送速率以避免网络拥塞
+    double bandwidth_limit_kbytes = 14.9; // 发送带宽限制，单位KB/s，用于动态调整发送速率以避免网络拥塞  
     double bandwidth_window_s = 0.5; // 计算发送速率的时间窗口，单位秒，较大的窗口可以更平滑地响应带宽变化但反应更慢
     double max_tx_delay_s = 0.09; // 发送最大延迟，单位秒，如果数据包在队列中等待超过此时间将被丢弃以避免过时的内容占用带宽
     bool enable_display = false; // 启用显示功能
@@ -73,13 +74,18 @@ public:
   explicit VideoEncoder(Options options);
   ~VideoEncoder();
 
-  bool processImage(const cv::Mat & input, int64_t timestamp_ns = 0, uint64_t source_frame_id = 0); // 处理输入图像并将其编码发送，返回是否成功接受该帧进行处理
+  bool processImage(
+    const cv::Mat & input,
+    int64_t capture_time_ns = 0,
+    int64_t host_receive_time_ns = 0,
+    uint64_t source_frame_id = 0); // 处理输入图像并将其编码发送，返回是否成功接受该帧进行处理
 
 private:
   struct PendingInputFrame
   {
     uint64_t source_frame_id = 0;   // 源帧ID
     int64_t input_time_ns = 0;      // 输入时间戳（纳秒）
+    int64_t host_receive_time_ns = 0; // 主机收到相机帧的时间戳（纳秒）
     int64_t enqueue_time_ns = 0;    // 入队时间戳（纳秒）
   };
 
@@ -105,7 +111,9 @@ private:
     uint64_t source_frame_id = 0; // 源帧ID，来自processImage的参数，用于关联输入帧和编码跟踪
     uint16_t payload_frame_id = 0; // 负载帧ID，编码后的视频帧ID，用于发送时的标识和接收端的重组
     int64_t input_time_ns = 0; // 输入时间戳（纳秒），来自processImage的参数，用于计算端到端延迟
+    int64_t host_receive_time_ns = 0; // 主机收到相机帧的时间戳（纳秒）
     int64_t enqueue_time_ns = 0; // 入队时间戳（纳秒），记录该帧被加入待发送队列的时间，用于计算在队列中的等待时间
+    int64_t encoded_time_ns = 0; // 编码帧从GStreamer输出的时间戳（纳秒）
     size_t encoded_bytes = 0; // 编码后的字节数，记录该帧编码后生成的数据大小，用于跟踪发送进度和计算带宽占用
     size_t sent_bytes = 0; // 已发送字节数，记录该帧已经成功发送的字节数，用于跟踪发送进度和计算丢包情况
     size_t dropped_bytes = 0; // 已丢弃字节数，记录该帧由于过时或带宽限制等原因被丢弃的字节数，用于统计丢包情况和调整发送策略
@@ -113,7 +121,8 @@ private:
 
   static int64_t nowNs();
 
-  uint64_t reserveFrameToken(int64_t input_time_ns, uint64_t source_frame_id); // 为输入帧保留一个唯一的帧令牌，并记录相关信息以便后续关联编码和发送过程
+  uint64_t reserveFrameToken(int64_t input_time_ns, int64_t host_receive_time_ns, uint64_t source_frame_id); // 为输入帧保留一个唯一的帧令牌，并记录相关信息以便后续关联编码和发送过程
+  void discardPendingInputFrame(uint64_t frame_token);
   void initialize_gstreamer(); // 初始化GStreamer管道
   void shutdown_gstreamer(); // 关闭GStreamer管道并释放资源
 
@@ -167,6 +176,7 @@ private:
   std::deque<std::pair<int64_t, size_t>> sent_window_; // 发送窗口，用于记录最近发送的数据包的时间戳和字节数，以便计算当前的发送速率并根据options_中的带宽限制动态调整发送行为
   std::deque<cv::Mat> motion_mask_history_; // 运动掩码历史队列，用于实现运动拖尾效果，记录最近几帧的运动掩码以便在当前帧中合并使用
   std::deque<cv::Mat> trail_frame_history_; // 拖尾帧历史队列，用于实现运动拖尾效果，记录最近几帧的处理后图像以便在当前帧中合并使用
+  std::deque<uint64_t> pending_input_order_; // bframes=0时编码输出顺序与输入一致，用于可靠关联延迟时间戳
   std::unordered_map<uint64_t, PendingInputFrame> pending_input_frames_; // 待处理的输入帧信息表，key为frame_token，value为PendingInputFrame结构体，记录了输入帧的相关信息以便在编码和发送过程中进行关联和跟踪
   std::unordered_map<uint64_t, FrameTrack> active_frame_tracks_; // 活跃的帧跟踪表，key为track_id，value为FrameTrack结构体，记录了每个正在编码和发送的帧的跟踪信息，以便统计和监控每个帧的处理进度和结果
   size_t sent_window_bytes_ = 0; // 发送窗口中的总字节数，用于计算当前的发送速率并根据options_中的带宽限制动态调整发送行为
@@ -189,7 +199,6 @@ private:
   uint64_t next_frame_track_id_ = 1; // 下一个帧跟踪ID，用于为每个正在编码和发送的帧分配一个唯一的标识，以便在统计和监控每个帧的处理进度和结果时进行关联和跟踪
   uint16_t next_payload_frame_id_ = 0; // 下一个负载帧ID，用于为每个编码后的视频帧分配一个唯一的标识，以便在发送时的标识和接收端的重组过程中进行关联和跟踪
   uint64_t input_frame_count_ = 0; // 处理的输入帧总数，用于统计和监控输入帧率
-  uint64_t throttled_frame_count_ = 0; // 由于带宽限制或发送队列积压等原因被节流丢弃的输入帧数量，用于统计和监控丢弃情况，以便调整发送策略和优化性能
   uint64_t pushed_frame_count_ = 0; // 成功推送到GStreamer管道进行编码的输入帧数量，用于统计和监控编码帧率，以便调整预处理和发送策略以满足目标帧率要求
   uint64_t push_failed_count_ = 0; // 由于GStreamer管道状态或其他原因导致推送到管道失败的输入帧数量，用于统计和监控编码过程的稳定性，以便在发生推送失败时采取措施如重启管道
   uint64_t pulled_sample_count_ = 0; // 成功从GStreamer管道拉取编码后的视频数据的样本数量，用于统计和监控编码帧率，以便调整预处理和发送策略以满足目标帧率要求
@@ -201,8 +210,17 @@ private:
   double latency_min_ms_ = -1.0; // 端到端延迟最小值（毫秒），用于统计和监控性能表现
   double latency_max_ms_ = 0.0; // 端到端延迟最大值（毫秒），用于统计和监控性能表现
   uint64_t latency_latest_frame_id_ = 0; // 最近一次计算的端到端延迟对应的输入帧ID，用于统计和监控性能表现
+  double camera_latency_latest_ms_ = 0.0;
+  double preprocess_latency_latest_ms_ = 0.0;
+  double encode_latency_latest_ms_ = 0.0;
+  double transmit_latency_latest_ms_ = 0.0;
+  double camera_latency_sum_ms_ = 0.0;
+  double preprocess_latency_sum_ms_ = 0.0;
+  double encode_latency_sum_ms_ = 0.0;
+  double transmit_latency_sum_ms_ = 0.0;
+  size_t encoded_bytes_latest_ = 0;
+  size_t fragment_count_latest_ = 0;
 
-  int64_t last_encode_stamp_ns_ = 0; // 上次成功编码的时间戳（纳秒），用于计算编码帧率和监控编码过程的活跃度，以便在编码停滞时采取措施如重启管道
   uint64_t display_frame_counter_ = 0; // 显示帧计数器，用于控制调试图像的保存频率，以避免过于频繁地保存导致性能问题
   cv::Mat background_gray_f32_; // 背景图像的灰度浮点版本，用于背景建模和运动检测，以便实现静态区域简化和运动拖尾效果
   cv::Mat motion_erode_kernel_; // 运动掩码腐蚀核，用于去除运动检测中的噪点，以便提高编码效率和视频质量

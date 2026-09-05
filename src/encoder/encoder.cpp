@@ -57,7 +57,10 @@ int64_t VideoEncoder::nowNs()
     .count();
 }
 
-uint64_t VideoEncoder::reserveFrameToken(const int64_t input_time_ns, const uint64_t source_frame_id)
+uint64_t VideoEncoder::reserveFrameToken(
+  const int64_t input_time_ns,
+  const int64_t host_receive_time_ns,
+  const uint64_t source_frame_id)
 {
   std::lock_guard<std::mutex> lock(buffer_mutex_);
 
@@ -65,9 +68,22 @@ uint64_t VideoEncoder::reserveFrameToken(const int64_t input_time_ns, const uint
   PendingInputFrame pending;
   pending.source_frame_id = (source_frame_id != 0U) ? source_frame_id : frame_token;
   pending.input_time_ns = input_time_ns;
+  pending.host_receive_time_ns = host_receive_time_ns;
   pending.enqueue_time_ns = nowNs();
   pending_input_frames_[frame_token] = pending;
+  pending_input_order_.push_back(frame_token);
   return frame_token;
+}
+
+void VideoEncoder::discardPendingInputFrame(const uint64_t frame_token)
+{
+  std::lock_guard<std::mutex> lock(buffer_mutex_);
+  pending_input_frames_.erase(frame_token);
+  const auto order_it = std::find(pending_input_order_.begin(), pending_input_order_.end(), frame_token);
+  if (order_it != pending_input_order_.end()) {
+    pending_input_order_.erase(order_it);
+  }
+  ++push_failed_count_;
 }
 
 VideoEncoder::VideoEncoder(Options options)
@@ -246,8 +262,8 @@ void VideoEncoder::initialize_gstreamer()
 
   const bool low_bitrate_mode = (options_.target_bitrate <= 80);
   // const int key_int = std::max(options_.output_fps, 40); // 关键帧间隔设置为1秒或更短，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久，尤其在极低比特率下更容易出现质量崩溃和解码失败的情况
-  const int key_int = 100; // 固定关键帧间隔为40帧，约0.8秒，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
-  const int default_speed_preset = low_bitrate_mode ? 9 : 3;
+  const int key_int = 400; // 固定关键帧间隔为40帧，约0.8秒，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
+  const int default_speed_preset = low_bitrate_mode ? 4 : 3;
   int speed_preset = default_speed_preset;
 
   std::string preset_lower = options_.x264_preset;
@@ -276,32 +292,18 @@ void VideoEncoder::initialize_gstreamer()
     g_object_set(
       G_OBJECT(encoder),
       "bitrate", options_.target_bitrate, // x264enc的bitrate参数单位是kbps
-      "speed-preset", 8, // 预设级别，数值越大编码越慢但质量越好，0是默认，1-10分别对应ultrafast到placebo
+      "speed-preset", speed_preset,
       "tune", 0x00000004, // 调优选项，0x00000004对应zerolatency，适合实时编码，禁用帧重排序和过多的缓冲以降低延迟
       "byte-stream", TRUE, // 输出Annex B格式的H.264字节流，适合网络传输
       "key-int-max", key_int, // 最大关键帧间隔，单位是帧数，设置为max(output_fps, 40)，避免过长的关键帧间隔导致解码器在丢包或错误恢复时需要等待过久
       "bframes", 0, // B帧数量，可以在低比特率下提高压缩效率，但过多的B帧可能增加编码延迟和复杂度
       "rc-lookahead", 0, // 码率控制的前瞻帧数，过多的前瞻可能增加编码延迟
       "sync-lookahead", 0, // 同步前瞻帧数，过多可能增加延迟
-      "sliced-threads", FALSE, // 禁用切片线程，切片线程在低比特率和小分辨率下可能反而增加编码复杂度和降低效率
-      "ref", 2, // 参考帧数量，可以在低比特率下提高压缩效率，但过多的参考帧可能增加编码复杂度和内存使用
+      "sliced-threads", TRUE, // 使用切片线程，避免普通帧线程缓存多帧后才输出
+      "ref", 1,
       "aud", TRUE, // 在每个访问单元前插入访问单元分界符，适合网络传输
-      "vbv-buf-capacity", 650, // VBV缓冲区容量，单位是kbps，设置为500可以在低比特率下提供足够的缓冲以避免码率过高时的质量崩溃，但过大可能增加编码延迟
-
-      "option-string", // 其他x264编码选项，通过option-string参数传递，具体选项可以参考x264的文档和源代码，以下是一些可能有助于低比特率编码的选项：
-      // repeat-headers=1:每个关键帧前重复SPS/PPS等参数集，增加丢包恢复能力但增加码流大小
-      // scenecut=0:禁用场景切割，保持稳定的关键帧间隔，适合实时视频流
-      // ref=1:使用单参考帧，减少编码复杂度但可能降低质量
-      // aq-mode=2:启用自适应量化，增强低比特率下的视觉质量
-      // aq-strength=1.2:自适应量化强度，数值
-      // mbtree=1:启用宏块树优化，改善低比特率编码效率
-      // qcomp=0.75:量化参数压缩率，较高的数值在低比特率下可能提供更好的质量但增加码流大小
-      // subme=8:亚像素运动估计精度，设置为8提供最高精度但增加编码时间，低比特率下可能有助于提高质量
-      // trellis=2:启用RDO量化，设置为2提供最佳质量但增加编码时间，低比特率下可能有助于提高质量
-      // deblock=1,1:启用去块滤波，设置为1,1提供适度的去块效果，改善低比特率下的视觉质量，但过强可能增加编码复杂度
-      // force-cfr=1:强制恒定帧率，适合实时视频流
-      "repeat-headers=1:scenecut=0:aq-mode=2:aq-strength=1.2:mbtree=1:qcomp=0.75:" 
-      "subme=8:trellis=2:deblock=1,1:force-cfr=1",
+      "vbv-buf-capacity", 50,
+      "option-string", "repeat-headers=1:scenecut=0:ref=1:mbtree=0:force-cfr=1",
       "pass", 0, // 单遍模式，适合实时编码，x264enc的pass参数可以设置为1或2以启用两遍编码以提高质量，但会增加编码时间，不适合实时视频流
       nullptr);
   } else {
@@ -338,7 +340,7 @@ void VideoEncoder::initialize_gstreamer()
     G_OBJECT(appsink_),
     "caps", h264_caps, // 设置appsink的caps以匹配parser的输出，确保数据格式正确，适合网络传输
     "max-buffers", 2, // 限制appsink内部队列长度为2，避免过多的编码帧积压在内存中增加延迟
-    "drop", TRUE, // 当appsink队列满时丢弃新帧，保持最新的内容，适合实时视频流
+    "drop", FALSE, // 保持编码输入输出一一对应，避免延迟追踪错配
     "emit-signals", FALSE, // 禁用appsink的信号机制，改为使用gst_app_sink_try_pull_sample非阻塞拉取样本，适合实时视频流
     "sync", FALSE, // 禁用appsink的同步机制，允许在不同线程中拉取样本，适合实时视频流
     nullptr);
@@ -500,23 +502,20 @@ cv::Mat VideoEncoder::preprocess_image(const cv::Mat & input,cv::Mat * roi_downs
   return focused; // 返回处理后的焦点图像
 }
 
-bool VideoEncoder::processImage(const cv::Mat & input, const int64_t timestamp_ns, const uint64_t source_frame_id)
+bool VideoEncoder::processImage(
+  const cv::Mat & input,
+  const int64_t capture_time_ns,
+  const int64_t host_receive_time_ns,
+  const uint64_t source_frame_id)
 {
   if (input.empty()) { // 检查输入图像是否为空，如果为空返回false
     return false;
   }
 
   ++input_frame_count_; // 增加输入帧计数
-  int64_t now = (timestamp_ns > 0) ? timestamp_ns : nowNs(); // 使用提供的时间戳，如果没有则使用当前时间
-  if (last_encode_stamp_ns_ > 0 && now <= last_encode_stamp_ns_) { // 如果有上一次编码的时间戳，且当前时间不晚于上一次，则重新获取当前时间以保证时间戳单调递增
-    now = nowNs();
-  }
-  if (last_encode_stamp_ns_ > 0 && (now - last_encode_stamp_ns_) < frame_interval_ns_) { // 检查帧间隔是否足够，如果不足则跳过此帧（进行帧率控制）
-    ++throttled_frame_count_; // 增加被限制的帧计数
-    LogRuntimeStats(nowNs()); // 记录运行时统计信息
-    return true; // 虽然跳过编码但返回true表示接受了此帧
-  }
-  last_encode_stamp_ns_ = now; // 更新最后编码时间戳
+  const int64_t now = nowNs();
+  const int64_t capture_ns = (capture_time_ns > 0) ? capture_time_ns : now;
+  const int64_t host_receive_ns = (host_receive_time_ns > 0) ? host_receive_time_ns : capture_ns;
 
   cv::Mat roi_downsample; // 准备用于存储ROI缩小图像的矩阵
   cv::Mat static_removed; // 准备用于存储移除静态背景后图像的矩阵
@@ -539,7 +538,7 @@ bool VideoEncoder::processImage(const cv::Mat & input, const int64_t timestamp_n
     processed.copyTo(display_frame_); // 将处理后的最终图像复制到显示缓冲区
   }
 
-  const uint64_t frame_token = reserveFrameToken(now, source_frame_id); // 为此帧预留一个唯一的帧令牌用于追踪
+  const uint64_t frame_token = reserveFrameToken(capture_ns, host_receive_ns, source_frame_id); // 为此帧预留一个唯一的帧令牌用于追踪
   push_frame_to_gstreamer(processed, frame_token); // 将处理后的帧推送到GStreamer管道
   pull_stream_and_packetize(); // 从GStreamer拉取已编码的数据流并进行打包
   poll_gstreamer_bus(); // 处理GStreamer总线上的消息和事件
@@ -551,15 +550,61 @@ bool VideoEncoder::processImage(const cv::Mat & input, const int64_t timestamp_n
 void VideoEncoder::push_frame_to_gstreamer(const cv::Mat & frame, const uint64_t frame_token)
 {
   if (!appsrc_ || frame.empty()) {
+    discardPendingInputFrame(frame_token);
     return;
   }
 
-  const size_t size = frame.total() * frame.elemSize();
-  GstBuffer * buffer = gst_buffer_new_allocate(nullptr, size, nullptr);
+  if (frame.cols != options_.output_width || frame.rows != options_.output_height ||
+      frame.type() != CV_8UC3) {
+    std::ostringstream oss;
+    oss << "Reject invalid encoder input: actual=" << frame.cols << "x" << frame.rows
+        << " type=" << frame.type() << " expected=" << options_.output_width << "x"
+        << options_.output_height << " CV_8UC3";
+    discardPendingInputFrame(frame_token);
+    LogWarn(oss.str());
+    return;
+  }
+
+  GstVideoInfo video_info;
+  gst_video_info_init(&video_info);
+  if (!gst_video_info_set_format(
+        &video_info,
+        GST_VIDEO_FORMAT_BGR,
+        static_cast<guint>(options_.output_width),
+        static_cast<guint>(options_.output_height))) {
+    discardPendingInputFrame(frame_token);
+    LogWarn("Failed to create GStreamer BGR video layout");
+    return;
+  }
+
+  const size_t buffer_size = GST_VIDEO_INFO_SIZE(&video_info);
+  const size_t source_row_bytes = static_cast<size_t>(frame.cols) * frame.elemSize();
+  const size_t destination_stride =
+    static_cast<size_t>(GST_VIDEO_INFO_PLANE_STRIDE(&video_info, 0));
+  GstBuffer * buffer = gst_buffer_new_allocate(nullptr, buffer_size, nullptr);
+  if (buffer == nullptr) {
+    discardPendingInputFrame(frame_token);
+    LogWarn("Failed to allocate GStreamer input buffer");
+    return;
+  }
 
   GstMapInfo map;
   if (gst_buffer_map(buffer, &map, GST_MAP_WRITE)) {
-    memcpy(map.data, frame.data, size);
+    if (map.size < buffer_size || source_row_bytes > destination_stride) {
+      gst_buffer_unmap(buffer, &map);
+      gst_buffer_unref(buffer);
+      discardPendingInputFrame(frame_token);
+      LogWarn("GStreamer input buffer has an invalid BGR stride or size");
+      return;
+    }
+
+    memset(map.data, 0, map.size);
+    for (int row = 0; row < frame.rows; ++row) {
+      memcpy(
+        map.data + static_cast<size_t>(row) * destination_stride,
+        frame.ptr(row),
+        source_row_bytes);
+    }
     gst_buffer_unmap(buffer, &map);
 
     if (frame_interval_ns_ > 0) {
@@ -573,13 +618,14 @@ void VideoEncoder::push_frame_to_gstreamer(const cv::Mat & frame, const uint64_t
     GstFlowReturn ret;
     g_signal_emit_by_name(appsrc_, "push-buffer", buffer, &ret);
     if (ret != GST_FLOW_OK) {
-      std::lock_guard<std::mutex> lock(buffer_mutex_);
-      pending_input_frames_.erase(frame_token);
-      ++push_failed_count_;
+      discardPendingInputFrame(frame_token);
       LogWarn("Push buffer failed, flow=" + std::to_string(static_cast<int>(ret)));
     } else {
       ++pushed_frame_count_;
     }
+  } else {
+    discardPendingInputFrame(frame_token);
+    LogWarn("Failed to map GStreamer input buffer");
   }
   gst_buffer_unref(buffer);
 }
@@ -619,11 +665,11 @@ void VideoEncoder::pull_stream_and_packetize()
         last_encoded_sample_ns_ = nowNs();
         ++pulled_sample_count_;
 
-        PendingInputFrame pending_input;
-        bool pending_found = false;
-      const GstClockTime pts = GST_BUFFER_PTS(buffer);
-      if (GST_CLOCK_TIME_IS_VALID(pts) && frame_interval_ns_ > 0) {
-        const uint64_t frame_token = static_cast<uint64_t>(pts / static_cast<GstClockTime>(frame_interval_ns_)) + 1U;
+      PendingInputFrame pending_input;
+      bool pending_found = false;
+      while (!pending_input_order_.empty() && !pending_found) {
+        const uint64_t frame_token = pending_input_order_.front();
+        pending_input_order_.pop_front();
         const auto pending_it = pending_input_frames_.find(frame_token);
         if (pending_it != pending_input_frames_.end()) {
           pending_input = pending_it->second;
@@ -632,14 +678,17 @@ void VideoEncoder::pull_stream_and_packetize()
         }
       }
 
-      const int64_t fallback_input_ns = nowNs();
+      const int64_t encoded_time_ns = nowNs();
+      const int64_t fallback_input_ns = encoded_time_ns;
       const uint64_t track_id = next_frame_track_id_++;
       FrameTrack track;
       track.track_id = track_id;
       track.source_frame_id = pending_found ? pending_input.source_frame_id : track_id;
       track.payload_frame_id = next_payload_frame_id_++;
       track.input_time_ns = pending_found ? pending_input.input_time_ns : fallback_input_ns;
+      track.host_receive_time_ns = pending_found ? pending_input.host_receive_time_ns : fallback_input_ns;
       track.enqueue_time_ns = pending_found ? pending_input.enqueue_time_ns : fallback_input_ns;
+      track.encoded_time_ns = encoded_time_ns;
       track.encoded_bytes = map.size;
       active_frame_tracks_[track_id] = track;
 
@@ -777,7 +826,6 @@ void VideoEncoder::LogRuntimeStats(const int64_t now_ns)
   const int64_t last_output_ns = (last_encoded_sample_ns_ > 0) ? last_encoded_sample_ns_ : pipeline_started_ns_;
   // std::ostringstream oss;
   // oss << "Encoder runtime: input=" << input_frame_count_
-  //     << " throttled=" << throttled_frame_count_
   //     << " pushed=" << pushed_frame_count_
   //     << " pushFailed=" << push_failed_count_
   //     << " pulled=" << pulled_sample_count_
@@ -799,6 +847,7 @@ void VideoEncoder::restart_gstreamer_pipeline(const char * reason)
   initialize_gstreamer();
 
   std::lock_guard<std::mutex> lock(buffer_mutex_);
+  pending_input_order_.clear();
   pending_input_frames_.clear();
   active_frame_tracks_.clear();
   stream_buffer_.clear();
@@ -974,10 +1023,23 @@ void VideoEncoder::accountConsumedSpans(
     }
 
     if (track.dropped_bytes == 0U && track.input_time_ns > 0) {
-      const double latency_ms =
-        static_cast<double>(completion_ns - track.input_time_ns) / 1000000.0;
+      const auto elapsedMs = [](const int64_t end_ns, const int64_t start_ns) {
+        return std::max(0.0, static_cast<double>(end_ns - start_ns) / 1000000.0);
+      };
+      const double latency_ms = elapsedMs(completion_ns, track.input_time_ns);
+      camera_latency_latest_ms_ = elapsedMs(track.host_receive_time_ns, track.input_time_ns);
+      preprocess_latency_latest_ms_ = elapsedMs(track.enqueue_time_ns, track.host_receive_time_ns);
+      encode_latency_latest_ms_ = elapsedMs(track.encoded_time_ns, track.enqueue_time_ns);
+      transmit_latency_latest_ms_ = elapsedMs(completion_ns, track.encoded_time_ns);
+      encoded_bytes_latest_ = track.encoded_bytes;
+      fragment_count_latest_ =
+        (track.encoded_bytes + kVideoDataBytes - 1U) / kVideoDataBytes;
       latency_latest_ms_ = latency_ms;
       latency_latest_frame_id_ = track.source_frame_id;
+      camera_latency_sum_ms_ += camera_latency_latest_ms_;
+      preprocess_latency_sum_ms_ += preprocess_latency_latest_ms_;
+      encode_latency_sum_ms_ += encode_latency_latest_ms_;
+      transmit_latency_sum_ms_ += transmit_latency_latest_ms_;
       latency_sum_ms_ += latency_ms;
       latency_max_ms_ = std::max(latency_max_ms_, latency_ms);
       if (latency_min_ms_ < 0.0 || latency_ms < latency_min_ms_) {
@@ -1006,16 +1068,26 @@ void VideoEncoder::LogLatencyStats(const int64_t now_ns)
     return;
   }
 
-// 估计从捕获到发送完成的延迟统计，单位为毫秒，包含最新的单帧延迟、平均延迟、最小延迟、最大延迟以及样本数量等信息，以便监控编码性能和网络传输状况 
-  // std::ostringstream oss;
-  // oss << std::fixed << std::setprecision(2)
-  //     << "Capture->last-packet latency: last=" << latency_latest_ms_
-  //     << "ms frame=" << latency_latest_frame_id_
-  //     << " avg=" << (latency_sum_ms_ / static_cast<double>(latency_sample_count_))
-  //     << "ms min=" << latency_min_ms_
-  //     << "ms max=" << latency_max_ms_
-  //     << "ms samples=" << latency_sample_count_;
-  // LogInfo(oss.str());
+  const double sample_count = static_cast<double>(latency_sample_count_);
+  std::ostringstream oss;
+  oss << std::fixed << std::setprecision(2)
+      << "Latency frame=" << latency_latest_frame_id_
+      << " latest[camera=" << camera_latency_latest_ms_
+      << "ms preprocess=" << preprocess_latency_latest_ms_
+      << "ms encode=" << encode_latency_latest_ms_
+      << "ms tx=" << transmit_latency_latest_ms_
+      << "ms total=" << latency_latest_ms_ << "ms]"
+      << " encoded=" << encoded_bytes_latest_ << "B"
+      << " fragments=" << fragment_count_latest_
+      << " avg[camera=" << (camera_latency_sum_ms_ / sample_count)
+      << "ms preprocess=" << (preprocess_latency_sum_ms_ / sample_count)
+      << "ms encode=" << (encode_latency_sum_ms_ / sample_count)
+      << "ms tx=" << (transmit_latency_sum_ms_ / sample_count)
+      << "ms total=" << (latency_sum_ms_ / sample_count) << "ms]"
+      << " totalRange=" << latency_min_ms_ << ".." << latency_max_ms_ << "ms"
+      << " samples=" << latency_sample_count_
+      << " endpoint=" << (options_.send_chain == "mqtt" ? "mqtt-local-queue" : "serial-drain");
+  LogInfo(oss.str());
   last_latency_report_ns_ = now_ns;
 }
 

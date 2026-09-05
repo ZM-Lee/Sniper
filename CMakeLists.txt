@@ -10,7 +10,7 @@ find_package(OpenCV REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(Protobuf REQUIRED)
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GSTREAMER REQUIRED gstreamer-1.0 gstreamer-app-1.0)
+pkg_check_modules(GSTREAMER REQUIRED gstreamer-1.0 gstreamer-app-1.0 gstreamer-video-1.0)
 find_path(MOSQUITTO_INCLUDE_DIR mosquitto.h)
 find_library(MOSQUITTO_LIBRARY mosquitto)
 
